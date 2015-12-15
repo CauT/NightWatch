@@ -12,54 +12,59 @@ var {
     DrawerLayoutAndroid,
     Text,
     View,
+    ListView,
 } = React;
 
-var DRAWER_WIDTH_LEFT = 56;
+var DRAWER_WIDTH_LEFT = 280;
+var majorFuncNames = ['土壤墒情', '气象信息', '生长过程监测', '可信溯源', '病虫害监测']
+var appName = '农业监测终端';
 
 var NightWatch = React.createClass({
+    getInitialState: function() {
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        /* testing sticky
+        for (var i=0; i<20; i++) {
+            majorFuncNames.push('Hello World!')
+        }
+        */
+        return {
+            dataSource: ds.cloneWithRows(majorFuncNames),
+        };
+    },
     render: function() {
-        /*
         return (
-                <View style={styles.container}>
-                <Text style={styles.welcome}>
-                Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                To get started, edit index.android.js
-                </Text>
-                <Text style={styles.instructions}>
-                Shake or press menu button for dev menu
-                </Text>
-                </View>
+                   <DrawerLayoutAndroid
+                   drawerPosition={DrawerLayoutAndroid.positions.Left}
+                   drawerWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
+                   keyboardDismissMode="on-drag"
+                   ref={(drawer) => { this.drawer = drawer; }}
+                   renderNavigationView={this._renderNavigationView}
+                   style={styles.sideBar}
+                   >
+                   </DrawerLayoutAndroid>
                );
-               */
-        return (
-            <DrawerLayoutAndroid
-            drawerPosition={DrawerLayoutAndroid.positions.Left}
-            drawerWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
-            keyboardDismissMode="on-drag"
-            ref={(drawer) => { this.drawer = drawer; }}
-            renderNavigationView={this._renderNavigationView}
-            >
-            </DrawerLayoutAndroid>
-        );
     },
 
     _renderNavigationView: function() {
         return (
-                <View style={styles.container}>
-                <Text style={styles.welcome}>
-                Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                To get started, edit index.android.js
-                </Text>
-                <Text style={styles.instructions}>
-                Shake or press menu button for dev menu
-                </Text>
-                </View>
+                <ListView
+                style={styles.sideBar}
+                dataSource={this.state.dataSource}
+                renderSectionHeader={this._renderSectionHeader}
+                renderRow={
+                    (rowData) => <Text style={styles.majorFunc}>
+                        {rowData}
+                    </Text>
+                }
+                />
                );
     },
+
+    _renderSectionHeader: function() {
+        return (
+                <Text style={styles.sideBarTitle}>{appName}</Text>
+                );
+    }
 });
 
 var styles = StyleSheet.create({
@@ -79,6 +84,19 @@ var styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    majorFunc: {
+        fontSize: 20,
+        marginBottom: 10,
+        color: '#000000',
+    },
+    sideBar: {
+        backgroundColor: '#F5FCFF',
+    },
+    sideBarTitle: {
+        fontSize: 30,
+        marginBottom: 10,
+        color: '#000000',
+    }
 });
 
 AppRegistry.registerComponent('NightWatch', () => NightWatch);

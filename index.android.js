@@ -70,6 +70,7 @@ var NightWatch = React.createClass({
             settingDataSource: ds.cloneWithRows(settingItemInfos),
         };
     },
+
     render: function() {
         return (
             <DrawerLayoutAndroid
@@ -113,7 +114,8 @@ var NightWatch = React.createClass({
                 <ListView style={styles.listContainer}
                     dataSource={this.state.settingDataSource}
                     renderRow={
-                        (rowData) => <TouchableHighlight>
+                        (rowData) =>
+                        <TouchableHighlight onPress={this._onPressButton}>
                             <View style={styles.majorItem}>
                                 <Image
                                     style={styles.majorItemIcon}
@@ -136,6 +138,10 @@ var NightWatch = React.createClass({
                 <Text style={styles.sideBarTitle}>{appName}</Text>
                 </View>
         );
+    },
+
+    _onPressButton: function() {
+        this.drawer.closeDrawer();
     }
 });
 

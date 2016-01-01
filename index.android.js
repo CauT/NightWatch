@@ -16,6 +16,7 @@ var {
     Image,
     PixelRatio,
     TouchableHighlight,
+    ToastAndroid,
 } = React;
 
 var DRAWER_WIDTH_LEFT = 42;
@@ -30,7 +31,7 @@ var majorItemInfos = [
         icon: require('image!icon_weather'),
     },
     {
-        name: '生长过程监测',
+        name: '视频监控',
         icon: require('image!icon_chart'),
     },
     {
@@ -56,18 +57,13 @@ var settingItemInfos = [
 
 var appName = '农业监测终端';
 
-
 var NightWatch = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-                /* testing sticky
-        for (var i=0; i<42; i++) {
-            majorItemNames.push('Hello World!')
-        }
-                */
         return {
             majorDataSource: ds.cloneWithRows(majorItemInfos),
             settingDataSource: ds.cloneWithRows(settingItemInfos),
+            homePageText: "Hello World",
         };
     },
 
@@ -82,6 +78,9 @@ var NightWatch = React.createClass({
                 ref={(drawer) => { this.drawer = drawer; }}
                 style={styles.sideBar}
             >
+                <Text>
+                    {this.state.homePageText}
+                </Text>
             </DrawerLayoutAndroid>
         );
     },
@@ -98,7 +97,9 @@ var NightWatch = React.createClass({
                 <ListView style={styles.listContainer}
                     dataSource={this.state.majorDataSource}
                     renderRow={
-                        (rowData) => <TouchableHighlight>
+                        (rowData) => <TouchableHighlight
+                            activeOpacity={0.3}
+                            underlayColor={'#01A971'}>
                             <View style={styles.majorItem}>
                                 <Image
                                     style={styles.majorItemIcon}
@@ -114,8 +115,21 @@ var NightWatch = React.createClass({
                 <ListView style={styles.listContainer}
                     dataSource={this.state.settingDataSource}
                     renderRow={
-                        (rowData) =>
-                        <TouchableHighlight onPress={this._onPressButton}>
+                        (rowData) => <TouchableHighlight
+                            activeOpacity={0.3}
+                            underlayColor={'#01A971'}
+                            onPress={() => {
+                                // ToastAndroid.show(homePageText, ToastAndroid.LONG);
+                                this.setState({
+                                    homePageText: 'Long Live VIM!',
+                                });
+                                // ToastAndroid.show(rowData.name, ToastAndroid.LONG);
+                                this.render();
+                                this.drawer.closeDrawer();
+                                // ToastAndroid.show(this.state.majorDataSource.toString(), ToastAndroid.LONG);
+                                console.log(this.state.majorDataSource);
+                            }}
+                        >
                             <View style={styles.majorItem}>
                                 <Image
                                     style={styles.majorItemIcon}
@@ -140,7 +154,8 @@ var NightWatch = React.createClass({
         );
     },
 
-    _onPressButton: function() {
+    _onPressButton: function(rowData) {
+        this.homePageText = rowData.name;
         this.drawer.closeDrawer();
     }
 });
@@ -149,6 +164,7 @@ var styles = StyleSheet.create({
     majorItem: {
         justifyContent: 'flex-start',
         flexDirection: 'row',
+        backgroundColor:'#1A1921',
     },
     majorItemName: {
         fontSize: 20,

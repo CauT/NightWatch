@@ -21,26 +21,53 @@ var {
 
 var DRAWER_WIDTH_LEFT = 42;
 
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+var soilItemInfos = [
+    {
+        name: '当前数据',
+        icon: require('image!icon_dian'),
+    },
+    {
+        name: '历史数据',
+        icon: require('image!icon_dot'),
+    },
+    {
+        name: '图表检索',
+        icon: require('image!icon_dot'),
+    },
+];
+
 var majorItemInfos = [
     {
         name: '土壤墒情',
         icon: require('image!icon_sapling'),
+        position: 0,
+        childDataSource: ds.cloneWithRows(soilItemInfos),
     },
     {
         name: '气象信息',
         icon: require('image!icon_weather'),
+        position: 1,
+        childDataSource: ds.cloneWithRows(soilItemInfos),
     },
     {
         name: '视频监控',
         icon: require('image!icon_chart'),
+        position: 2,
+        childDataSource: ds.cloneWithRows(soilItemInfos),
     },
     {
         name: '可信溯源',
         icon: require('image!icon_certificate'),
+        position: 3,
+        childDataSource: ds.cloneWithRows(soilItemInfos),
     },
     {
         name: '病虫害监测',
         icon: require('image!icon_microscope'),
+        position: 4,
+        childDataSource: ds.cloneWithRows(soilItemInfos),
     },
 ];
 
@@ -48,10 +75,12 @@ var settingItemInfos = [
     {
         name: '账户信息',
         icon: require('image!icon_account'),
+        position: 5,
     },
     {
         name: '应用设置',
-        icon: require('image!icon_settings')
+        icon: require('image!icon_settings'),
+        position: 6,
     },
 ];
 
@@ -60,9 +89,12 @@ var appName = '农业监测终端';
 var NightWatch = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var arr = new Array(10).fill(0);
+        arr[2] = 1;
         return {
             majorDataSource: ds.cloneWithRows(majorItemInfos),
             settingDataSource: ds.cloneWithRows(settingItemInfos),
+            itemFolded: arr,
             homePageText: "Hello World",
         };
     },
@@ -93,25 +125,20 @@ var NightWatch = React.createClass({
                         {appName}
                     </Text>
                 </View>
+
                 <View style={styles.whileLine}/>
                 <ListView style={styles.listContainer}
                     dataSource={this.state.majorDataSource}
                     renderRow={
-                        (rowData) => <TouchableHighlight
-                            activeOpacity={0.3}
-                            underlayColor={'#01A971'}>
-                            <View style={styles.majorItem}>
-                                <Image
-                                    style={styles.majorItemIcon}
-                                    source={rowData.icon}/>
-                                <Text style={styles.majorItemName}>
-                                    {rowData.name}
-                                </Text>
-                            </View>
-                        </TouchableHighlight>
+                        (rowData) => <FoldableListView rd={rowData}/>
                     }
                 />
+
+
+
+
                 <View style={styles.whileLine}/>
+
                 <ListView style={styles.listContainer}
                     dataSource={this.state.settingDataSource}
                     renderRow={
@@ -148,9 +175,9 @@ var NightWatch = React.createClass({
 
     _renderSectionHeader: function() {
         return (
-                <View>
+            <View>
                 <Text style={styles.sideBarTitle}>{appName}</Text>
-                </View>
+            </View>
         );
     },
 
@@ -158,6 +185,55 @@ var NightWatch = React.createClass({
         this.homePageText = rowData.name;
         this.drawer.closeDrawer();
     }
+});
+
+var FoldableListView = React.createClass({
+    getInitialState: function() {
+        return {
+            isFolded: false,
+        };
+    },
+
+    _renderBasicItem: function(rd) {
+        return (
+            <TouchableHighlight
+                activeOpacity={0.3}
+                underlayColor={'#01A971'}
+                onPress={() => {
+                    this.setState({
+                        isFolded: !this.state.isFolded,
+                    });
+                }}
+            >
+                <View style={styles.majorItem}>
+                    <Image
+                        style={this.state.isFolded ? styles.childItemIcon:
+                        styles.majorItemIcon}
+                        source={rd.icon}/>
+                    <Text style={this.state.isFolded ? styles.childItemName :
+                        styles.majorItemName}>
+                        {rd.name}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+        );
+    },
+
+    render: function() {
+        if (this.state.isFolded === false)
+            return this._renderBasicItem(this.props.rd);
+            // return (<Text style={styles.sideBarTitle}>{'Hello'}</Text>);
+        else
+            return (
+                <View>
+                    {this._renderBasicItem(this.props.rd)}
+                    <ListView style={styles.listContainer}
+                        dataSource={this.props.rd.childDataSource}
+                        renderRow={this._renderBasicItem}
+                    />
+                </View>
+            );
+    },
 });
 
 var styles = StyleSheet.create({
@@ -173,12 +249,26 @@ var styles = StyleSheet.create({
         marginLeft: 12,
         color: '#FFFFFF',
     },
+    childItemName: {
+        fontSize: 16,
+        marginTop: 4,
+        marginBottom: 4,
+        marginLeft: 16,
+        color: '#FFFFFF',
+    },
     majorItemIcon: {
         width: 20,
         height: 20,
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 12,
+    },
+    childItemIcon: {
+        width: 10,
+        height: 10,
+        marginTop: 6,
+        marginBottom: 6,
+        marginLeft: 16,
     },
     sideBar: {
         flex: 1,
@@ -198,10 +288,10 @@ var styles = StyleSheet.create({
         height: 1 / PixelRatio.get(),
     },
     listContainer: {
-        flex: 0,
+        flex: 1,
     },
     listRest: {
-        flex: 1,
+        flex: 0,
     }
 });
 

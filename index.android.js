@@ -26,7 +26,7 @@ var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 var soilItemInfos = [
     {
         name: '当前数据',
-        icon: require('image!icon_dian'),
+        icon: require('image!icon_dot'),
     },
     {
         name: '历史数据',
@@ -134,9 +134,6 @@ var NightWatch = React.createClass({
                     }
                 />
 
-
-
-
                 <View style={styles.whileLine}/>
 
                 <ListView style={styles.listContainer}
@@ -146,14 +143,11 @@ var NightWatch = React.createClass({
                             activeOpacity={0.3}
                             underlayColor={'#01A971'}
                             onPress={() => {
-                                // ToastAndroid.show(homePageText, ToastAndroid.LONG);
                                 this.setState({
                                     homePageText: 'Long Live VIM!',
                                 });
-                                // ToastAndroid.show(rowData.name, ToastAndroid.LONG);
                                 this.render();
                                 this.drawer.closeDrawer();
-                                // ToastAndroid.show(this.state.majorDataSource.toString(), ToastAndroid.LONG);
                                 console.log(this.state.majorDataSource);
                             }}
                         >
@@ -187,6 +181,37 @@ var NightWatch = React.createClass({
     }
 });
 
+var BasicItem = React.createClass({
+    getInitialState: function() {
+        return {
+            isFolded: false,
+        };
+    },
+
+    render: function() {
+        return (
+            <TouchableHighlight
+                activeOpacity={0.3}
+                underlayColor={'#01A971'}
+                onPress={this.props.onPressFunc}
+            >
+                <View
+                    style={this.props.isMajor ? styles.majorItem :
+                    styles.childItem}>
+                    <Image
+                        style={this.props.isMajor ? styles.majorItemIcon :
+                        styles.childItemIcon}
+                        source={this.props.data.icon}/>
+                    <Text style={this.props.isMajor ? styles.majorItemName :
+                        styles.childItemName}>
+                        {this.props.data.name}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+        );
+    },
+});
+
 var FoldableListView = React.createClass({
     getInitialState: function() {
         return {
@@ -194,50 +219,49 @@ var FoldableListView = React.createClass({
         };
     },
 
-    _renderBasicItem: function(rd) {
-        return (
-            <TouchableHighlight
-                activeOpacity={0.3}
-                underlayColor={'#01A971'}
-                onPress={() => {
-                    this.setState({
-                        isFolded: !this.state.isFolded,
-                    });
-                }}
-            >
-                <View style={styles.majorItem}>
-                    <Image
-                        style={this.state.isFolded ? styles.childItemIcon:
-                        styles.majorItemIcon}
-                        source={rd.icon}/>
-                    <Text style={this.state.isFolded ? styles.childItemName :
-                        styles.majorItemName}>
-                        {rd.name}
-                    </Text>
-                </View>
-            </TouchableHighlight>
-        );
+    changeFolded: function() {
+        this.setState({
+            isFolded: !this.state.isFolded,
+        });
     },
 
     render: function() {
-        if (this.state.isFolded === false)
-            return this._renderBasicItem(this.props.rd);
+        var majorItem = <BasicItem data={this.props.rd}
+            isMajor={true}
+            onPressFunc={this.changeFolded}
+        />;
+        // if (majorItem.state === undefined || majorItem.state.isFolded === false) {
+        if (this.state.isFolded === false) {
+            return majorItem;
+        }
             // return (<Text style={styles.sideBarTitle}>{'Hello'}</Text>);
-        else
+        else {
             return (
                 <View>
-                    {this._renderBasicItem(this.props.rd)}
+                    {majorItem}
                     <ListView style={styles.listContainer}
                         dataSource={this.props.rd.childDataSource}
-                        renderRow={this._renderBasicItem}
+                        renderRow={(rowData) => {
+                            return (
+                                <BasicItem data={rowData}
+                                    isMajor={false}
+                                />
+                            );
+                        }}
                     />
                 </View>
             );
+        }
     },
 });
 
 var styles = StyleSheet.create({
     majorItem: {
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        backgroundColor:'#1A1921',
+    },
+    childItem: {
         justifyContent: 'flex-start',
         flexDirection: 'row',
         backgroundColor:'#1A1921',
@@ -251,24 +275,24 @@ var styles = StyleSheet.create({
     },
     childItemName: {
         fontSize: 16,
-        marginTop: 4,
-        marginBottom: 4,
-        marginLeft: 16,
+        marginTop: 6,
+        marginBottom: 6,
+        marginLeft: 8,
         color: '#FFFFFF',
     },
     majorItemIcon: {
         width: 20,
         height: 20,
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 12,
+        marginBottom: 12,
         marginLeft: 12,
     },
     childItemIcon: {
         width: 10,
         height: 10,
-        marginTop: 6,
-        marginBottom: 6,
-        marginLeft: 16,
+        marginTop: 12,
+        marginBottom: 12,
+        marginLeft: 24,
     },
     sideBar: {
         flex: 1,

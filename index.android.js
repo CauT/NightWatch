@@ -17,7 +17,10 @@ var {
     PixelRatio,
     TouchableHighlight,
     ToastAndroid,
+    ScrollView,
 } = React;
+
+var FacebookTabsExample = require('./FacebookTabsExample');
 
 var DRAWER_WIDTH_LEFT = 42;
 
@@ -110,9 +113,7 @@ var NightWatch = React.createClass({
                 ref={(drawer) => { this.drawer = drawer; }}
                 style={styles.sideBar}
             >
-                <Text>
-                    {this.state.homePageText}
-                </Text>
+                <FacebookTabsExample />
             </DrawerLayoutAndroid>
         );
     },
@@ -174,11 +175,6 @@ var NightWatch = React.createClass({
             </View>
         );
     },
-
-    _onPressButton: function(rowData) {
-        this.homePageText = rowData.name;
-        this.drawer.closeDrawer();
-    }
 });
 
 var BasicItem = React.createClass({
@@ -230,11 +226,9 @@ var FoldableListView = React.createClass({
             isMajor={true}
             onPressFunc={this.changeFolded}
         />;
-        // if (majorItem.state === undefined || majorItem.state.isFolded === false) {
         if (this.state.isFolded === false) {
             return majorItem;
         }
-            // return (<Text style={styles.sideBarTitle}>{'Hello'}</Text>);
         else {
             return (
                 <View>
@@ -316,7 +310,7 @@ var styles = StyleSheet.create({
     },
     listRest: {
         flex: 0,
-    }
+    },
 });
 
 AppRegistry.registerComponent('NightWatch', () => NightWatch);

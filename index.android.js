@@ -98,7 +98,7 @@ var NightWatch = React.createClass({
             majorDataSource: ds.cloneWithRows(majorItemInfos),
             settingDataSource: ds.cloneWithRows(settingItemInfos),
             itemFolded: arr,
-            homePageText: "Hello World",
+            homePageText: 'Hello World',
         };
     },
 

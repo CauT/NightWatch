@@ -10,6 +10,7 @@ var {
     Image,
 } = React;
 
+var FacebookTabsExample = require('./FacebookTabsExample');
 var {majorItemInfos} = require('./string.json');
 
 var TabBarExample = React.createClass({
@@ -37,34 +38,40 @@ var TabBarExample = React.createClass({
         );
     },
 
+    _renderMajor: function() {
+        return (
+            <FacebookTabsExample />
+        );
+    },
+
     render: function() {
         return (
             <TabBarIOS>
                 <TabBarIOS.Item
                     title={majorItemInfos[0].name}
-                    icon={{uri: majorItemInfos[0].base64, scale: 4}}
+                    icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
                     selected={this.state.selectedTab === 'soilTab'}
                     onPress={() => {
                         this.setState({
                             selectedTab: 'soilTab',
                         });
                 }}>
-                    {this._renderContent('#414A8C', 'Blue Tab')}
+                    <FacebookTabsExample />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[1].name}
-                    icon={{uri: majorItemInfos[1].base64, scale: 4}}
+                    icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
                     selected={this.state.selectedTab === 'weatherTab'}
                     onPress={() => {
                         this.setState({
                             selectedTab: 'weatherTab',
                         });
                     }}>
-                    {this._renderContent('#783E33', 'Red Tab', this.state.notifCount)}
+                    <FacebookTabsExample />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[2].name}
-                    icon={{uri: majorItemInfos[2].base64, scale: 4}}
+                    icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
                     selected={this.state.selectedTab === 'videoTab'}
                     onPress={() => {
                         this.setState({
@@ -76,7 +83,7 @@ var TabBarExample = React.createClass({
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[3].name}
-                    icon={{uri: majorItemInfos[3].base64, scale: 4}}
+                    icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
                     selected={this.state.selectedTab === 'diseaseTab'}
                     onPress={() => {
                         this.setState({
@@ -88,7 +95,7 @@ var TabBarExample = React.createClass({
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[4].name}
-                    icon={{uri: majorItemInfos[4].base64, scale: 4}}
+                    icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
                     selected={this.state.selectedTab === 'settingTab'}
                     onPress={() => {
                         this.setState({

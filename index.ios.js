@@ -7,7 +7,6 @@ var {
     Text,
     View,
     AppRegistry,
-    Image,
 } = React;
 
 var FacebookTabsExample = require('./FacebookTabsExample');

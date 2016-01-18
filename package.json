@@ -8,6 +8,7 @@
   "dependencies": {
     "react-native": "^0.16.0",
     "react-native-icons": "^0.7.0",
-    "react-native-scrollable-tab-view": "0.3.4"
+    "react-native-scrollable-tab-view": "0.3.4",
+    "art": "^0.10.0"
   }
 }

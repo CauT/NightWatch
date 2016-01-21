@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react-native');
+var VectorWidget = require('./VectorWidget');
+
 var {
     StyleSheet,
     Text,
@@ -32,15 +34,11 @@ var FacebookTabsExample = React.createClass({
             <View style={styles.container}>
                 <ScrollableTabView initialPage={1} renderTabBar={() => <FacebookTabBar />}>
                     <ScrollView tabLabel={tabInfos[0]} style={styles.tabView}>
-                        <View style={styles.card}>
-                            <Text>News</Text>
-                        </View>
-                    </ScrollView>
-                    <ScrollView tabLabel={tabInfos[1]} style={styles.tabView}>
-                        <View style={styles.card}>
                             <Text>Friends</Text>
-                        </View>
                     </ScrollView>
+                    <View tabLabel={tabInfos[1]} style={styles.tabView}>
+                        <VectorWidget style={styles.card}/>
+                    </View>
                     <ScrollView tabLabel={tabInfos[2]} style={styles.tabView}>
                         <View style={styles.card}>
                             <Text>Messenger</Text>

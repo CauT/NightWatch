@@ -17,20 +17,110 @@ var {
     Animated,
     Easing,
     StyleSheet,
+    ViewStylePropTypes,
 } = React;
 
 var Group = ART.Group;
 var Shape = ART.Shape;
 var Surface = ART.Surface;
 var Transform = ART.Transform;
+var AnimatedText = createAnimatedTextComponent();
+var AnimatedProps = Animated.__PropsOnlyForTests;
 
 var AnimatedShape = Animated.createAnimatedComponent(Shape);
+var AnimatedSurface = Animated.createAnimatedComponent(Surface);
 
 var MOUSE_UP_DRAG = 0.978;
 var MOUSE_DOWN_DRAG = 0.9;
 var MAX_VEL = 11;
 var CLICK_ACCEL = 3;
 var BASE_VEL = 0.15;
+
+function createAnimatedTextComponent() {
+  var refName = 'node';
+
+  class AnimatedComponent extends React.Component {
+    _propsAnimated: AnimatedProps;
+
+    componentWillUnmount() {
+      this._propsAnimated && this._propsAnimated.__detach();
+    }
+
+    setNativeProps(props) {
+      this.refs[refName].setNativeProps(props);
+    }
+
+    componentWillMount() {
+      this.attachProps(this.props);
+    }
+
+    attachProps(nextProps) {
+      var oldPropsAnimated = this._propsAnimated;
+
+      // The system is best designed when setNativeProps is implemented. It is
+      // able to avoid re-rendering and directly set the attributes that
+      // changed. However, setNativeProps can only be implemented on leaf
+      // native components. If you want to animate a composite component, you
+      // need to re-render it. In this case, we have a fallback that uses
+      // forceUpdate.
+      var callback = () => {
+        // if (this.refs[refName].setNativeProps) {
+        //     console.log(this._propsAnimated);
+        //   var value = this._propsAnimated.__getAnimatedValue();
+        //   this.refs[refName].setNativeProps(value);
+        // } else {
+        // var tmpText = this._propsAnimated.__getAnimatedValue().text;
+        // if (tmpText === Math.floor(tmpText)) {
+        //   console.log(tmpText);
+          this.forceUpdate();
+    //   }
+    //   else {
+    //       console.log('fuck %f', tmpText);
+    //   }
+        // }
+      };
+
+      this._propsAnimated = new AnimatedProps(
+        nextProps,
+        callback,
+      );
+
+      // When you call detach, it removes the element from the parent list
+      // of children. If it goes to 0, then the parent also detaches itself
+      // and so on.
+      // An optimization is to attach the new elements and THEN detach the old
+      // ones instead of detaching and THEN attaching.
+      // This way the intermediate state isn't to go to 0 and trigger
+      // this expensive recursive detaching to then re-attach everything on
+      // the very next operation.
+      oldPropsAnimated && oldPropsAnimated.__detach();
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.attachProps(nextProps);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextState.degree.__getValue() !== this.state.degree.__getValue())
+            && (nextState.degree.__getValue() === nextState.degree);
+    }
+
+    render() {
+        var tmpText = this._propsAnimated.__getAnimatedValue().text;
+      return (
+        <Text
+          {...this._propsAnimated.__getValue()}
+          ref={refName}
+        >
+            {Math.floor(tmpText)}
+        </Text>
+      );
+    }
+  }
+
+  return AnimatedComponent;
+}
+
 
 /**
 * An animated SVG component.
@@ -42,7 +132,7 @@ var VectorWidget = React.createClass({
     getInitialState: function() {
         // return {degrees: 0, velocity: 0, drag: MOUSE_UP_DRAG};
         return {
-            degree: new Animated.Value(100),
+            degree: new Animated.Value(10),
         };
     },
 
@@ -58,8 +148,8 @@ var VectorWidget = React.createClass({
         Animated.timing(          // Uses easing functions
             this.state.degree,    // The value to drive
             {
-                toValue: 200,
-                duration: 2000,
+                toValue: 30,
+                duration: 1000,
                 easing: Easing.linear,
             },           // Configuration
         ).start();
@@ -69,40 +159,45 @@ var VectorWidget = React.createClass({
         // window.clearInterval(this._interval);
     },
 
-    onTick: function() {
-        var nextDegrees = this.state.degrees + BASE_VEL + this.state.velocity;
-        var nextVelocity = this.state.velocity * this.state.drag;
-        this.setState({degrees: nextDegrees, velocity: nextVelocity});
-    },
+    // onTick: function() {
+    //     var nextDegrees = this.state.degrees + BASE_VEL + this.state.velocity;
+    //     var nextVelocity = this.state.velocity * this.state.drag;
+    //     this.setState({degrees: nextDegrees, velocity: nextVelocity});
+    // },
 
     /**
     * When mousing down, we increase the friction down the velocity.
     */
-    handleMouseDown: function() {
-        this.setState({drag: MOUSE_DOWN_DRAG});
-    },
+    // handleMouseDown: function() {
+    //     this.setState({drag: MOUSE_DOWN_DRAG});
+    // },
 
     /**
     * Cause the rotation to "spring".
     */
-    handleMouseUp: function() {
-        var nextVelocity = Math.min(this.state.velocity + CLICK_ACCEL, MAX_VEL);
-        this.setState({velocity: nextVelocity, drag: MOUSE_UP_DRAG});
-    },
+    // handleMouseUp: function() {
+    //     var nextVelocity = Math.min(this.state.velocity + CLICK_ACCEL, MAX_VEL);
+    //     this.setState({velocity: nextVelocity, drag: MOUSE_UP_DRAG});
+    // },
 
     /**
     * This is the "main" method for any component. The React API allows you to
     * describe the structure of your UI component at *any* point in time.
     */
+
+            // <View>
+            //     <AnimatedSurface
+            //     width={700}
+            //     height={700}>
+            //         {this.renderGraphic()}
+            //     </AnimatedSurface>
+            // </View>
     render: function() {
+        console.log(AnimatedText);
         return (
-            <View>
-                <Surface
-                width={700}
-                height={700}>
-                    {this.renderGraphic()}
-                </Surface>
-            </View>
+            <AnimatedText
+                // style={{fontSize: this.state.degree}}
+                text={this.state.degree} />
         );
         // return (
         //     <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, 115 205'}
@@ -142,16 +237,19 @@ var VectorWidget = React.createClass({
             </Group>
             </Group>
             */
-            <Shape d={"M160 160 A 45 45, 0, 0, 1, 115 205"}
-            stroke="#000000"
-            strokeWidth={3} />
+            // <Shape d={"M160 160 A 45 45, 0, 0, 1, 115 205"}
+            // stroke="#000000"
+            // strokeWidth={3} />
             // 205
-            // <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, ' +
-            //     this.state.degree.__getValue().toString() +
-            //     ' ' +
-            //     this.state.degree.__getValue().toString()}
+            <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, ' +
+                this.state.degree.__getValue().toString() +
+                ' ' +
+                this.state.degree.__getValue().toString()}
+                stroke="#000000"
+                strokeWidth={3} />
+            // <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, 115 205'}
             //     stroke="#000000"
-            //     strokeWidth={3} />
+            //     strokeWidth={this.state.degree.__getValue()} />
         );
     }
 });

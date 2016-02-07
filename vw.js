@@ -26,6 +26,8 @@ var Transform = ART.Transform;
 
 var AnimatedShape = Animated.createAnimatedComponent(Shape);
 
+var Circle = require('./circle')
+
 var MOUSE_UP_DRAG = 0.978;
 var MOUSE_DOWN_DRAG = 0.9;
 var MAX_VEL = 11;
@@ -142,9 +144,9 @@ var VectorWidget = React.createClass({
             </Group>
             </Group>
             */
-            <Shape d={"M160 160 A 45 45, 0, 0, 1, 115 205"}
-            stroke="#000000"
-            strokeWidth={3} />
+            // <Shape d={"M160 160 A 45 45, 0, 0, 1, 115 205"}
+            // stroke="#000000"
+            // strokeWidth={3} />
             // 205
             // <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, ' +
             //     this.state.degree.__getValue().toString() +
@@ -152,6 +154,13 @@ var VectorWidget = React.createClass({
             //     this.state.degree.__getValue().toString()}
             //     stroke="#000000"
             //     strokeWidth={3} />
+            <Group>
+                <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#D1D3D7" fill="FFFFFF"
+                    />
+                <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#00A5E0" fill="FFFFFF"
+                     strokeDasharray="0 100"
+                    />
+            </Group>
         );
     }
 });

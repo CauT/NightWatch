@@ -10,6 +10,7 @@ var {
 } = React;
 
 var FacebookTabsExample = require('./FacebookTabsExample');
+var VectorWidget = require('./VectorWidget');
 var {majorItemInfos} = require('./string.json');
 
 var TabBarExample = React.createClass({

@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var VectorWidget = require('./VectorWidget');
+var Vw = require('./vw');
 
 var {
     StyleSheet,
@@ -37,7 +38,7 @@ var FacebookTabsExample = React.createClass({
                             <Text>Friends</Text>
                     </ScrollView>
                     <View tabLabel={tabInfos[1]} style={styles.tabView}>
-                        <VectorWidget style={styles.card}/>
+                        <Vw />
                     </View>
                     <ScrollView tabLabel={tabInfos[2]} style={styles.tabView}>
                         <View style={styles.card}>

@@ -23,6 +23,9 @@ var Group = ART.Group;
 var Shape = ART.Shape;
 var Surface = ART.Surface;
 var Transform = ART.Transform;
+var Wedge = require('./Wedge');
+
+var AnimatedWedge = Animated.createAnimatedComponent(Wedge);
 
 var AnimatedShape = Animated.createAnimatedComponent(Shape);
 
@@ -44,7 +47,7 @@ var VectorWidget = React.createClass({
     getInitialState: function() {
         // return {degrees: 0, velocity: 0, drag: MOUSE_UP_DRAG};
         return {
-            degree: new Animated.Value(100),
+            degree: new Animated.Value(10),
         };
     },
 
@@ -118,48 +121,21 @@ var VectorWidget = React.createClass({
     */
     renderGraphic: function() {
 
+                // <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#D1D3D7" fill="FFFFFF"
+                //     />
+                // <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#00A5E0" fill="FFFFFF"
+                //      strokeDasharray="0 100"
+                //     />
         console.log(this.state.degree.__getValue());
         return (
-            /*
-            <Group
-            onMouseDown={this.handleMouseDown}
-            onMouseUp={this.handleMouseUp}>
-            <Group x={210} y={135}>
-            <Shape fill="rgba(0,0,0,0.1)" d={BORDER_PATH} />
-            <Shape fill="#7BC7BA" d={BG_PATH} />
-            <Shape fill="#DCDCDC" d={BAR_PATH} />
-            <Shape fill="#D97B76" d={RED_DOT_PATH} />
-            <Shape fill="#DBBB79" d={YELLOW_DOT_PATH} />
-            <Shape fill="#A6BD8A" d={GREEN_DOT_PATH} />
-            <Group x={55} y={29}>
-            <Group rotation={rotation} originX={84} originY={89}>
-            <Shape fill="#FFFFFF" d={CENTER_DOT_PATH} />
             <Group>
-            <Shape d={RING_ONE_PATH} stroke="#FFFFFF" strokeWidth={8} />
-            <Shape d={RING_TWO_PATH} transform={RING_TWO_ROTATE} stroke="#FFFFFF" strokeWidth={8} />
-            <Shape d={RING_THREE_PATH} transform={RING_THREE_ROTATE} stroke="#FFFFFF" strokeWidth={8} />
-            </Group>
-            </Group>
-            </Group>
-            </Group>
-            </Group>
-            */
-            // <Shape d={"M160 160 A 45 45, 0, 0, 1, 115 205"}
-            // stroke="#000000"
-            // strokeWidth={3} />
-            // 205
-            // <AnimatedShape d={'M160 160 A 45 45, 0, 0, 1, ' +
-            //     this.state.degree.__getValue().toString() +
-            //     ' ' +
-            //     this.state.degree.__getValue().toString()}
-            //     stroke="#000000"
-            //     strokeWidth={3} />
-            <Group>
-                <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#D1D3D7" fill="FFFFFF"
-                    />
-                <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#00A5E0" fill="FFFFFF"
-                     strokeDasharray="0 100"
-                    />
+                <AnimatedWedge
+                    outerRadius={50}
+                    stroke="red"
+                    startAngle={0}
+                    endAngle={this.state.degree}
+                    fill="FFFFFF"
+                />
             </Group>
         );
     }

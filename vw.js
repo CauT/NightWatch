@@ -45,9 +45,10 @@ var VectorWidget = React.createClass({
     * Initialize state members.
     */
     getInitialState: function() {
-        // return {degrees: 0, velocity: 0, drag: MOUSE_UP_DRAG};
+        // return {endAngles: 0, velocity: 0, drag: MOUSE_UP_DRAG};
         return {
-            degree: new Animated.Value(10),
+            startAngle: new Animated.Value(90),
+            endAngle: new Animated.Value(100),
         };
     },
 
@@ -61,12 +62,20 @@ var VectorWidget = React.createClass({
     componentDidMount: function() {
         // this._interval = window.setInterval(this.onTick, 20);
         Animated.timing(          // Uses easing functions
-            this.state.degree,    // The value to drive
+            this.state.endAngle,    // The value to drive
             {
-                toValue: 200,
-                duration: 2000,
+                toValue: 45,
+                duration: 700,
                 easing: Easing.linear,
             },           // Configuration
+        ).start();
+        Animated.timing(
+            this.state.startAngle,
+            {
+                toValue: -225,
+                duration: 700,
+                easing: Easing.linear,
+            },
         ).start();
     },
 
@@ -75,9 +84,9 @@ var VectorWidget = React.createClass({
     },
 
     onTick: function() {
-        var nextDegrees = this.state.degrees + BASE_VEL + this.state.velocity;
+        var nextendAngles = this.state.endAngles + BASE_VEL + this.state.velocity;
         var nextVelocity = this.state.velocity * this.state.drag;
-        this.setState({degrees: nextDegrees, velocity: nextVelocity});
+        this.setState({endAngles: nextendAngles, velocity: nextVelocity});
     },
 
     /**
@@ -126,14 +135,16 @@ var VectorWidget = React.createClass({
                 // <Circle cx={200} cy={100} radius={170} strokeWidth={50} stroke="#00A5E0" fill="FFFFFF"
                 //      strokeDasharray="0 100"
                 //     />
-        console.log(this.state.degree.__getValue());
+        console.log(this.state.endAngle.__getValue());
         return (
             <Group>
                 <AnimatedWedge
-                    outerRadius={50}
+                    cx={100}
+                    cy={100}
+                    outerRadius={30}
                     stroke="red"
-                    startAngle={0}
-                    endAngle={this.state.degree}
+                    startAngle={this.state.startAngle}
+                    endAngle={this.state.endAngle}
                     fill="FFFFFF"
                 />
             </Group>

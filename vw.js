@@ -64,7 +64,7 @@ var VectorWidget = React.createClass({
         Animated.timing(          // Uses easing functions
             this.state.endAngle,    // The value to drive
             {
-                toValue: 45,
+                toValue: 405,
                 duration: 700,
                 easing: Easing.linear,
             },           // Configuration
@@ -72,7 +72,7 @@ var VectorWidget = React.createClass({
         Animated.timing(
             this.state.startAngle,
             {
-                toValue: -225,
+                toValue: 135,
                 duration: 700,
                 easing: Easing.linear,
             },
@@ -141,8 +141,9 @@ var VectorWidget = React.createClass({
                 <AnimatedWedge
                     cx={100}
                     cy={100}
-                    outerRadius={30}
-                    stroke="red"
+                    outerRadius={50}
+                    stroke="black"
+                    strokeWidth={2.5}
                     startAngle={this.state.startAngle}
                     endAngle={this.state.endAngle}
                     fill="FFFFFF"

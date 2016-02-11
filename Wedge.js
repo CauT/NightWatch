@@ -39,7 +39,9 @@ var Wedge = React.createClass({displayName: "Wedge",
     outerRadius: PropTypes.number.isRequired,
     startAngle: PropTypes.number.isRequired,
     endAngle: PropTypes.number.isRequired,
-    innerRadius: PropTypes.number
+    innerRadius: PropTypes.number,
+    cx: PropTypes.number,
+    cy: PropTypes.number
   },
 
   circleRadians: Math.PI * 2,
@@ -74,12 +76,12 @@ var Wedge = React.createClass({displayName: "Wedge",
   _createCirclePath: function(or, ir) {
     var path = Path();
 
-    path.move(0, or)
+    path.move(this.props.cx, or + this.props.cy)
         .arc(or * 2, 0, or)
         .arc(-or * 2, 0, or);
 
     if (ir) {
-      path.move(or - ir, 0)
+      path.move(this.props.cx + or - ir, this.props.cy)
           .counterArc(ir * 2, 0, ir)
           .counterArc(-ir * 2, 0, ir);
     }
@@ -141,9 +143,10 @@ var Wedge = React.createClass({displayName: "Wedge",
       // The arguments for path.arc and path.counterArc used below are:
       // (endX, endY, radiusX, radiusY, largeAngle)
 
-      path.move(or + or * ss, or - or * sc) // move to starting point
+      path.move(or + or * ss + this.props.cx, or - or * sc + this.props.cy) // move to starting point
           .arc(or * ds, or * -dc, or, or, large) // outer arc
-          .line(dr * es, dr * -ec);  // width of arc or wedge
+
+        //   .line(dr * es, dr * -ec);  // width of arc or wedge
 
       if (ir) {
         path.counterArc(ir * -ds, ir * dc, ir, ir, large); // inner arc

@@ -18,6 +18,7 @@ var {
     TouchableHighlight,
     ToastAndroid,
     ScrollView,
+    PullToRefreshViewAndroid,
 } = React;
 
 var FacebookTabsExample = require('./FacebookTabsExample');
@@ -91,7 +92,6 @@ var appName = '农业监测终端';
 
 var NightWatch = React.createClass({
     getInitialState: function() {
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         var arr = new Array(10).fill(0);
         arr[2] = 1;
         return {
@@ -99,7 +99,20 @@ var NightWatch = React.createClass({
             settingDataSource: ds.cloneWithRows(settingItemInfos),
             itemFolded: arr,
             homePageText: 'Hello World',
+            isRefreshing: false,
         };
+    },
+
+    _onRefresh: function() {
+        console.log('refreshing');
+        this.setState({isRefreshing: true});
+        setTimeout(() => {
+            console.log('refreshing');
+
+            this.setState({
+                isRefreshing: false,
+            });
+        }, 5000);
     },
 
     render: function() {
@@ -311,6 +324,9 @@ var styles = StyleSheet.create({
     listRest: {
         flex: 0,
     },
+    pullToRefreshLayout: {
+        flex: 1,
+    }
 });
 
 AppRegistry.registerComponent('NightWatch', () => NightWatch);

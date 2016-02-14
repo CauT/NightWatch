@@ -8,6 +8,7 @@ var {
     Text,
     View,
     ScrollView,
+    PullToRefreshViewAndroid,
 } = React;
 
 var tabInfos = [
@@ -29,13 +30,28 @@ var ScrollableTabView = require('react-native-scrollable-tab-view');
 var FacebookTabBar = require('./FacebookTabBar');
 
 var FacebookTabsExample = React.createClass({
+    getInitialState: function() {
+        return {
+            isRefreshing: false,
+        };
+    },
+
     render() {
         return (
             <View style={styles.container}>
                 <ScrollableTabView initialPage={1} renderTabBar={() => <FacebookTabBar />}>
-                    <ScrollView tabLabel={tabInfos[0]} style={styles.tabView}>
-                            <Text>Friends</Text>
-                    </ScrollView>
+                    <PullToRefreshViewAndroid
+                        tabLabel={tabInfos[0]}
+                        style={styles.pullToRefreshLayout}
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={this._onRefresh}
+                        colors={['#01A971']}
+                        progressBackgroundColor={'#FFFFFF'}
+                    >
+                        <ScrollView style={styles.tabView}>
+                                <Text>Friends</Text>
+                        </ScrollView>
+                    </PullToRefreshViewAndroid>
                     <View tabLabel={tabInfos[1]} style={styles.tabView}>
                         <VectorWidget style={styles.card}/>
                     </View>
@@ -47,7 +63,19 @@ var FacebookTabsExample = React.createClass({
                 </ScrollableTabView>
             </View>
         );
-    }
+    },
+
+    _onRefresh: function() {
+        console.log('refreshing');
+        this.setState({isRefreshing: true});
+        setTimeout(() => {
+            console.log('refreshing');
+
+            this.setState({
+                isRefreshing: false,
+            });
+        }, 5000);
+    },
 });
 
 var SimpleExample = React.createClass({
@@ -87,4 +115,7 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 3,
     },
+    pullToRefreshLayout: {
+        flex: 1,
+    }
 });

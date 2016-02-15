@@ -70,7 +70,7 @@ function createAnimatedTextComponent() {
     return AnimatedComponent;
 }
 
-var VectorWidget = React.createClass({
+var RisingNumber = React.createClass({
     getInitialState: function() {
         return {
             degree: new Animated.Value(10),
@@ -97,4 +97,4 @@ var VectorWidget = React.createClass({
     }
 });
 
-module.exports = VectorWidget;
+module.exports = RisingNumber;

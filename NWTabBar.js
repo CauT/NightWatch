@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var VectorWidget = require('./VectorWidget');
+var RisingNumber = require('./RisingNumber');
 
 var {
     StyleSheet,
@@ -27,7 +27,7 @@ var tabInfos = [
 ];
 
 var ScrollableTabView = require('react-native-scrollable-tab-view');
-var FacebookTabBar = require('./FacebookTabBar');
+var TabBar = require('./TabBar');
 
 var FacebookTabsExample = React.createClass({
     getInitialState: function() {
@@ -39,7 +39,7 @@ var FacebookTabsExample = React.createClass({
     render() {
         return (
             <View style={styles.container}>
-                <ScrollableTabView initialPage={1} renderTabBar={() => <FacebookTabBar />}>
+                <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
                     <PullToRefreshViewAndroid
                         tabLabel={tabInfos[0]}
                         style={styles.pullToRefreshLayout}
@@ -53,7 +53,7 @@ var FacebookTabsExample = React.createClass({
                         </ScrollView>
                     </PullToRefreshViewAndroid>
                     <View tabLabel={tabInfos[1]} style={styles.tabView}>
-                        <VectorWidget style={styles.card}/>
+                        <RisingNumber style={styles.card}/>
                     </View>
                     <ScrollView tabLabel={tabInfos[2]} style={styles.tabView}>
                         <View style={styles.card}>
@@ -77,21 +77,6 @@ var FacebookTabsExample = React.createClass({
         }, 5000);
     },
 });
-
-var SimpleExample = React.createClass({
-    render() {
-        return (
-            <ScrollableTabView style={{marginTop: 20}}>
-            <Text tabLabel='Tab #1'>My</Text>
-            <Text tabLabel='Tab #2'>favorite</Text>
-            <Text tabLabel='Tab #3'>project</Text>
-            </ScrollableTabView>
-        )
-    }
-});
-
-// module.exports = SimpleExample;
-module.exports = FacebookTabsExample;
 
 var styles = StyleSheet.create({
     container: {
@@ -119,3 +104,5 @@ var styles = StyleSheet.create({
         flex: 1,
     }
 });
+
+module.exports = FacebookTabsExample;

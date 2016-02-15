@@ -21,7 +21,7 @@ var {
     PullToRefreshViewAndroid,
 } = React;
 
-var FacebookTabsExample = require('./FacebookTabsExample');
+var NWTabBars = require('./NWTabBars');
 
 var DRAWER_WIDTH_LEFT = 42;
 
@@ -126,7 +126,7 @@ var NightWatch = React.createClass({
                 ref={(drawer) => { this.drawer = drawer; }}
                 style={styles.sideBar}
             >
-                <FacebookTabsExample />
+                <NWTabBars />
             </DrawerLayoutAndroid>
         );
     },

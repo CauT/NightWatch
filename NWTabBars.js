@@ -29,7 +29,7 @@ var tabInfos = [
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var TabBar = require('./TabBar');
 
-var FacebookTabsExample = React.createClass({
+var NWTabBars = React.createClass({
     getInitialState: function() {
         return {
             isRefreshing: false,
@@ -105,4 +105,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = FacebookTabsExample;
+module.exports = NWTabBars;

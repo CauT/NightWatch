@@ -7,10 +7,40 @@ var {
     Text,
     View,
     AppRegistry,
+    ListView,
 } = React;
 
+var RefreshableListview = require('react-native-refreshable-listview');
 var FacebookTabsExample = require('./FacebookTabsExample');
 var {majorItemInfos} = require('./string.json');
+
+var majorItemInfos = [
+    {
+        name: '土壤墒情',
+        icon: require('image!icon_sapling'),
+        position: 0,
+    },
+    {
+        name: '气象信息',
+        icon: require('image!icon_weather'),
+        position: 1,
+    },
+    {
+        name: '视频监控',
+        icon: require('image!icon_chart'),
+        position: 2,
+    },
+    {
+        name: '可信溯源',
+        icon: require('image!icon_certificate'),
+        position: 3,
+    },
+    {
+        name: '病虫害监测',
+        icon: require('image!icon_microscope'),
+        position: 4,
+    },
+];
 
 var TabBarExample = React.createClass({
     statics: {
@@ -21,10 +51,9 @@ var TabBarExample = React.createClass({
     displayName: 'TabBarExample',
 
     getInitialState: function() {
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
-            selectedTab: 'soilTab',
-            notifCount: 0,
-            presses: 0,
+            majorDataSource: ds.cloneWithRows(majorItemInfos),
         };
     },
 
@@ -43,68 +72,24 @@ var TabBarExample = React.createClass({
         );
     },
 
+    _renderRow: function(obj) {
+        return (
+            <Text>{obj.name}</Text>
+        );
+    },
+
+    _loadData: function() {
+        console.log('load data');
+    },
+
     render: function() {
         return (
-            <TabBarIOS>
-                <TabBarIOS.Item
-                    title={majorItemInfos[0].name}
-                    icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'soilTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'soilTab',
-                        });
-                }}>
-                    <FacebookTabsExample />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[1].name}
-                    icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'weatherTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'weatherTab',
-                        });
-                    }}>
-                    <FacebookTabsExample />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[2].name}
-                    icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'videoTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'videoTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[3].name}
-                    icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'diseaseTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'diseaseTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[4].name}
-                    icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'settingTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'settingTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-            </TabBarIOS>
+            <RefreshableListview
+                dataSource={this.state.majorDataSource}
+                renderRow={this._renderRow}
+                loadData={this._loadData}
+                refreshDescription="NightWatch"
+            />
         );
     },
 

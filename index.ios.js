@@ -11,6 +11,7 @@ var {
 
 var NWTabBars = require('./NWTabBars');
 var {majorItemInfos} = require('./string.json');
+var WebViewExample = require('./WebViewExample').examples;
 
 var TabBarExample = React.createClass({
     statics: {
@@ -44,67 +45,70 @@ var TabBarExample = React.createClass({
     },
 
     render: function() {
+        // return (
+        //     <TabBarIOS>
+        //         <TabBarIOS.Item
+        //             title={majorItemInfos[0].name}
+        //             icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
+        //             selected={this.state.selectedTab === 'soilTab'}
+        //             onPress={() => {
+        //                 this.setState({
+        //                     selectedTab: 'soilTab',
+        //                 });
+        //         }}>
+        //             <NWTabBars />
+        //         </TabBarIOS.Item>
+        //         <TabBarIOS.Item
+        //             title={majorItemInfos[1].name}
+        //             icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
+        //             selected={this.state.selectedTab === 'weatherTab'}
+        //             onPress={() => {
+        //                 this.setState({
+        //                     selectedTab: 'weatherTab',
+        //                 });
+        //             }}>
+        //             <NWTabBars />
+        //         </TabBarIOS.Item>
+        //         <TabBarIOS.Item
+        //             title={majorItemInfos[2].name}
+        //             icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
+        //             selected={this.state.selectedTab === 'videoTab'}
+        //             onPress={() => {
+        //                 this.setState({
+        //                     selectedTab: 'videoTab',
+        //                     presses: this.state.presses + 1
+        //                 });
+        //             }}>
+        //             {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        //         </TabBarIOS.Item>
+        //         <TabBarIOS.Item
+        //             title={majorItemInfos[3].name}
+        //             icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
+        //             selected={this.state.selectedTab === 'diseaseTab'}
+        //             onPress={() => {
+        //                 this.setState({
+        //                     selectedTab: 'diseaseTab',
+        //                     presses: this.state.presses + 1
+        //                 });
+        //             }}>
+        //             {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        //         </TabBarIOS.Item>
+        //         <TabBarIOS.Item
+        //             title={majorItemInfos[4].name}
+        //             icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
+        //             selected={this.state.selectedTab === 'settingTab'}
+        //             onPress={() => {
+        //                 this.setState({
+        //                     selectedTab: 'settingTab',
+        //                     presses: this.state.presses + 1
+        //                 });
+        //             }}>
+        //             {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        //         </TabBarIOS.Item>
+        //     </TabBarIOS>
+        // );
         return (
-            <TabBarIOS>
-                <TabBarIOS.Item
-                    title={majorItemInfos[0].name}
-                    icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'soilTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'soilTab',
-                        });
-                }}>
-                    <NWTabBars />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[1].name}
-                    icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'weatherTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'weatherTab',
-                        });
-                    }}>
-                    <NWTabBars />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[2].name}
-                    icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'videoTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'videoTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[3].name}
-                    icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'diseaseTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'diseaseTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[4].name}
-                    icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'settingTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'settingTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-            </TabBarIOS>
+            <WebViewExample />
         );
     },
 

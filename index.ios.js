@@ -32,7 +32,6 @@ var {
     View,
     AppRegistry,
 } = React;
-
 var SoilTabBars = require('./SoilTabBars');
 var {
     iosMajorItemInfos: majorItemInfos

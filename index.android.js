@@ -103,30 +103,31 @@ var NightWatch = React.createClass({
                 <ListView style={styles.listContainer}
                     dataSource={this.state.settingDataSource}
                     renderRow={
-                        (rowData) => <TouchableHighlight
-                            activeOpacity={0.3}
-                            underlayColor={'#01A971'}
-                            onPress={() => {
-                                // ToastAndroid.show(homePageText, ToastAndroid.LONG);
-                                this.setState({
-                                    homePageText: 'Long Live VIM!',
-                                });
-                                // ToastAndroid.show(rowData.name, ToastAndroid.LONG);
-                                this.render();
-                                this.drawer.closeDrawer();
-                                // ToastAndroid.show(this.state.majorDataSource.toString(), ToastAndroid.LONG);
-                                console.log(this.state.majorDataSource);
-                            }}
-                        >
-                            <View style={styles.majorItem}>
-                                <Image
-                                    style={styles.majorItemIcon}
-                                    source={rowData.icon}/>
-                                <Text style={styles.majorItemName}>
-                                    {rowData.name}
-                                </Text>
-                            </View>
-                        </TouchableHighlight>
+                        (rowData) =>
+                            <TouchableHighlight
+                                activeOpacity={0.3}
+                                underlayColor={'#01A971'}
+                                onPress={() => {
+                                    // ToastAndroid.show(homePageText, ToastAndroid.LONG);
+                                    this.setState({
+                                        homePageText: 'Long Live VIM!',
+                                    });
+                                    // ToastAndroid.show(rowData.name, ToastAndroid.LONG);
+                                    this.render();
+                                    this.drawer.closeDrawer();
+                                    // ToastAndroid.show(this.state.majorDataSource.toString(), ToastAndroid.LONG);
+                                    console.log(this.state.majorDataSource);
+                                }}
+                            >
+                                <View style={styles.majorItem}>
+                                    <Image
+                                        style={styles.majorItemIcon}
+                                        source={{uri: rowData.base64, scale: 4.5}}/>
+                                    <Text style={styles.majorItemName}>
+                                        {rowData.name}
+                                    </Text>
+                                </View>
+                                </TouchableHighlight>
                     }
                 />
                 <View style={styles.listRest}/>

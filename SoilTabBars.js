@@ -16,7 +16,7 @@ var {soilItemInfos} = require('./string.json');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var TabBar = require('./TabBar');
 
-var NWTabBars = React.createClass({
+var SoilTabBars = React.createClass({
     getInitialState: function() {
         return {
             isRefreshing: false,
@@ -84,4 +84,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = NWTabBars;
+module.exports = SoilTabBars;

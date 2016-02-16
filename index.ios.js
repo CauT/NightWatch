@@ -9,7 +9,7 @@ var {
     AppRegistry,
 } = React;
 
-var NWTabBars = require('./NWTabBars');
+var SoilTabBars = require('./SoilTabBars');
 var {majorItemInfos} = require('./string.json');
 
 var TabBarExample = React.createClass({
@@ -39,7 +39,7 @@ var TabBarExample = React.createClass({
 
     _renderMajor: function() {
         return (
-            <NWTabBars />
+            <SoilTabBars />
         );
     },
 
@@ -55,7 +55,7 @@ var TabBarExample = React.createClass({
                             selectedTab: 'soilTab',
                         });
                 }}>
-                    <NWTabBars />
+                    <SoilTabBars />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[1].name}
@@ -66,7 +66,7 @@ var TabBarExample = React.createClass({
                             selectedTab: 'weatherTab',
                         });
                     }}>
-                    <NWTabBars />
+                    <SoilTabBars />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title={majorItemInfos[2].name}

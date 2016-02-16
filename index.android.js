@@ -1,7 +1,27 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
+/*
+    "Night gathers, and now my watch begins.
+    It shall not end until my death.
+    I shall take no wife, hold no lands, father no children.
+    I shall wear no crowns and win no glory.
+    I shall live and die at my post.
+    I am the sword in the darkness.
+    I am the watcher on the walls.
+    I am the shield that guards the realms of men.
+    I pledge my life and honor to the Night's Watch, for this night and all the nights to come."
+    ― The Night's Watch oath
+
+    『长夜将至，我从今开始守望，至死方休。
+    我将不娶妻、不封地、不生子。
+    我将不戴宝冠，不争荣宠。
+    我将尽忠职守，生死于斯。
+    我是黑暗中的利剑，长城上的守卫，
+    抵御寒冷的烈焰，破晓时分的光线，
+    唤醒眠者的号角，守护王国的坚盾。
+    我将生命与荣耀献给守夜人，
+    今夜如此，夜夜皆然。』
+    - 守夜人誓言
+*/
+
 'use strict';
 
 var React = require('react-native');
@@ -18,44 +38,13 @@ var {
     TouchableHighlight,
     ToastAndroid,
 } = React;
-
 var SoilTabBars = require('./SoilTabBars');
+var {
+    androidMajorItemInfos: majorItemInfos,
+    settingItemInfos,
+} = require('./string.json');
+
 var DRAWER_WIDTH_LEFT = 42;
-
-var majorItemInfos = [
-    {
-        name: '土壤墒情',
-        icon: require('image!icon_sapling'),
-    },
-    {
-        name: '气象信息',
-        icon: require('image!icon_weather'),
-    },
-    {
-        name: '视频监控',
-        icon: require('image!icon_chart'),
-    },
-    {
-        name: '可信溯源',
-        icon: require('image!icon_certificate'),
-    },
-    {
-        name: '病虫害监测',
-        icon: require('image!icon_microscope'),
-    },
-];
-
-var settingItemInfos = [
-    {
-        name: '账户信息',
-        icon: require('image!icon_account'),
-    },
-    {
-        name: '应用设置',
-        icon: require('image!icon_settings')
-    },
-];
-
 var appName = '农业监测终端';
 
 var NightWatch = React.createClass({
@@ -64,7 +53,7 @@ var NightWatch = React.createClass({
         return {
             majorDataSource: ds.cloneWithRows(majorItemInfos),
             settingDataSource: ds.cloneWithRows(settingItemInfos),
-            homePageText: "Hello World",
+            homePageText: 'Hello World',
         };
     },
 
@@ -102,7 +91,7 @@ var NightWatch = React.createClass({
                             <View style={styles.majorItem}>
                                 <Image
                                     style={styles.majorItemIcon}
-                                    source={rowData.icon}/>
+                                    source={{uri: rowData.base64, scale: 4.5}}/>
                                 <Text style={styles.majorItemName}>
                                     {rowData.name}
                                 </Text>

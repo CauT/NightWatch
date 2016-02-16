@@ -27,7 +27,6 @@ var SoilTabBars = React.createClass({
         return (
             <View style={styles.container}>
                 <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
-
                     <ScrollView tabLabel={soilItemInfos[0]} style={styles.tabView}>
                             <Text>Friends</Text>
                     </ScrollView>

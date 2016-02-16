@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var RisingNumber = require('./RisingNumber');
-
 var {
     StyleSheet,
     Text,
@@ -10,9 +9,7 @@ var {
     ScrollView,
     PullToRefreshViewAndroid,
 } = React;
-
 var {soilItemInfos} = require('./string.json');
-
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var TabBar = require('./TabBar');
 

@@ -6,6 +6,7 @@ var {
     Text,
     Animated,
     Easing,
+    PropTypes,
 } = React;
 
 var AnimatedText = createAnimatedTextComponent();
@@ -32,12 +33,6 @@ function createAnimatedTextComponent() {
         attachProps(nextProps) {
             var oldPropsAnimated = this._propsAnimated;
 
-            // The system is best designed when setNativeProps is implemented. It is
-            // able to avoid re-rendering and directly set the attributes that
-            // changed. However, setNativeProps can only be implemented on leaf
-            // native components. If you want to animate a composite component, you
-            // need to re-render it. In this case, we have a fallback that uses
-            // forceUpdate.
             var callback = () => {
                 this.forceUpdate();
             };
@@ -71,28 +66,47 @@ function createAnimatedTextComponent() {
 }
 
 var RisingNumber = React.createClass({
+    propTypes: {
+        startNumber: PropTypes.number.isRequired,
+        toNumber: PropTypes.number.isRequired,
+        startFontSize: PropTypes.number.isRequired,
+        toFontSize: PropTypes.number.isRequired,
+        duration: PropTypes.number.isRequired,
+    },
+
     getInitialState: function() {
         return {
-            degree: new Animated.Value(10),
+            number: new Animated.Value(this.props.startNumber),
+            fontSize: new Animated.Value(this.props.startFontSize),
         };
     },
 
     componentDidMount: function() {
-        Animated.timing(
-            this.state.degree,
-            {
-                toValue: 30,
-                duration: 1000,
-                easing: Easing.linear,
-            },
-        ).start();
+        Animated.parallel([
+            Animated.timing(
+                this.state.number,
+                {
+                    toValue: this.props.toNumber,
+                    duration: this.props.duration,
+                    easing: Easing.linear,
+                },
+            ),
+            Animated.timing(
+                this.state.fontSize,
+                {
+                    toValue: this.props.toFontSize,
+                    duration: this.props.duration,
+                    easing: Easing.linear,
+                }
+            )
+        ]).start();
     },
 
     render: function() {
         return (
             <AnimatedText
-                style={{fontSize: this.state.degree}}
-                text={this.state.degree} />
+                style={{fontSize: this.state.fontSize}}
+                text={this.state.number} />
         );
     }
 });

@@ -28,7 +28,13 @@ var SoilTabBars = React.createClass({
                             <Text>Friends</Text>
                     </ScrollView>
                     <View tabLabel={soilItemInfos[1]} style={styles.tabView}>
-                        <RisingNumber style={styles.card}/>
+                        <RisingNumber
+                            startNumber={10}
+                            toNumber={30}
+                            startFontSize={10}
+                            toFontSize={40}
+                            duration={1000}
+                        />
                     </View>
                     <ScrollView tabLabel={soilItemInfos[2]} style={styles.tabView}>
                         <View style={styles.card}>

@@ -50,8 +50,8 @@ var NightWatch = React.createClass({
     _renderContent: function(color: string, pageText: string, num?: number) {
         return (
             <View style={[styles.tabContent, {backgroundColor: color}]}>
-            <Text style={styles.tabText}>{pageText}</Text>
-            <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
+                <Text style={styles.tabText}>{pageText}</Text>
+                <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
             </View>
         );
     },

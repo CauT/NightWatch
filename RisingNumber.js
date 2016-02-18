@@ -7,6 +7,8 @@ var {
     Animated,
     Easing,
     PropTypes,
+    View,
+    StyleSheet,
 } = React;
 
 var AnimatedText = createAnimatedTextComponent();
@@ -72,6 +74,7 @@ var RisingNumber = React.createClass({
         startFontSize: PropTypes.number.isRequired,
         toFontSize: PropTypes.number.isRequired,
         duration: PropTypes.number.isRequired,
+        upperText: PropTypes.string.isRequired,
     },
 
     getInitialState: function() {
@@ -104,11 +107,24 @@ var RisingNumber = React.createClass({
 
     render: function() {
         return (
-            <AnimatedText
-                style={{fontSize: this.state.fontSize}}
-                text={this.state.number} />
+            <View>
+                <Text style={styles.kind}>{this.props.upperText}</Text>
+                <AnimatedText
+                    style={{fontSize: this.state.fontSize, marginLeft: 15}}
+                    text={this.state.number} />
+            </View>
         );
-    }
+    },
+});
+
+var styles = StyleSheet.create({
+    kind: {
+        fontSize: 15,
+        color: '#01A971',
+    },
+    number: {
+        marginLeft: 15,
+    },
 });
 
 module.exports = RisingNumber;

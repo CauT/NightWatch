@@ -34,6 +34,7 @@ var SoilTabBars = React.createClass({
                             startFontSize={10}
                             toFontSize={40}
                             duration={1000}
+                            upperText={"湿度"}
                         />
                     </View>
                     <ScrollView tabLabel={soilItemInfos[2]} style={styles.tabView}>

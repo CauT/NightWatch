@@ -8,6 +8,7 @@ var {
     View,
     ScrollView,
     PullToRefreshViewAndroid,
+    WebView,
 } = React;
 var {soilItemInfos} = require('./string.json');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
@@ -21,6 +22,19 @@ var SoilTabBars = React.createClass({
     },
 
     render() {
+        // var DEFAULT_URL = 'http://localhost:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172&platform=Android&width=300&height=200';
+        var DEFAULT_URL = 'http://172.17.240.113:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172&platform=iOS&width=300&height=200';
+        // var DEFAULT_URL = 'http://localhost:3000/v1/device/info/type_list';
+        // var DEFAULT_URL = 'http://www.sharejs.com/code/game/pintu/index.html';
+        // var DEFAULT_URL = 'http://res.xiaomaiketang.com/school_major/6237c5011312585aadf43c5e4ef2611e.html';
+        fetch(DEFAULT_URL)
+        .then((response) => response.text())
+        .then((responseText) => {
+          console.log(responseText);
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
         return (
             <View style={styles.container}>
                 <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
@@ -28,14 +42,12 @@ var SoilTabBars = React.createClass({
                             <Text>Friends</Text>
                     </ScrollView>
                     <View tabLabel={soilItemInfos[1]} style={styles.tabView}>
-                        <RisingNumber
-                            startNumber={10}
-                            toNumber={30}
-                            startFontSize={10}
-                            toFontSize={40}
-                            duration={1000}
-                            upperText={"湿度"}
-                        />
+                  <WebView style={styles.webView}
+                    source={{uri: DEFAULT_URL}}
+                    startInLoadingState={true}
+                    domStorageEnabled={true}
+                    javaScriptEnabled={true}
+                    />
                     </View>
                     <ScrollView tabLabel={soilItemInfos[2]} style={styles.tabView}>
                         <View style={styles.card}>
@@ -61,6 +73,9 @@ var SoilTabBars = React.createClass({
 });
 
 var styles = StyleSheet.create({
+    webView: {
+      flex: 1,
+    },
     container: {
         flex: 1,
         marginTop: 30,
@@ -68,7 +83,7 @@ var styles = StyleSheet.create({
     tabView: {
         flex: 1,
         padding: 10,
-        backgroundColor: 'rgba(0,0,0,0.01)',
+        // backgroundColor: 'rgba(0,0,0,0.01)',
     },
     card: {
         borderWidth: 1,

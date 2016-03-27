@@ -1,25 +1,25 @@
 /*
-    "Night gathers, and now my watch begins.
-    It shall not end until my death.
-    I shall take no wife, hold no lands, father no children.
-    I shall wear no crowns and win no glory.
-    I shall live and die at my post.
-    I am the sword in the darkness.
-    I am the watcher on the walls.
-    I am the shield that guards the realms of men.
-    I pledge my life and honor to the Night's Watch, for this night and all the nights to come."
-    ― The Night's Watch oath
+  "Night gathers, and now my watch begins.
+  It shall not end until my death.
+  I shall take no wife, hold no lands, father no children.
+  I shall wear no crowns and win no glory.
+  I shall live and die at my post.
+  I am the sword in the darkness.
+  I am the watcher on the walls.
+  I am the shield that guards the realms of men.
+  I pledge my life and honor to the Night's Watch, for this night and all the nights to come."
+  ― The Night's Watch oath
 
-    长夜将至，我从今开始守望，至死方休。
-    我将不娶妻、不封地、不生子。
-    我将不戴宝冠，不争荣宠。
-    我将尽忠职守，生死于斯。
-    我是黑暗中的利剑，长城上的守卫，
-    抵御寒冷的烈焰，破晓时分的光线，
-    唤醒眠者的号角，守护王国的坚盾。
-    我将生命与荣耀献给守夜人，
-    今夜如此，夜夜皆然。
-    - 守夜人誓言
+  长夜将至，我从今开始守望，至死方休。
+  我将不娶妻、不封地、不生子。
+  我将不戴宝冠，不争荣宠。
+  我将尽忠职守，生死于斯。
+  我是黑暗中的利剑，长城上的守卫，
+  抵御寒冷的烈焰，破晓时分的光线，
+  唤醒眠者的号角，守护王国的坚盾。
+  我将生命与荣耀献给守夜人，
+  今夜如此，夜夜皆然。
+  - 守夜人誓言
 */
 
 'use strict';
@@ -31,7 +31,9 @@ var {
     Text,
     View,
     AppRegistry,
+    WebView,
 } = React;
+
 var SoilTabBars = require('./SoilTabBars');
 var {
     iosMajorItemInfos: majorItemInfos
@@ -141,6 +143,58 @@ var styles = StyleSheet.create({
         color: 'white',
         margin: 50,
     },
+    webview_style:{
+       backgroundColor:'#000000',
+    }
 });
+
+// var WebViewExample = require('./WebViewExample');
+
+// fetch('http://172.17.245.168:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172')
+// .then((response) => response.text())
+// .then((responseText) => {
+//   console.log(responseText);
+// })
+// .catch((error) => {
+//   console.warn(error);
+// });
+
+/*
+'use strict';
+import React, {
+  AppRegistry,
+  Component,
+  StyleSheet,
+  Text,
+  View,
+  WebView,
+} from 'react-native';
+var DEFAULT_URL = 'http://172.17.246.23:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172';
+// var DEFAULT_URL = 'http://www.baidu.com';
+// var DEFAULT_URL = 'http://172.17.246.23:3000/v1/device/info/type_list';
+// var DEFAULT_URL = 'http://ww2.sinaimg.cn/large/9751e385jw1f27tbj98ndj20u01bctb1.jpg';
+
+var WebViewDemo = React.createClass({
+  render: function() {
+    return (
+      <View style={{flex:1}}>
+        <Text style={{height:40}}>简单的网页显示</Text>
+        <WebView style={styles.webview_style}
+          url={DEFAULT_URL}
+          startInLoadingState={true}
+          domStorageEnabled={true}
+          javaScriptEnabled={true}
+          >
+        </WebView>
+      </View>
+    );
+  },
+});
+var styles = StyleSheet.create({
+    webview_style:{
+       backgroundColor:'#00ff00',
+    }
+});
+*/
 
 AppRegistry.registerComponent('NightWatch', () => NightWatch);

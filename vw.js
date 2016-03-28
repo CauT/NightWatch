@@ -25,21 +25,23 @@ var VectorWidget = React.createClass({
   },
 
   componentDidMount: function() {
-    Animated.timing(
-      this.state.endAngle,
-      {
-        toValue: 405,
-        duration: 700,
-        easing: Easing.linear,
-      },
-    ).start();
-    Animated.timing(
-      this.state.startAngle, {
-        toValue: 135,
-        duration: 700,
-        easing: Easing.linear,
-      },
-    ).start();
+    Animated.parallel([
+      Animated.timing(
+        this.state.endAngle,
+        {
+          toValue: 405,
+          duration: 700,
+          easing: Easing.linear,
+        }
+      ),
+      Animated.timing(
+        this.state.startAngle,
+        {
+          toValue: 135,
+          duration: 700,
+          easing: Easing.linear,
+        })
+    ]).start();
   },
 
   render: function() {

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start"
+    "start": "react-native start",
+    "count": "cloc *.js *.json"
   },
   "dependencies": {
     "react": "^0.14.7",

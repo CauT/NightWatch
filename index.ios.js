@@ -26,175 +26,126 @@
 
 var React = require('react-native');
 var {
-    StyleSheet,
-    TabBarIOS,
-    Text,
-    View,
-    AppRegistry,
-    WebView,
+  StyleSheet,
+  TabBarIOS,
+  Text,
+  View,
+  AppRegistry,
+  WebView,
 } = React;
 
 var SoilTabBars = require('./SoilTabBars');
 var {
-    iosMajorItemInfos: majorItemInfos
+  iosMajorItemInfos: majorItemInfos
 } = require('./string.json');
 
 var NightWatch = React.createClass({
 
-    getInitialState: function() {
-        return {
-            selectedTab: 'soilTab',
-            notifCount: 0,
-            presses: 0,
-        };
-    },
+  getInitialState: function () {
+    return {
+      selectedTab: 'soilTab',
+      notifCount: 0,
+      presses: 0,
+    };
+  },
 
-    _renderContent: function(color: string, pageText: string, num?: number) {
-        return (
-            <View style={[styles.tabContent, {backgroundColor: color}]}>
-                <Text style={styles.tabText}>{pageText}</Text>
-                <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
-            </View>
-        );
-    },
+  _renderContent: function(color: string, pageText: string, num?: number) {
+    return (
+        <View style={[styles.tabContent, {backgroundColor: color}]}>
+            <Text style={styles.tabText}>{pageText}</Text>
+            <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
+        </View>
+    );
+  },
 
-    _renderMajor: function() {
-        return (
-            <SoilTabBars />
-        );
-    },
+  _renderMajor: function() {
+    return (
+        <SoilTabBars />
+    );
+  },
 
-    render: function() {
-        return (
-            <TabBarIOS>
-                <TabBarIOS.Item
-                    title={majorItemInfos[0].name}
-                    icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'soilTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'soilTab',
-                        });
-                }}>
-                    <SoilTabBars />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[1].name}
-                    icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'weatherTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'weatherTab',
-                        });
-                    }}>
-                    <SoilTabBars />
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[2].name}
-                    icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'videoTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'videoTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[3].name}
-                    icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'diseaseTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'diseaseTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    title={majorItemInfos[4].name}
-                    icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
-                    selected={this.state.selectedTab === 'settingTab'}
-                    onPress={() => {
-                        this.setState({
-                            selectedTab: 'settingTab',
-                            presses: this.state.presses + 1
-                        });
-                    }}>
-                    {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-                </TabBarIOS.Item>
-            </TabBarIOS>
-        );
-    },
-});
-
-var styles = StyleSheet.create({
-    logo: {
-        width: 10,
-        height: 10,
-    },
-    tabContent: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    tabText: {
-        color: 'white',
-        margin: 50,
-    },
-    webview_style:{
-       backgroundColor:'#000000',
-    }
-});
-
-// var WebViewExample = require('./WebViewExample');
-
-// fetch('http://172.17.245.168:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172')
-// .then((response) => response.text())
-// .then((responseText) => {
-//   console.log(responseText);
-// })
-// .catch((error) => {
-//   console.warn(error);
-// });
-
-/*
-'use strict';
-import React, {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  View,
-  WebView,
-} from 'react-native';
-var DEFAULT_URL = 'http://172.17.246.23:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172';
-// var DEFAULT_URL = 'http://www.baidu.com';
-// var DEFAULT_URL = 'http://172.17.246.23:3000/v1/device/info/type_list';
-// var DEFAULT_URL = 'http://ww2.sinaimg.cn/large/9751e385jw1f27tbj98ndj20u01bctb1.jpg';
-
-var WebViewDemo = React.createClass({
   render: function() {
     return (
-      <View style={{flex:1}}>
-        <Text style={{height:40}}>简单的网页显示</Text>
-        <WebView style={styles.webview_style}
-          url={DEFAULT_URL}
-          startInLoadingState={true}
-          domStorageEnabled={true}
-          javaScriptEnabled={true}
-          >
-        </WebView>
-      </View>
+      <TabBarIOS>
+        <TabBarIOS.Item
+          title={majorItemInfos[0].name}
+          icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
+          selected={this.state.selectedTab === 'soilTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'soilTab',
+            });
+        }}>
+          <SoilTabBars />
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title={majorItemInfos[1].name}
+          icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
+          selected={this.state.selectedTab === 'weatherTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'weatherTab',
+            });
+          }}>
+          <SoilTabBars />
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title={majorItemInfos[2].name}
+          icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
+          selected={this.state.selectedTab === 'videoTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'videoTab',
+              presses: this.state.presses + 1
+            });
+          }}>
+          {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title={majorItemInfos[3].name}
+          icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
+          selected={this.state.selectedTab === 'diseaseTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'diseaseTab',
+              presses: this.state.presses + 1
+            });
+          }}>
+          {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+            title={majorItemInfos[4].name}
+            icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
+            selected={this.state.selectedTab === 'settingTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'settingTab',
+                presses: this.state.presses + 1
+              });
+            }}>
+            {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
+        </TabBarIOS.Item>
+      </TabBarIOS>
     );
   },
 });
+
 var styles = StyleSheet.create({
-    webview_style:{
-       backgroundColor:'#00ff00',
-    }
+  logo: {
+    width: 10,
+    height: 10,
+  },
+  tabContent: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  tabText: {
+    color: 'white',
+    margin: 50,
+  },
+  webview_style:{
+    backgroundColor:'#000000',
+  }
 });
-*/
 
 AppRegistry.registerComponent('NightWatch', () => NightWatch);

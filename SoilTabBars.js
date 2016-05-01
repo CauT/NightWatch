@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var RisingNumber = require('./RisingNumber');
+var MonitorView = require('./CurrentData');
 var {
   StyleSheet,
   Text,
@@ -21,16 +22,7 @@ var SoilTabBars = React.createClass({
     };
   },
 
-  render() {
-    var DEFAULT_URL = 'http://172.17.240.113:3000/v1/utils/generate_graph?start_time=1443700260&end_time=1443800000&device_id=172&platform=iOS&width=300&height=200';
-    fetch(DEFAULT_URL)
-    .then((response) => response.text())
-    .then((responseText) => {
-      console.log(responseText);
-    })
-    .catch((error) => {
-      console.warn(error);
-    });
+  render: function() {
     return (
       <View style={styles.container}>
         <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
@@ -38,12 +30,7 @@ var SoilTabBars = React.createClass({
             <Text>Friends</Text>
           </ScrollView>
           <View tabLabel={soilItemInfos[1]} style={styles.tabView}>
-          <WebView style={styles.webView}
-            source={{uri: DEFAULT_URL}}
-            startInLoadingState={true}
-            domStorageEnabled={true}
-            javaScriptEnabled={true}
-          />
+            <MonitorView name={'湿度'} value={62.3} />
           </View>
           <ScrollView tabLabel={soilItemInfos[2]} style={styles.tabView}>
             <View style={styles.card}>
@@ -77,7 +64,7 @@ var styles = StyleSheet.create({
     marginTop: 30,
   },
   tabView: {
-    flex: 1,
+    // flex: 1,
     padding: 10,
     // backgroundColor: 'rgba(0,0,0,0.01)',
   },

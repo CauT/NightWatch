@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 // var RisingNumber = require('./RisingNumber');
-var MonitorView = require('./CurrentData');
+var CurrentData = require('./CurrentData');
 var {
   StyleSheet,
   Text,
@@ -30,7 +30,12 @@ var SoilTabBars = React.createClass({
             <Text>Friends</Text>
           </ScrollView>
           <View tabLabel={soilItemInfos[1]} style={styles.tabView}>
-            <MonitorView name={'湿度'} value={62.3} />
+            <CurrentData
+              devices_num={4}
+              devices_name={['湿度', '温度', '风力', '水位']}
+              devices_id={['A1Z1', 'A1Z1', 'A1Z1', 'A1Z1']}
+              devices_value={[60, 24, 44, 77]}
+            />
           </View>
           <ScrollView tabLabel={soilItemInfos[2]} style={styles.tabView}>
             <View style={styles.card}>

@@ -43,10 +43,10 @@
   }],
   "soilItemInfos": [{
     "tabIcon": "ion|ios-paper",
-    "tabName": "当前数据"
+    "tabName": "历史数据"
   }, {
     "tabIcon": "ion|calendar",
-    "tabName": "历史数据"
+    "tabName": "当前数据"
   }, {
     "tabIcon": "ion|connection-bars",
     "tabName": "图表生成"

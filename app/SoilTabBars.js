@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var RisingNumber = require('./RisingNumber');
+// var RisingNumber = require('./RisingNumber');
 var MonitorView = require('./CurrentData');
 var {
   StyleSheet,
@@ -11,7 +11,7 @@ var {
   PullToRefreshViewAndroid,
   WebView,
 } = React;
-var {soilItemInfos} = require('./string.json');
+var {soilItemInfos} = require('../string.json');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var TabBar = require('./TabBar');
 

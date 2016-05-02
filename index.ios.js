@@ -34,7 +34,7 @@ var {
   WebView,
 } = React;
 
-var SoilTabBars = require('./app/SoilTabBars');
+var SoilTabBars = require('./app/pages/SoilTabBars');
 var {
   iosMajorItemInfos: majorItemInfos
 } = require('./string.json');

@@ -38,7 +38,7 @@ var {
   TouchableHighlight,
   ToastAndroid,
 } = React;
-var SoilTabBars = require('./app/SoilTabBars');
+var SoilTabBars = require('./app/pages/SoilTabBars');
 var {
   androidMajorItemInfos: majorItemInfos,
   settingItemInfos,

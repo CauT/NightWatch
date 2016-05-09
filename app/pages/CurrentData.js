@@ -16,6 +16,7 @@ var MonitorView = React.createClass({
   PropTypes: {
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   },
 
   render: function() {
@@ -33,20 +34,20 @@ var CurrentData = React.createClass({
   propTypes: {
     devices_num: PropTypes.number.isRequired,
     devices_name: PropTypes.arrayOf(React.PropTypes.string),
+    devices_id: PropTypes.arrayOf(React.PropTypes.string),
     devices_value: PropTypes.arrayOf(React.PropTypes.number),
   },
 
   render: function() {
-    // var monitorViews =
     var rows = [];
-    // var row = [];
-    var rowNum = this.props.devices_num / 4;
+    // ToDo: add num replacement of different screen size
+    var rowNum = this.props.devices_num / 3;
 
     for (var i = 0; i < rowNum; i++) {
-      var tmp = [];
-      for (var j = 0; j < 4; j++) {
-        var k = i * 4 + j;
-        tmp.push(
+      var row = [];
+      for (var j = 0; j < 3; j++) {
+        var k = i * 3 + j;
+        row.push(
           <MonitorView
             id={this.props.devices_id[k]}
             name={this.props.devices_name[k]}
@@ -56,7 +57,7 @@ var CurrentData = React.createClass({
       }
       rows.push(
         <View style={styles.row}>
-          {tmp}
+          {row}
         </View>
       );
     }

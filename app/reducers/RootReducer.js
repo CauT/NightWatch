@@ -1,10 +1,10 @@
 'use strict';
 
 import {combineReducers} from 'redux';
-import category from  './category';
+import tmp from './tmp';
 
 const rootReducer = combineReducers({
-	category
+	tmp,
 })
 
 export default rootReducer;

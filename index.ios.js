@@ -26,6 +26,7 @@
 
 import React from 'react-native';
 import IOSRoot from './app/iOSRoot';
+import CurrentData from './app/pages/CurrentData';
 import {Provider} from 'react-redux';
 import ConfigureStore from './app/stores/ConfigureStore';
 

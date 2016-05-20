@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react-native');
+import {fetchCurrentData} from '../actions/read';
+import {connect} from 'react-redux';
 
 var {
   StyleSheet,
@@ -16,6 +18,7 @@ var MonitorView = React.createClass({
   PropTypes: {
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
+    unit: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   },
 
@@ -25,17 +28,45 @@ var MonitorView = React.createClass({
         <Text style={styles.monitorName}>{this.props.name}</Text>
         <Text style={styles.monitorId}>{this.props.id}</Text>
         <Text style={styles.monitorValue}>{this.props.value}</Text>
+        <Text style={styles.monitorUnit}>{this.props.unit}</Text>
       </View>
     );
   }
 });
 
+function mapStateToProps(state) {
+  const {tmp} = state;
+  return {
+    ...tmp.soilCurrentData,
+  };
+}
+
+function formatNumber(num) {
+  var res;
+  if (num === undefined) {
+    return undefined;
+  } else if (num === 0) {
+    return '0.000';
+  } else if (num > 9999) {
+    res = num.toPrecision(3);
+  } else {
+    res = num.toString().substring(0, 5);
+  }
+
+  return res;
+}
+
 var CurrentData = React.createClass({
-  propTypes: {
-    devices_num: PropTypes.number.isRequired,
-    devices_name: PropTypes.arrayOf(React.PropTypes.string),
-    devices_id: PropTypes.arrayOf(React.PropTypes.string),
-    devices_value: PropTypes.arrayOf(React.PropTypes.number),
+  // propTypes: {
+  //   devices_num: PropTypes.number.isRequired,
+  //   devices_name: PropTypes.arrayOf(React.PropTypes.string),
+  //   devices_id: PropTypes.arrayOf(React.PropTypes.string),
+  //   devices_value: PropTypes.arrayOf(React.PropTypes.number),
+  // },
+
+  componentDidMount: function() {
+    const {dispatch} = this.props;
+    dispatch(fetchCurrentData(undefined, undefined));
   },
 
   render: function() {
@@ -50,8 +81,9 @@ var CurrentData = React.createClass({
         row.push(
           <MonitorView
             id={this.props.devices_id[k]}
+            unit={this.props.devices_unit[k]}
             name={this.props.devices_name[k]}
-            value={this.props.devices_value[k]}
+            value={formatNumber(this.props.devices_value[k])}
           />
         );
       }
@@ -111,10 +143,18 @@ var styles = StyleSheet.create({
     fontSize: 10,
     color: '#01A971',
   },
+  monitorNumber: {
+    flex: 1,
+  },
   monitorValue: {
-    fontSize: 30,
-    paddingTop: 5,
-    paddingLeft: 20,
+    fontSize: 20,
+    paddingRight: 5,
+    alignSelf: 'flex-end',
+  },
+  monitorUnit: {
+    fontSize: 12,
+    padding: 5,
+    alignSelf: 'flex-end'
   },
   row: {
     flex: 1,
@@ -123,4 +163,6 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = CurrentData;
+// console.log(connect(mapStateToProps)(CurrentData));
+// module.exports = CurrentData;
+export default connect(mapStateToProps)(CurrentData);

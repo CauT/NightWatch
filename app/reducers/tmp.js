@@ -10,25 +10,19 @@ const initialState = {
 export default function category(state = initialState, action) {
 	switch (action.type) {
 		case types.FETCH_CURRENT_DATA:
-			var devices_num = 0;
-			var devices_id = [];
-			var devices_name = [];
-			var devices_unit = [];
-			var devices_value = [];
-			action.res.forEach((dev) => {
-				devices_num++;
-				devices_id.push(dev.DEVICECODE);
-				devices_name.push(dev.DEVICENAME);
-				devices_unit.push(dev.UNIT);
-				devices_value.push(dev.VALUE);
-			});
+			var devicesInfo = [];
+			var k;
+			for (var i = 0; i < action.res.length / 3; i++) {
+				var rowInfo = [];
+				for (var j = 0; j < 3; j++) {
+					k = 3 * i + j;
+					rowInfo.push(action.res[k]);
+				}
+				devicesInfo.push(rowInfo);
+			}
 			return Object.assign({}, state, {
 				soilCurrentData: {
-					devices_num,
-					devices_id,
-					devices_name,
-					devices_unit,
-					devices_value,
+					devicesInfo,
 				}
 			});
 		case types.RECEIVE_TYPE_LIST:

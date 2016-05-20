@@ -1,11 +1,13 @@
 'use strict';
 
 var React = require('react-native');
+import RefreshableListview from 'react-native-refreshable-listview';
 import {fetchCurrentData} from '../actions/read';
 import {connect} from 'react-redux';
 
 var {
   StyleSheet,
+  ListView,
   PropTypes,
   Text,
   View,
@@ -35,9 +37,14 @@ var MonitorView = React.createClass({
 });
 
 function mapStateToProps(state) {
+  var ds = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2
+  });
   const {tmp} = state;
   return {
     ...tmp.soilCurrentData,
+    currentDataSource: tmp.soilCurrentData !== undefined ?
+      ds.cloneWithRows(tmp.soilCurrentData.devicesInfo) : undefined,
   };
 }
 
@@ -57,48 +64,59 @@ function formatNumber(num) {
 }
 
 var CurrentData = React.createClass({
-  // propTypes: {
-  //   devices_num: PropTypes.number.isRequired,
-  //   devices_name: PropTypes.arrayOf(React.PropTypes.string),
-  //   devices_id: PropTypes.arrayOf(React.PropTypes.string),
-  //   devices_value: PropTypes.arrayOf(React.PropTypes.number),
-  // },
 
   componentDidMount: function() {
     const {dispatch} = this.props;
     dispatch(fetchCurrentData(undefined, undefined));
   },
 
-  render: function() {
-    var rows = [];
-    // ToDo: add num replacement of different screen size
-    var rowNum = this.props.devices_num / 3;
+  _loadData: function() {
+    const {dispatch} = this.props;
+    console.log('refreshing');
+    dispatch(fetchCurrentData(undefined, undefined));
+  },
 
-    for (var i = 0; i < rowNum; i++) {
-      var row = [];
-      for (var j = 0; j < 3; j++) {
-        var k = i * 3 + j;
-        row.push(
-          <MonitorView
-            id={this.props.devices_id[k]}
-            unit={this.props.devices_unit[k]}
-            name={this.props.devices_name[k]}
-            value={formatNumber(this.props.devices_value[k])}
-          />
-        );
+  _genRow: function(rowInfo) {
+    var row = [];
+    for (var i = 0; i < 3; i++) {
+      if (rowInfo[i] === undefined) {
+        break;
       }
-      rows.push(
-        <View style={styles.row}>
-          {row}
-        </View>
+      row.push(
+        <MonitorView
+          key={rowInfo[i].DEVICECODE}
+          id={rowInfo[i].DEVICECODE}
+          unit={rowInfo[i].UNIT}
+          name={rowInfo[i].DEVICENAME}
+          value={formatNumber(rowInfo[i].VALUE)}
+        />
       );
     }
-
     return (
-      <View>
-        {rows}
+      <View style={styles.row}>
+        {row}
       </View>
     );
+  },
+
+  _onRefresh: function() {
+    console.log('refreshing');
+  },
+
+  render: function() {
+    if (this.props.currentDataSource === undefined) {
+      return (
+        <View />
+      );
+    } else {
+      return (
+        <RefreshableListview
+          dataSource={this.props.currentDataSource}
+          renderRow={this._genRow}
+          loadData={this._loadData}
+        />
+      );
+    }
   }
 });
 
@@ -113,7 +131,6 @@ var styles = StyleSheet.create({
   tabView: {
     flex: 1,
     padding: 10,
-    // backgroundColor: 'rgba(0,0,0,0.01)',
   },
   monitor: {
     borderWidth: 1,

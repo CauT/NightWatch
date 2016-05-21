@@ -1,27 +1,26 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import CurrentData from './CurrentData';
-var {
+const {
   StyleSheet,
   Text,
   View,
   ScrollView,
   PullToRefreshViewAndroid,
   WebView,
+  Component,
 } = React;
-var {soilItemInfos} = require('../../string.json');
-var ScrollableTabView = require('react-native-scrollable-tab-view');
-var TabBar = require('./TabBar');
+import {soilItemInfos} from '../../string';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import TabBar from './TabBar';
 
-var SoilTabBars = React.createClass({
-  getInitialState: function() {
-    return {
-      isRefreshing: false,
-    };
-  },
+class SoilTabBars extends Component {
+  static initialState = {
+    isRefreshing: false,
+  };
 
-  render: function() {
+  render() {
     return (
       <View style={styles.container}>
         <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
@@ -37,9 +36,9 @@ var SoilTabBars = React.createClass({
         </ScrollableTabView>
       </View>
     );
-  },
+  }
 
-  _onRefresh: function() {
+  _onRefresh() {
     console.log('refreshing');
     this.setState({isRefreshing: true});
     setTimeout(() => {
@@ -49,8 +48,8 @@ var SoilTabBars = React.createClass({
         isRefreshing: false,
       });
     }, 5000);
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   webView: {
@@ -82,4 +81,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = SoilTabBars;
+export default SoilTabBars;

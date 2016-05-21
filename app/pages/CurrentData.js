@@ -1,11 +1,11 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import RefreshableListview from 'react-native-refreshable-listview';
 import {fetchCurrentData} from '../actions/read';
 import {connect} from 'react-redux';
 
-var {
+const {
   StyleSheet,
   ListView,
   PropTypes,
@@ -14,17 +14,18 @@ var {
   ScrollView,
   PullToRefreshViewAndroid,
   WebView,
+  Component,
 } = React;
 
-var MonitorView = React.createClass({
-  PropTypes: {
+class MonitorView extends Component {
+  static PropTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     unit: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View style={styles.monitor}>
         <Text style={styles.monitorName}>{this.props.name}</Text>
@@ -34,7 +35,7 @@ var MonitorView = React.createClass({
       </View>
     );
   }
-});
+}
 
 function mapStateToProps(state) {
   var ds = new ListView.DataSource({
@@ -63,20 +64,20 @@ function formatNumber(num) {
   return res;
 }
 
-var CurrentData = React.createClass({
+class CurrentData extends Component {
 
-  componentDidMount: function() {
+  componentDidMount() {
     const {dispatch} = this.props;
     dispatch(fetchCurrentData(undefined, undefined));
-  },
+  }
 
-  _loadData: function() {
+  _loadData() {
     const {dispatch} = this.props;
     console.log('refreshing');
     dispatch(fetchCurrentData(undefined, undefined));
-  },
+  }
 
-  _genRow: function(rowInfo) {
+  _genRow(rowInfo) {
     var row = [];
     for (var i = 0; i < 3; i++) {
       if (rowInfo[i] === undefined) {
@@ -97,13 +98,13 @@ var CurrentData = React.createClass({
         {row}
       </View>
     );
-  },
+  }
 
-  _onRefresh: function() {
+  _onRefresh() {
     console.log('refreshing');
-  },
+  }
 
-  render: function() {
+  render() {
     if (this.props.currentDataSource === undefined) {
       return (
         <View />
@@ -118,7 +119,7 @@ var CurrentData = React.createClass({
       );
     }
   }
-});
+}
 
 var styles = StyleSheet.create({
   webView: {

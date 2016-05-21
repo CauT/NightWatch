@@ -10,9 +10,10 @@ const {
 } = React;
 
 import SoilTabBars from './pages/SoilTabBars';
-var {
-  iosMajorItemInfos: majorItemInfos
-} = require('../string.json');
+// var {
+//   iosiosMajorItemInfos: iosMajorItemInfos
+// } = require('../string');
+import {iosMajorItemInfos} from '../string';
 
 class iOSRoot extends React.Component {
   constructor(props) {
@@ -37,8 +38,8 @@ class iOSRoot extends React.Component {
     return (
       <TabBarIOS>
         <TabBarIOS.Item
-          title={majorItemInfos[0].name}
-          icon={{uri: majorItemInfos[0].base64, scale: 4.5}}
+          title={iosMajorItemInfos[0].name}
+          icon={{uri: iosMajorItemInfos[0].base64, scale: 4.5}}
           selected={this.state.selectedTab === 'soilTab'}
           onPress={() => {
             this.setState({
@@ -48,8 +49,8 @@ class iOSRoot extends React.Component {
           <SoilTabBars />
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          title={majorItemInfos[1].name}
-          icon={{uri: majorItemInfos[1].base64, scale: 4.5}}
+          title={iosMajorItemInfos[1].name}
+          icon={{uri: iosMajorItemInfos[1].base64, scale: 4.5}}
           selected={this.state.selectedTab === 'weatherTab'}
           onPress={() => {
             this.setState({
@@ -59,8 +60,8 @@ class iOSRoot extends React.Component {
           <SoilTabBars />
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          title={majorItemInfos[2].name}
-          icon={{uri: majorItemInfos[2].base64, scale: 4.5}}
+          title={iosMajorItemInfos[2].name}
+          icon={{uri: iosMajorItemInfos[2].base64, scale: 4.5}}
           selected={this.state.selectedTab === 'videoTab'}
           onPress={() => {
             this.setState({
@@ -71,8 +72,8 @@ class iOSRoot extends React.Component {
           {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          title={majorItemInfos[3].name}
-          icon={{uri: majorItemInfos[3].base64, scale: 4.5}}
+          title={iosMajorItemInfos[3].name}
+          icon={{uri: iosMajorItemInfos[3].base64, scale: 4.5}}
           selected={this.state.selectedTab === 'diseaseTab'}
           onPress={() => {
             this.setState({
@@ -83,8 +84,8 @@ class iOSRoot extends React.Component {
           {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
-            title={majorItemInfos[4].name}
-            icon={{uri: majorItemInfos[4].base64, scale: 4.5}}
+            title={iosMajorItemInfos[4].name}
+            icon={{uri: iosMajorItemInfos[4].base64, scale: 4.5}}
             selected={this.state.selectedTab === 'settingTab'}
             onPress={() => {
               this.setState({

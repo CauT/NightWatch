@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React from 'react-native';
+const {
   StyleSheet,
   Dimensions,
   DrawerLayoutAndroid,
@@ -12,22 +12,20 @@ var {
   PixelRatio,
   TouchableHighlight,
 } = React;
-var SoilTabBars = require('./pages/SoilTabBars');
-var {
-  androidMajorItemInfos: majorItemInfos,
-  settingItemInfos,
-} = require('../string.json');
+import SoilTabBars from './pages/SoilTabBars';
+import {androidMajorItemInfos, settingItemInfos} from '../string';
 
 var DRAWER_WIDTH_LEFT = 42;
 var appName = '农业监测终端';
 
 class AndroidRoot extends React.Component {
-  getInitialState() {
+  constructor(props) {
+    super(props);
     var ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    return {
-      majorDataSource: ds.cloneWithRows(majorItemInfos),
+    this.state = {
+      majorDataSource: ds.cloneWithRows(androidMajorItemInfos),
       settingDataSource: ds.cloneWithRows(settingItemInfos),
       homePageText: 'Hello World',
     };

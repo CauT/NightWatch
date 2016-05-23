@@ -10,6 +10,7 @@ const initialState = {
 export default function category(state = initialState, action) {
 	switch (action.type) {
 		case types.FETCH_CURRENT_DATA:
+      // devices are grouped into sections that each contains 3
 			var devicesInfo = [];
 			var k;
 			for (var i = 0; i < action.res.length / 3; i++) {
@@ -20,16 +21,18 @@ export default function category(state = initialState, action) {
 				}
 				devicesInfo.push(rowInfo);
 			}
+
 			return Object.assign({}, state, {
-				soilCurrentData: {
-					devicesInfo,
-				}
+				soilDevicesInfo: devicesInfo,
 			});
-		case types.RECEIVE_TYPE_LIST:
-			return Object.assign({}, state, {
-				loading: false,
-				typeList: action.typeList
-			});
+		case types.FETCH_TYPE_LIST:
+      return Object.assign({}, state, {
+        soilTypeList: action.res,
+      });
+    case types.FETCH_STATION_LIST:
+      return Object.assign({}, state, {
+        soilStationList: action.res,
+      });
 		default:
 			return state;
 	}

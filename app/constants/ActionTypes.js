@@ -1,3 +1,5 @@
 'use strict'
 
 export const FETCH_CURRENT_DATA = 'FETCH_CURRENT_DATA';
+export const FETCH_TYPE_LIST = 'FETCH_TYPE_LIST';
+export const FETCH_STATION_LIST = 'FETCH_STATION_LIST';

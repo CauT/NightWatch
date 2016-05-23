@@ -10,9 +10,6 @@ const {
 } = React;
 
 import SoilTabBars from './pages/SoilTabBars';
-// var {
-//   iosiosMajorItemInfos: iosMajorItemInfos
-// } = require('../string');
 import {iosMajorItemInfos} from '../string';
 
 class iOSRoot extends React.Component {

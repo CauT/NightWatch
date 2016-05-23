@@ -2,8 +2,18 @@
 
 import React from 'react-native';
 import RefreshableListview from 'react-native-refreshable-listview';
-import {fetchCurrentData} from '../actions/read';
+import {
+  fetchCurrentData,
+  fetchStationList,
+  fetchTypeList,
+} from '../actions/read';
 import {connect} from 'react-redux';
+
+import {
+  Select,
+  Option,
+  OptionList,
+} from 'react-native-selectme';
 
 const {
   StyleSheet,
@@ -15,7 +25,10 @@ const {
   PullToRefreshViewAndroid,
   WebView,
   Component,
+  Dimensions,
 } = React;
+
+const window = Dimensions.get('window');
 
 class MonitorView extends Component {
   static PropTypes = {
@@ -43,9 +56,9 @@ function mapStateToProps(state) {
   });
   const {tmp} = state;
   return {
-    ...tmp.soilCurrentData,
-    currentDataSource: tmp.soilCurrentData !== undefined ?
-      ds.cloneWithRows(tmp.soilCurrentData.devicesInfo) : undefined,
+    ...tmp,
+    currentDataSource: tmp.soilDevicesInfo !== undefined ?
+      ds.cloneWithRows(tmp.soilDevicesInfo) : undefined,
   };
 }
 
@@ -64,16 +77,106 @@ function formatNumber(num) {
   return res;
 }
 
+class Selector extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: '',
+    };
+  }
+
+  _selectType(selected) {
+    this.setState({
+      ...this.state,
+      selected,
+    });
+  }
+
+  _getOptionList() {
+    return this.refs['OPTION_LIST'];
+  }
+
+  render() {
+    var optionList = [];
+    var overlayStyles = {
+      position: 'absolute',
+      width: window.width / 3,
+      height: window.height / 3,
+      flex : 1,
+      justifyContent : 'center',
+      alignItems : 'center',
+      backgroundColor : '#ffffff',
+    };
+
+    if (this.props.valList !== undefined) {
+      this.props.valList.forEach(function(val) {
+        optionList.push(
+          <Option value={val} key={val}>{val}</Option>
+        );
+      });
+    }
+
+    return (
+      <View style={styles.selector}>
+        <Text style={{padding: 10,}}>{this.props.defaultValue}</Text>
+        <Select
+          width={120}
+          ref="SELECT_TYPE"
+          optionListRef={this._getOptionList.bind(this)}
+          defaultValue={this.props.defaultValue}
+          onSelect={this._selectType.bind(this)}>
+          {optionList}
+        </Select>
+        <OptionList ref="OPTION_LIST" overlayStyles={overlayStyles}/>
+      </View>
+    );
+  }
+}
+
 class CurrentData extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
   componentDidMount() {
     const {dispatch} = this.props;
+    dispatch(fetchTypeList());
+    dispatch(fetchStationList());
     dispatch(fetchCurrentData(undefined, undefined));
+  }
+
+  _getTypeOptionList() {
+    return this.refs['TYPE_OPTION_LIST'];
+  }
+
+  _getStationOptionList() {
+    return this.refs['STATION_OPTION_LIST'];
+  }
+
+  _selectType(deviceType) {
+    this.setState({
+      ...this.state,
+      deviceType,
+    });
+  }
+
+  _selectStation(stationName) {
+    this.setState({
+      ...this.state,
+      stationName,
+    });
   }
 
   _loadData() {
     const {dispatch} = this.props;
     console.log('refreshing');
+
+    // dispatch(fetchTypeList());
+    // dispatch(fetchStationList());
     dispatch(fetchCurrentData(undefined, undefined));
   }
 
@@ -100,11 +203,7 @@ class CurrentData extends Component {
     );
   }
 
-  _onRefresh() {
-    console.log('refreshing');
-  }
-
-  render() {
+  getMajor() {
     if (this.props.currentDataSource === undefined) {
       return (
         <View />
@@ -118,6 +217,36 @@ class CurrentData extends Component {
         />
       );
     }
+  }
+
+  render() {
+    var typeValList = [];
+    var stl = this.props.soilTypeList;
+    if (stl !== undefined) {
+      stl.forEach(function(type) {
+        typeValList.push(type.DEVICENAME);
+      });
+    }
+
+    var stationValList = [];
+    var ssl = this.props.soilStationList;
+    if (ssl !== undefined) {
+      ssl.forEach(function(station) {
+        stationValList.push(station.NAME);
+      });
+    }
+
+    return (
+      <View style={{flex:1,}}>
+        <View style={styles.selectBar}>
+          <Selector defaultValue={'传感器种类'} valList={typeValList}
+            overlayStyles={styles.overlay}/>
+          <Selector defaultValue={'监测站编号'} valList={stationValList}/>
+        </View>
+
+        {this.getMajor()}
+      </View>
+    );
   }
 }
 
@@ -179,8 +308,14 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
+  selectBar: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    height: 100,
+  },
+  selector: {
+    justifyContent: 'center',
+  },
 });
 
-// console.log(connect(mapStateToProps)(CurrentData));
-// module.exports = CurrentData;
 export default connect(mapStateToProps)(CurrentData);

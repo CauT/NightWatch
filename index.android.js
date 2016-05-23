@@ -36,9 +36,11 @@ const {
 
 class Root extends React.Component {
   render() {
-    <Provider store={store}>
-      <AndroidRoot />
-    </Provider>
+    return (
+      <Provider store={store}>
+        <AndroidRoot />
+      </Provider>
+    );
   }
 }
 

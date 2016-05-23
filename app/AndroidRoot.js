@@ -19,16 +19,19 @@ var DRAWER_WIDTH_LEFT = 42;
 var appName = '农业监测终端';
 
 class AndroidRoot extends React.Component {
+
   constructor(props) {
     super(props);
+
+    this.state = {
+    };
+
     var ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.state = {
-      majorDataSource: ds.cloneWithRows(androidMajorItemInfos),
-      settingDataSource: ds.cloneWithRows(settingItemInfos),
-      homePageText: 'Hello World',
-    };
+
+    this.majorDataSource = ds.cloneWithRows(androidMajorItemInfos);
+    this.settingDataSource = ds.cloneWithRows(settingItemInfos);
   }
 
   render() {
@@ -57,7 +60,7 @@ class AndroidRoot extends React.Component {
         </View>
         <View style={styles.whileLine}/>
         <ListView style={styles.listContainer}
-          dataSource={this.state.majorDataSource}
+          dataSource={this.majorDataSource}
           renderRow={(rowData) =>
               <TouchableHighlight
                 activeOpacity={0.3}
@@ -75,7 +78,7 @@ class AndroidRoot extends React.Component {
         />
         <View style={styles.whileLine}/>
         <ListView style={styles.listContainer}
-          dataSource={this.state.settingDataSource}
+          dataSource={this.settingDataSource}
           renderRow={
             (rowData) =>
               <TouchableHighlight
@@ -83,14 +86,9 @@ class AndroidRoot extends React.Component {
                 underlayColor={'#01A971'}
                 onPress={() => {
                   // ToastAndroid.show(homePageText, ToastAndroid.LONG);
-                  this.setState({
-                      homePageText: 'Long Live VIM!',
-                  });
                   // ToastAndroid.show(rowData.name, ToastAndroid.LONG);
-                  this.render();
                   this.drawer.closeDrawer();
-                  // ToastAndroid.show(this.state.majorDataSource.toString(), ToastAndroid.LONG);
-                  console.log(this.state.majorDataSource);
+                  // ToastAndroid.show(this.majorDataSource.toString(), ToastAndroid.LONG);
                 }}
               >
               <View style={styles.majorItem}>
@@ -118,7 +116,6 @@ class AndroidRoot extends React.Component {
   }
 
   _onPressButton(rowData) {
-    this.homePageText = rowData.name;
     this.drawer.closeDrawer();
   }
 }

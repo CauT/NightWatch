@@ -23,6 +23,7 @@ const {
   PropTypes,
   Text,
   View,
+  PixelRatio,
   ScrollView,
   PullToRefreshViewAndroid,
   WebView,
@@ -98,7 +99,7 @@ class CurrentData extends Component {
 
     // dispatch(fetchTypeList());
     // dispatch(fetchStationList());
-    dispatch(fetchCurrentData(undefined, undefined));
+    dispatch(fetchCurrentData());
   }
 
   _genRow(rowInfo) {
@@ -165,8 +166,9 @@ class CurrentData extends Component {
           <Selector upperText={'监测站编号'} valList={stationValList}
             defaultValue="所有" name={'stationSelector'}/>
         </View>
-
+        <View style={styles.greyLine}/>
         {this._getMajor()}
+        <View style={styles.blank} />
       </View>
     );
   }
@@ -238,6 +240,17 @@ var styles = StyleSheet.create({
   selector: {
     justifyContent: 'center',
   },
+  greyLine: {
+    backgroundColor: '#000000',
+    margin: 3,
+    height: 3 / PixelRatio.get(),
+    shadowColor: '#ccc',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+  },
+  blank: {
+    height: 50,
+  }
 });
 
 export default connect(mapStateToProps)(CurrentData);

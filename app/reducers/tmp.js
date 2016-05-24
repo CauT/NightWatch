@@ -30,10 +30,16 @@ export default function category(state = initialState, action) {
 				soilDevicesInfo: devicesInfo,
 			});
 		case types.FETCH_TYPE_LIST:
+			action.res.push({
+				DEVICENAME: '所有'
+			});
       return Object.assign({}, state, {
         soilTypeList: action.res,
       });
     case types.FETCH_STATION_LIST:
+			action.res.push({
+				NAME: '所有'
+			});
       return Object.assign({}, state, {
         soilStationList: action.res,
       });

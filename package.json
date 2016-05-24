@@ -13,7 +13,7 @@
     "react-native-dropdown": "0.0.6",
     "react-native-icons": "^0.7.0",
     "react-native-refreshable-listview": "2.0.0-beta4",
-    "react-native-scrollable-tab-view": "0.3.4",
+    "react-native-scrollable-tab-view": "0.4.3",
     "react-native-selectme": "^1.0.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",

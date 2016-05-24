@@ -52,6 +52,11 @@ class Selector extends Component {
       justifyContent : 'center',
       alignItems : 'center',
       backgroundColor : '#ffffff',
+      shadowColor: '#ccc',
+      opacity: 1,
+      shadowOffset: {width: 2, height: 2},
+      shadowOpacity: 0.5,
+      shadowRadius: 3,
     };
 
     if (this.props.valList !== undefined) {

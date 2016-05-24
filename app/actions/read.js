@@ -21,11 +21,12 @@ export function setSelectorState(selector, selected) {
 
 export function fetchCurrentData(stationName, deviceType) {
 	var url = urls.SOIL_CURRENT_DATA;
-	if (stationName !== undefined) {
+
+	if (stationName !== undefined && stationName !== '所有') {
 		url = url + 'stationName=' + stationName + '&';
 	}
 
-	if (deviceType !== undefined) {
+	if (deviceType !== undefined && deviceType !== '所有') {
 		url = url + 'deviceType=' + deviceType + '&';
 	}
 

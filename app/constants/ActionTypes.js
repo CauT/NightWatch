@@ -1,5 +1,6 @@
 'use strict'
 
+export const SET_SELECTOR_STATE = 'SET_SELECTOR_STATE';
 export const FETCH_CURRENT_DATA = 'FETCH_CURRENT_DATA';
 export const FETCH_TYPE_LIST = 'FETCH_TYPE_LIST';
 export const FETCH_STATION_LIST = 'FETCH_STATION_LIST';

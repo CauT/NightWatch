@@ -1,14 +1,36 @@
 'use strict';
 
 import * as types from '../constants/ActionTypes';
-// import {ToastShort} from '../utils/ToastUtils';
-// import {request} from '../utils/RequestUtils';
 import * as urls from '../constants/Urls';
-// import {WEXIN_ARTICLE_LIST} from '../constants/Urls';
 
-export function fetchCurrentData(stationId, typeId) {
+export function selectCurrentDataSelector(selector, selected) {
+	return (dispatch, getState) => {
+		dispatch(setSelectorState(selector, selected));
+		dispatch(fetchCurrentData(getState().tmp.stationSelector,
+			getState().tmp.typeSelector));
+	};
+}
+
+export function setSelectorState(selector, selected) {
+	return {
+		selectorName: selector,
+		selected: selected,
+		type: types.SET_SELECTOR_STATE,
+	};
+}
+
+export function fetchCurrentData(stationName, deviceType) {
+	var url = urls.SOIL_CURRENT_DATA;
+	if (stationName !== undefined) {
+		url = url + 'stationName=' + stationName + '&';
+	}
+
+	if (deviceType !== undefined) {
+		url = url + 'deviceType=' + deviceType + '&';
+	}
+
 	return dispatch => {
-		return fetch(urls.SOIL_CURRENT_DATA)
+		return fetch(url)
 		.then((response) => response.json())
 		.then((json) => {
 			dispatch({
@@ -53,23 +75,3 @@ export function fetchStationList() {
 		});
 	};
 }
-
-// function fetchArticleList(isRefreshing, loading, isLoadMore) {
-// 	if (isLoadMore == undefined) {
-// 		isLoadMore = false;
-// 	};
-// 	return {
-// 		type: types.FETCH_ARTICLE_LIST,
-// 		isRefreshing: isRefreshing,
-// 		loading: loading,
-// 		isLoadMore: isLoadMore
-// 	}
-// }
-//
-// function receiveArticleList(articleList, typeId) {
-// 	return {
-// 		type: types.RECEIVE_ARTICLE_LIST,
-// 		articleList: articleList,
-// 		typeId: typeId
-// 	}
-// }

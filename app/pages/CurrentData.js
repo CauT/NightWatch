@@ -3,10 +3,12 @@
 import React from 'react-native';
 import RefreshableListview from 'react-native-refreshable-listview';
 import {
+  setSelectorState,
   fetchCurrentData,
   fetchStationList,
   fetchTypeList,
 } from '../actions/read';
+import Selector from './Selector';
 import {connect} from 'react-redux';
 
 import {
@@ -77,69 +79,10 @@ function formatNumber(num) {
   return res;
 }
 
-class Selector extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: '',
-    };
-  }
-
-  _selectType(selected) {
-    this.setState({
-      ...this.state,
-      selected,
-    });
-  }
-
-  _getOptionList() {
-    return this.refs['OPTION_LIST'];
-  }
-
-  render() {
-    var optionList = [];
-    var overlayStyles = {
-      position: 'absolute',
-      width: window.width / 3,
-      height: window.height / 3,
-      flex : 1,
-      justifyContent : 'center',
-      alignItems : 'center',
-      backgroundColor : '#ffffff',
-    };
-
-    if (this.props.valList !== undefined) {
-      this.props.valList.forEach(function(val) {
-        optionList.push(
-          <Option value={val} key={val}>{val}</Option>
-        );
-      });
-    }
-
-    return (
-      <View style={styles.selector}>
-        <Text style={{padding: 10,}}>{this.props.defaultValue}</Text>
-        <Select
-          width={120}
-          ref="SELECT_TYPE"
-          optionListRef={this._getOptionList.bind(this)}
-          defaultValue={this.props.defaultValue}
-          onSelect={this._selectType.bind(this)}>
-          {optionList}
-        </Select>
-        <OptionList ref="OPTION_LIST" overlayStyles={overlayStyles}/>
-      </View>
-    );
-  }
-}
-
 class CurrentData extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
 
   componentDidMount() {
@@ -147,28 +90,6 @@ class CurrentData extends Component {
     dispatch(fetchTypeList());
     dispatch(fetchStationList());
     dispatch(fetchCurrentData(undefined, undefined));
-  }
-
-  _getTypeOptionList() {
-    return this.refs['TYPE_OPTION_LIST'];
-  }
-
-  _getStationOptionList() {
-    return this.refs['STATION_OPTION_LIST'];
-  }
-
-  _selectType(deviceType) {
-    this.setState({
-      ...this.state,
-      deviceType,
-    });
-  }
-
-  _selectStation(stationName) {
-    this.setState({
-      ...this.state,
-      stationName,
-    });
   }
 
   _loadData() {
@@ -203,7 +124,7 @@ class CurrentData extends Component {
     );
   }
 
-  getMajor() {
+  _getMajor() {
     if (this.props.currentDataSource === undefined) {
       return (
         <View />
@@ -240,11 +161,12 @@ class CurrentData extends Component {
       <View style={{flex:1,}}>
         <View style={styles.selectBar}>
           <Selector defaultValue={'传感器种类'} valList={typeValList}
-            overlayStyles={styles.overlay}/>
-          <Selector defaultValue={'监测站编号'} valList={stationValList}/>
+            name={'typeSelector'}/>
+          <Selector defaultValue={'监测站编号'} valList={stationValList}
+            name={'stationSelector'}/>
         </View>
 
-        {this.getMajor()}
+        {this._getMajor()}
       </View>
     );
   }

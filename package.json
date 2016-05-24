@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "count": "cloc *.js *.json"
+    "count": "cloc *.js *.json app/" 
   },
   "dependencies": {
     "immutable": "^3.8.1",

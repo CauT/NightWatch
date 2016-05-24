@@ -9,6 +9,10 @@ const initialState = {
 
 export default function category(state = initialState, action) {
 	switch (action.type) {
+    case types.SET_SELECTOR_STATE:
+      var tmp = {};
+      tmp[action.selectorName] = action.selected;
+      return Object.assign({}, state, tmp);
 		case types.FETCH_CURRENT_DATA:
       // devices are grouped into sections that each contains 3
 			var devicesInfo = [];

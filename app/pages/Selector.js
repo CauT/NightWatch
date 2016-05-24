@@ -2,7 +2,6 @@
 
 import React from 'react-native';
 import {
-  setSelectorState,
   selectCurrentDataSelector,
 } from '../actions/read';
 import {connect} from 'react-redux';
@@ -15,12 +14,9 @@ import {
 
 const {
   StyleSheet,
-  ListView,
-  PropTypes,
   Text,
   View,
   Component,
-  Dimensions,
 } = React;
 
 function mapStateToProps(state) {
@@ -39,7 +35,6 @@ class Selector extends Component {
 
   _selectType(selected) {
     const {dispatch} = this.props;
-    // dispatch(setSelectorState(this.props.name, selected));
     dispatch(selectCurrentDataSelector(this.props.name, selected));
   }
 
@@ -70,7 +65,7 @@ class Selector extends Component {
     return (
       <View style={styles.selector}>
         <Text style={{padding: 10,}}>
-          {this.props.defaultValue + ': ' + this.props[this.props.name]}
+          {this.props.upperText}
         </Text>
         <Select
           width={120}

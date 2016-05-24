@@ -160,10 +160,10 @@ class CurrentData extends Component {
     return (
       <View style={{flex:1,}}>
         <View style={styles.selectBar}>
-          <Selector defaultValue={'传感器种类'} valList={typeValList}
-            name={'typeSelector'}/>
-          <Selector defaultValue={'监测站编号'} valList={stationValList}
-            name={'stationSelector'}/>
+          <Selector upperText={'传感器种类'} valList={typeValList}
+            defaultValue="所有" name={'typeSelector'}/>
+          <Selector upperText={'监测站编号'} valList={stationValList}
+            defaultValue="所有" name={'stationSelector'}/>
         </View>
 
         {this._getMajor()}

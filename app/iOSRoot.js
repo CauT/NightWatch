@@ -6,7 +6,6 @@ const {
   TabBarIOS,
   Text,
   View,
-  WebView,
 } = React;
 
 import SoilTabBars from './pages/SoilTabBars';
@@ -54,7 +53,7 @@ class iOSRoot extends React.Component {
               selectedTab: 'weatherTab',
             });
           }}>
-          <SoilTabBars />
+          <View />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title={iosMajorItemInfos[2].name}

@@ -109,9 +109,6 @@ var styles = StyleSheet.create({
     color: 'white',
     margin: 50,
   },
-  webview_style:{
-    backgroundColor:'#000000',
-  }
 });
 
 export default iOSRoot;

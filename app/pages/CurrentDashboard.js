@@ -15,7 +15,10 @@ function mapStateToProps(state) {
   });
   const {tmp} = state;
   return {
-    loadArgs: [tmp.stationSelector, tmp.typeSelector],
+    _loadData: function() {
+      const {dispatch} = this.props;
+      dispatch(fetchCurrentData(tmp.stationSelector, tmp.typeSelector));
+    },
     dataSource: tmp.soilDevicesInfo !== undefined ?
       ds.cloneWithRows(tmp.soilDevicesInfo) : undefined,
   };

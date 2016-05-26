@@ -4,15 +4,11 @@ import React from 'react-native';
 import RefreshableListview from 'react-native-refreshable-listview';
 import {
   fetchCurrentData,
-  fetchStationList,
-  fetchTypeList,
 } from '../actions/read';
 import MonitorView from './MonitorView';
-import {connect} from 'react-redux';
 
 const {
   StyleSheet,
-  ListView,
   PropTypes,
   Text,
   View,
@@ -50,7 +46,6 @@ class Dashboard extends Component {
     dispatch(fetchCurrentData(undefined, undefined));
   }
 
-
   _genRow(rowInfo) {
     var row = [];
     for (var i = 0; i < 3; i++) {
@@ -74,11 +69,6 @@ class Dashboard extends Component {
     );
   }
 
-  _loadData() {
-    const {dispatch} = this.props;
-    dispatch(fetchCurrentData.apply(null, this.props.loadArgs));
-  }
-
   _getMajor() {
 
     if (this.props.dataSource === undefined) {
@@ -90,7 +80,7 @@ class Dashboard extends Component {
         <RefreshableListview
           dataSource={this.props.dataSource}
           renderRow={this._genRow}
-          loadData={this._loadData.bind(this)}
+          loadData={this.props._loadData.bind(this)}
         />
       );
     }

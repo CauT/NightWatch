@@ -6,7 +6,7 @@ import {
   fetchTypeList,
 } from '../actions/read';
 import Selector from './Selector';
-import CurrentDashboard from './CurrentDashboard';
+import HistoricalDashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
 
 const {
@@ -28,7 +28,7 @@ function mapStateToProps(state) {
   };
 }
 
-class CurrentData extends Component {
+class HistoricalData extends Component {
 
   constructor(props) {
     super(props);
@@ -61,11 +61,11 @@ class CurrentData extends Component {
       <View style={{flex:1,}}>
         <View style={styles.selectBar}>
           <Selector upperText={'传感器种类'} valList={typeValList}
-            defaultValue="所有" name={'currentTypeSelector'} isCurrent={true}/>
+            defaultValue="所有" name={'historicalTypeSelector'} isCurrent={false}/>
           <Selector upperText={'监测站编号'} valList={stationValList}
-            defaultValue="所有" name={'currentStationSelector'} isCurrent={true}/>
+            defaultValue="所有" name={'historicalStationSelector'} isCurrent={false}/>
         </View>
-        <CurrentDashboard />
+        <HistoricalDashboard />
       </View>
     );
   }
@@ -79,4 +79,4 @@ var styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(CurrentData);
+export default connect(mapStateToProps)(HistoricalData);

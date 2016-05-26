@@ -9,10 +9,12 @@ const initialState = {
 
 export default function category(state = initialState, action) {
 	switch (action.type) {
+
     case types.SET_SELECTOR_STATE:
       var tmp = {};
       tmp[action.selectorName] = action.selected;
       return Object.assign({}, state, tmp);
+
 		case types.FETCH_CURRENT_DATA:
       // devices are grouped into sections that each contains 3
 			var devicesInfo = [];
@@ -26,19 +28,22 @@ export default function category(state = initialState, action) {
 				devicesInfo.push(rowInfo);
 			}
 
-			return Object.assign({}, state, {
-				soilDevicesInfo: devicesInfo,
-			});
+			var tmp = {};
+			tmp[action.key] = devicesInfo;
+			return Object.assign({}, state, tmp);
+
 		case types.FETCH_TYPE_LIST:
 			var tmp = [{DEVICENAME: '所有'}];
       return Object.assign({}, state, {
         soilTypeList: tmp.concat(action.res),
       });
+
     case types.FETCH_STATION_LIST:
 			var tmp = [{NAME: '所有'}];
       return Object.assign({}, state, {
         soilStationList: tmp.concat(action.res),
       });
+
 		default:
 			return state;
 	}

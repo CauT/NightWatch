@@ -43,7 +43,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const {dispatch} = this.props;
-    dispatch(fetchCurrentData(undefined, undefined));
+    this.props._loadData(dispatch);
   }
 
   _genRow(rowInfo) {

@@ -2,7 +2,7 @@
 
 import React from 'react-native';
 import {
-  selectCurrentDataSelector,
+  selectDataSelector,
 } from '../actions/read';
 import {connect} from 'react-redux';
 
@@ -20,11 +20,7 @@ const {
 } = React;
 
 function mapStateToProps(state) {
-  const {tmp} = state;
-  return {
-    typeSelector: tmp.typeSelector,
-    stationSelector: tmp.stationSelector,
-  };
+  return {};
 }
 
 class Selector extends Component {
@@ -35,7 +31,7 @@ class Selector extends Component {
 
   _selectType(selected) {
     const {dispatch} = this.props;
-    dispatch(selectCurrentDataSelector(this.props.name, selected));
+    dispatch(selectDataSelector(this.props.isCurrent, this.props.name, selected));
   }
 
   _getOptionList() {

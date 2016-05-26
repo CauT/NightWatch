@@ -2,6 +2,7 @@
 
 import React from 'react-native';
 import CurrentData from './CurrentData';
+import HistoricalData from './HistoricalData';
 const {
   StyleSheet,
   Text,
@@ -24,9 +25,7 @@ class SoilTabBars extends Component {
     return (
       <View style={styles.container}>
         <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
-          <View tabLabel={soilItemInfos[0]} style={styles.tabView}>
-            <Text>Friends</Text>
-          </View>
+          <HistoricalData tabLabel={soilItemInfos[0]} style={styles.tabView} />
           <CurrentData tabLabel={soilItemInfos[1]} style={styles.tabView}/>
           <View tabLabel={soilItemInfos[2]} style={styles.tabView}>
             <View style={styles.card}>

@@ -40,9 +40,13 @@ export function fetchCurrentData(stationName, deviceType) {
 			});
 		})
 		.catch((error) => {
-			console.warn(error);
+			console.log(error);
 		});
 	};
+}
+
+export function fetchHistroyData(stationName, deviceType, time) {
+	return undefined;
 }
 
 export function fetchTypeList() {

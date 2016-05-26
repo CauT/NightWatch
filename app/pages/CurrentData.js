@@ -1,14 +1,12 @@
 'use strict';
 
 import React from 'react-native';
-import RefreshableListview from 'react-native-refreshable-listview';
 import {
-  fetchCurrentData,
   fetchStationList,
   fetchTypeList,
 } from '../actions/read';
 import Selector from './Selector';
-import Dashboard from './Dashboard';
+import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';
 
 const {
@@ -16,8 +14,11 @@ const {
   PropTypes,
   Text,
   View,
+  Dimensions,
   Component,
 } = React;
+
+var window = Dimensions.get('window');
 
 function mapStateToProps(state) {
   const {tmp} = state;
@@ -64,7 +65,7 @@ class CurrentData extends Component {
           <Selector upperText={'监测站编号'} valList={stationValList}
             defaultValue="所有" name={'stationSelector'}/>
         </View>
-        <Dashboard />
+        <CurrentDashboard />
       </View>
     );
   }
@@ -74,7 +75,7 @@ var styles = StyleSheet.create({
   selectBar: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    height: 120,
+    height: window.height / 6,
   },
 });
 

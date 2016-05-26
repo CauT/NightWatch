@@ -23,19 +23,6 @@ const {
 
 var window = Dimensions.get('window');
 
-function mapStateToProps(state) {
-  var ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1 !== r2
-  });
-  const {tmp} = state;
-  return {
-    typeSelector: tmp.typeSelector,
-    stationSelector: tmp.stationSelector,
-    currentDataSource: tmp.soilDevicesInfo !== undefined ?
-      ds.cloneWithRows(tmp.soilDevicesInfo) : undefined,
-  };
-}
-
 function _formatNumber(num) {
   var res;
   if (num === undefined) {
@@ -89,20 +76,19 @@ class Dashboard extends Component {
 
   _loadData() {
     const {dispatch} = this.props;
-    dispatch(fetchCurrentData(this.props.stationSelector,
-      this.props.typeSelector));
+    dispatch(fetchCurrentData.apply(null, this.props.loadArgs));
   }
 
   _getMajor() {
 
-    if (this.props.currentDataSource === undefined) {
+    if (this.props.dataSource === undefined) {
       return (
         <View />
       );
     } else {
       return (
         <RefreshableListview
-          dataSource={this.props.currentDataSource}
+          dataSource={this.props.dataSource}
           renderRow={this._genRow}
           loadData={this._loadData.bind(this)}
         />
@@ -139,4 +125,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

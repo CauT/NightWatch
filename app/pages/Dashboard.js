@@ -103,9 +103,9 @@ var styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   greyLine: {
-    backgroundColor: '#000000',
+    backgroundColor: '#01a971',
     margin: 3,
-    height: 2 / PixelRatio.get(),
+    height: 4 / PixelRatio.get(),
     shadowColor: '#ccc',
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.5,

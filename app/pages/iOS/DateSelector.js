@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react');
+var React = require('react-native');
 var {
   DatePickerIOS,
   StyleSheet,
@@ -41,28 +41,6 @@ var DatePickerExample = React.createClass({
     // text input, but we don't have any pickers yet :(
     return (
       <View>
-        <WithLabel label="Value:">
-          <Text>{
-            this.state.date.toLocaleDateString() +
-            ' ' +
-            this.state.date.toLocaleTimeString()
-          }</Text>
-        </WithLabel>
-        <WithLabel label="Timezone:">
-          <TextInput
-            onChange={this.onTimezoneChange}
-            style={styles.textinput}
-            value={this.state.timeZoneOffsetInHours.toString()}
-          />
-          <Text> hours from UTC</Text>
-        </WithLabel>
-        <Heading label="Date + time picker" />
-        <DatePickerIOS
-          date={this.state.date}
-          mode="datetime"
-          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-          onDateChange={this.onDateChange}
-        />
         <Heading label="Date picker" />
         <DatePickerIOS
           date={this.state.date}

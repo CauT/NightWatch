@@ -65,11 +65,11 @@ class Selector extends Component {
 
     return (
       <View style={styles.selector}>
-        <Text style={{padding: 10,}}>
+        <Text style={styles.selectorName}>
           {this.props.upperText}
         </Text>
         <Select
-          width={120}
+          width={100}
           ref="SELECT_TYPE"
           optionListRef={this._getOptionList.bind(this)}
           defaultValue={this.props.defaultValue}
@@ -85,7 +85,13 @@ class Selector extends Component {
 
 var styles = StyleSheet.create({
   selector: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+  },
+  selectorName: {
+    paddingRight: 10,
+    alignSelf: 'center',
   },
 });
 

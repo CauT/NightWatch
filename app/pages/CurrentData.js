@@ -60,9 +60,9 @@ class CurrentData extends Component {
     return (
       <View style={{flex:1,}}>
         <View style={styles.selectBar}>
-          <Selector upperText={'传感器种类'} valList={typeValList}
+          <Selector upperText={'传感器\n种类'} valList={typeValList}
             defaultValue="所有" name={'currentTypeSelector'} isCurrent={true}/>
-          <Selector upperText={'监测站编号'} valList={stationValList}
+          <Selector upperText={'监测站\n编号'} valList={stationValList}
             defaultValue="所有" name={'currentStationSelector'} isCurrent={true}/>
         </View>
         <CurrentDashboard />
@@ -75,7 +75,7 @@ var styles = StyleSheet.create({
   selectBar: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    height: window.height / 6,
+    height: window.height / 8,
   },
 });
 

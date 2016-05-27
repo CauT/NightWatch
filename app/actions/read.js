@@ -16,6 +16,15 @@ export function selectDataSelector(isCurrent, selector, selected) {
 	};
 }
 
+export function switchDateSelectPad() {
+	return (dispatch, getState) => {
+		dispatch({
+			type: types.SWITCH_DATE_SELECT_PAD_STATE,
+			isHistoricalDatePadHidden: !getState().tmp.isHistoricalDatePadHidden,
+		});
+	};
+}
+
 export function setSelectorState(selector, selected) {
 	return {
 		selectorName: selector,

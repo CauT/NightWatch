@@ -30,6 +30,7 @@ function mapStateToProps(state) {
     minYear: tmp.minYear,
     soilTypeList: tmp.soilTypeList,
     soilStationList: tmp.soilStationList,
+    historicalDate: tmp.historicalDate,
     needExtendHistoricalPad: tmp.needExtendHistoricalPad,
   };
 }
@@ -77,10 +78,8 @@ class HistoricalData extends Component {
       <View style={{flex:1,}}>
         <View style={[
           styles.selectBar,
-          {
-            height: this.props.needExtendHistoricalPad ?
-              window.height * 3 / 5 : window.height / 3
-          }
+          {height: this.props.needExtendHistoricalPad ?
+            window.height * 3 / 5 : window.height / 3}
         ]}>
           <View style={styles.normalSelectBar}>
             <Selector upperText={'传感器\n种类'} valList={typeValList}
@@ -90,8 +89,9 @@ class HistoricalData extends Component {
               defaultValue="所有" name={'historicalStationSelector'}
               isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
             <Selector upperText={'选择\n年份'} valList={yearValList}
-              defaultValue={yearValList[0]} type={strings.YEAR_SELECTOR_TYPE}
-              name={'historicalYearSelector'} isCurrent={false} />
+              defaultValue={this.props.historicalDate.getFullYear()}
+              type={strings.YEAR_SELECTOR_TYPE} name={'historicalYearSelector'}
+              isCurrent={false} />
           </View>
           <DateSelectPad />
         </View>

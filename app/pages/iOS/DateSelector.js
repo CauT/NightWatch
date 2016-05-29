@@ -80,43 +80,47 @@ var DatePickerExample = React.createClass({
       <View>
         <Text style={styles.selectedTime}>{
           '选中：' +
-          this.props.historicalDate.toLocaleDateString() +
+          this.props.localeDate +
           ' ' +
-          this.props.historicalDate.toLocaleTimeString().substr(0, 11)
+          this.props.localeTime.substr(0, 11)
         }</Text>
-        <Heading label="选择月日" />
         {this._renderDatePicker()}
         <TouchableHighlight
-          style={{padding: 5,}}
+          style={styles.arrowBar}
           onPress={this._onPressDateArrow}
           activeOpacity={0.3}
-          underlayColor={'#ccc'}
+          underlayColor={'#66bb6a'}
         >
-          <Image
-            style={styles.arrowIcon}
-            source={{
-              uri: this.props.isHistoricalDatePadHidden ?
-                logos.downArrow : logos.upArrow,
-              scale: 4.5
-            }}
-          />
+          <View style={styles.row} >
+            <Text style={{paddingRight: 8,}}>选择月日</Text>
+              <Image
+                style={styles.arrowIcon}
+                source={{
+                  uri: this.props.isHistoricalDatePadHidden ?
+                    logos.downArrow : logos.upArrow,
+                  scale: 4.5
+                }}
+              />
+          </View>
         </TouchableHighlight>
-        <Heading label="选择时间" />
         {this._renderTimePicker()}
         <TouchableHighlight
-          style={{padding: 5,}}
+          style={styles.arrowBar}
           onPress={this._onPressTimeArrow}
           activeOpacity={0.3}
-          underlayColor={'#ccc'}
+          underlayColor={'#66bb6a'}
         >
-          <Image
-            style={styles.arrowIcon}
-            source={{
-              uri: this.props.isHistoricalTimePadHidden ?
-                logos.downArrow : logos.upArrow,
-              scale: 4.5
-            }}
-          />
+          <View style={styles.row} >
+            <Text style={{paddingRight: 8,}}>选择时间</Text>
+              <Image
+                style={styles.arrowIcon}
+                source={{
+                  uri: this.props.isHistoricalTimePadHidden ?
+                    logos.downArrow : logos.upArrow,
+                  scale: 4.5
+                }}
+              />
+          </View>
         </TouchableHighlight>
       </View>
     );
@@ -174,11 +178,23 @@ var styles = StyleSheet.create({
     padding: 10,
     alignSelf: 'center',
   },
+  arrowBar: {
+    backgroundColor: '#a5d6a7',
+    margin: 8
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+  }
 });
 
 function mapStateToProps(state) {
   const {tmp} = state;
   return {
+    localeDate: tmp.historicalDate.toLocaleDateString(),
+    localeTime: tmp.historicalDate.toLocaleTimeString(),
     historicalDate: tmp.historicalDate,
     isHistoricalTimePadHidden: tmp.historicalPadState[1].bool,
     isHistoricalDatePadHidden: tmp.historicalPadState[0].bool,

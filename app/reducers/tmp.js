@@ -19,8 +19,11 @@ export default function category(state = initialState, action) {
 	switch (action.type) {
 
 		case types.SET_YEAR_SELECTOR_STATE:
+			console.log(state);
 			state.historicalDate.setFullYear(action.selected);
-			return state;
+			return Object.assign({}, state, {
+				historicalDate: state.historicalDate,
+			});
 
 		case types.SWITCH_DATE_SELECT_PAD_STATE:
 			var obj = {

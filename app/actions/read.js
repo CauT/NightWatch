@@ -2,34 +2,45 @@
 
 import * as types from '../constants/ActionTypes';
 import * as urls from '../constants/Urls';
+import * as strings from '../constants/Strings';
 
-export function selectDataSelector(isCurrent, selector, selected) {
+export function selectCurrentDataSelector(selectorType, selector, selected) {
 	return (dispatch, getState) => {
 		dispatch(setSelectorState(selector, selected));
-		if (isCurrent) {
+
+		if (selectorType === strings.NORMAL_SELECTOR_TYPE) {
 			dispatch(fetchCurrentData(getState().tmp.currentStationSelector,
 				getState().tmp.currentTypeSelector));
-		} else {
-			dispatch(fetchHistoricalData(getState().tmp.historicalStationSelector,
-				getState().tmp.historicalTypeSelector, 1443760000));
+		} else if (selectorType === strings.YEAR_SELECTOR_TYPE) {
+			dispatch(setYearSelectorState(selector, selected));
 		}
 	};
 }
 
-export function switchDateSelectPad() {
+export function selectHistoricalDataSelector(selectorType, selector, selected) {
 	return (dispatch, getState) => {
-		dispatch({
-			type: types.SWITCH_DATE_SELECT_PAD_STATE,
-			isHistoricalDatePadHidden: !getState().tmp.isHistoricalDatePadHidden,
-		});
+
+		if (selectorType === strings.NORMAL_SELECTOR_TYPE) {
+			dispatch(setSelectorState(selector, selected));
+		} else if (selectorType === strings.YEAR_SELECTOR_TYPE) {
+			dispatch(setYearSelectorState(selector, selected));
+		}
 	};
 }
 
-export function setSelectorState(selector, selected) {
+function setSelectorState(selector, selected) {
 	return {
 		selectorName: selector,
 		selected: selected,
 		type: types.SET_SELECTOR_STATE,
+	};
+}
+
+function setYearSelectorState(selector, selected) {
+	return {
+		selectorName: selector,
+		selected: selected,
+		type: types.SET_YEAR_SELECTOR_STATE,
 	};
 }
 

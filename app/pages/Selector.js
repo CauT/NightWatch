@@ -2,7 +2,8 @@
 
 import React from 'react-native';
 import {
-  selectDataSelector,
+  selectCurrentDataSelector,
+  selectHistoricalDataSelector,
 } from '../actions/read';
 import {connect} from 'react-redux';
 
@@ -31,11 +32,17 @@ class Selector extends Component {
 
   _selectType(selected) {
     const {dispatch} = this.props;
-    dispatch(selectDataSelector(this.props.isCurrent, this.props.name, selected));
+    if (this.props.isCurrent) {
+      dispatch(selectCurrentDataSelector(this.props.type, this.props.name,
+        selected));
+    } else {
+      dispatch(selectHistoricalDataSelector(this.props.type, this.props.name,
+        selected));
+    }
   }
 
   _getOptionList() {
-    return this.refs['OPTION_LIST'];
+    return this.refs.OPTION_LIST;
   }
 
   render() {
@@ -69,7 +76,8 @@ class Selector extends Component {
           {this.props.upperText}
         </Text>
         <Select
-          width={100}
+          width={70}
+          height={55}
           ref="SELECT_TYPE"
           optionListRef={this._getOptionList.bind(this)}
           defaultValue={this.props.defaultValue}

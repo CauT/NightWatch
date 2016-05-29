@@ -1,79 +1,126 @@
 'use strict';
 
 var React = require('react-native');
+import {connect} from 'react-redux';
 var {
   DatePickerIOS,
   StyleSheet,
   Text,
-  TextInput,
   View,
+  Image,
+  TouchableHighlight,
 } = React;
+import {logos} from '../../../string';
+import * as types from '../../constants/ActionTypes';
 
 var DatePickerExample = React.createClass({
   getDefaultProps: function () {
     return {
-      date: new Date(),
       timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
     };
   },
 
   getInitialState: function() {
     return {
-      date: this.props.date,
       timeZoneOffsetInHours: this.props.timeZoneOffsetInHours,
     };
   },
 
   onDateChange: function(date) {
-    this.setState({date: date});
+    const {dispatch} = this.props;
+    dispatch({
+      type: types.CHANGE_HISTORICAL_DATE,
+      date: date,
+    });
   },
 
-  onTimezoneChange: function(event) {
-    var offset = parseInt(event.nativeEvent.text, 10);
-    if (isNaN(offset)) {
-      return;
-    }
-    this.setState({timeZoneOffsetInHours: offset});
+  _onPressDateArrow() {
+    const {dispatch} = this.props;
+    dispatch({
+      type: types.SWITCH_DATE_SELECT_PAD_STATE,
+      padIndex: 0,
+    });
+  },
+
+  _onPressTimeArrow() {
+    const {dispatch} = this.props;
+    dispatch({
+      type: types.SWITCH_DATE_SELECT_PAD_STATE,
+      padIndex: 1,
+    });
+  },
+
+  _renderDatePicker() {
+    return (
+      this.props.isHistoricalDatePadHidden ?
+      <View /> :
+      <DatePickerIOS
+        date={this.props.historicalDate}
+        mode="date"
+        onDateChange={this.onDateChange}
+      />
+    );
+  },
+
+  _renderTimePicker() {
+    return (
+      this.props.isHistoricalTimePadHidden ?
+      <View /> :
+      <DatePickerIOS
+        date={this.props.historicalDate}
+        mode="time"
+        onDateChange={this.onDateChange}
+        minuteInterval={1}
+      />
+    );
   },
 
   render: function() {
-    // Ideally, the timezone input would be a picker rather than a
-    // text input, but we don't have any pickers yet :(
     return (
       <View>
-        <Heading label="Date picker" />
-        <DatePickerIOS
-          date={this.state.date}
-          mode="date"
-          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-          onDateChange={this.onDateChange}
-        />
-        <Heading label="Time picker, 10-minute interval" />
-        <DatePickerIOS
-          date={this.state.date}
-          mode="time"
-          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-          onDateChange={this.onDateChange}
-          minuteInterval={10}
-        />
+        <Text style={styles.selectedTime}>{
+          '选中：' +
+          this.props.historicalDate.toLocaleDateString() +
+          ' ' +
+          this.props.historicalDate.toLocaleTimeString().substr(0, 11)
+        }</Text>
+        <Heading label="选择月日" />
+        {this._renderDatePicker()}
+        <TouchableHighlight
+          style={{padding: 5,}}
+          onPress={this._onPressDateArrow}
+          activeOpacity={0.3}
+          underlayColor={'#ccc'}
+        >
+          <Image
+            style={styles.arrowIcon}
+            source={{
+              uri: this.props.isHistoricalDatePadHidden ?
+                logos.downArrow : logos.upArrow,
+              scale: 4.5
+            }}
+          />
+        </TouchableHighlight>
+        <Heading label="选择时间" />
+        {this._renderTimePicker()}
+        <TouchableHighlight
+          style={{padding: 5,}}
+          onPress={this._onPressTimeArrow}
+          activeOpacity={0.3}
+          underlayColor={'#ccc'}
+        >
+          <Image
+            style={styles.arrowIcon}
+            source={{
+              uri: this.props.isHistoricalTimePadHidden ?
+                logos.downArrow : logos.upArrow,
+              scale: 4.5
+            }}
+          />
+        </TouchableHighlight>
       </View>
     );
   },
-});
-
-var WithLabel = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.labelContainer}>
-        <View style={styles.labelView}>
-          <Text style={styles.label}>
-            {this.props.label}
-          </Text>
-        </View>
-        {this.props.children}
-      </View>
-    );
-  }
 });
 
 var Heading = React.createClass({
@@ -87,17 +134,6 @@ var Heading = React.createClass({
     );
   }
 });
-
-// exports.displayName = (undefined: ?string);
-// exports.title = '<DatePickerIOS>';
-// exports.description = 'Select dates and times using the native UIDatePicker.';
-// exports.examples = [
-// {
-//   title: '<DatePickerIOS>',
-//   render: function() {
-//     return <DatePickerExample />;
-//   },
-// }];
 
 var styles = StyleSheet.create({
   textinput: {
@@ -128,6 +164,25 @@ var styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
   },
+  arrowIcon: {
+    width: 14,
+    height: 14,
+    alignSelf: 'center',
+  },
+  selectedTime: {
+    fontSize: 20,
+    padding: 10,
+    alignSelf: 'center',
+  },
 });
 
-export default DatePickerExample;
+function mapStateToProps(state) {
+  const {tmp} = state;
+  return {
+    historicalDate: tmp.historicalDate,
+    isHistoricalTimePadHidden: tmp.historicalPadState[1].bool,
+    isHistoricalDatePadHidden: tmp.historicalPadState[0].bool,
+  };
+}
+
+export default connect(mapStateToProps)(DatePickerExample);

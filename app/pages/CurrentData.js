@@ -8,6 +8,7 @@ import {
 import Selector from './Selector';
 import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';
+import * as strings from '../constants/Strings'
 
 const {
   StyleSheet,
@@ -61,9 +62,11 @@ class CurrentData extends Component {
       <View style={{flex:1,}}>
         <View style={styles.selectBar}>
           <Selector upperText={'传感器\n种类'} valList={typeValList}
-            defaultValue="所有" name={'currentTypeSelector'} isCurrent={true}/>
+            defaultValue="所有" name={'currentTypeSelector'}
+            isCurrent={true} type={strings.NORMAL_SELECTOR_TYPE} />
           <Selector upperText={'监测站\n编号'} valList={stationValList}
-            defaultValue="所有" name={'currentStationSelector'} isCurrent={true}/>
+            defaultValue="所有" name={'currentStationSelector'}
+            isCurrent={true} type={strings.NORMAL_SELECTOR_TYPE} />
         </View>
         <CurrentDashboard />
       </View>

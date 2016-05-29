@@ -16,7 +16,6 @@ function mapStateToProps(state) {
   const {tmp} = state;
   return {
     _loadData: function(dispatch) {
-      // const {dispatch} = this.props;
       dispatch(fetchHistoricalData(tmp.historicalStationSelector,
         tmp.historicalTypeSelector, 1443760000));
     },

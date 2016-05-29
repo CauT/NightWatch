@@ -2,15 +2,14 @@
 
 import React from 'react-native';
 import {
-  switchDateSelectPad,
   fetchStationList,
   fetchTypeList,
 } from '../actions/read';
 import Selector from './Selector';
 import HistoricalDashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
-import {logos} from '../../string';
 import DateSelectPad from './iOS/DateSelector';
+import * as strings from '../constants/Strings';
 
 const {
   StyleSheet,
@@ -28,9 +27,10 @@ var window = Dimensions.get('window');
 function mapStateToProps(state) {
   const {tmp} = state;
   return {
+    minYear: tmp.minYear,
     soilTypeList: tmp.soilTypeList,
     soilStationList: tmp.soilStationList,
-    isHistoricalDatePadHidden: tmp.isHistoricalDatePadHidden,
+    needExtendHistoricalPad: tmp.needExtendHistoricalPad,
   };
 }
 
@@ -44,16 +44,6 @@ class HistoricalData extends Component {
     const {dispatch} = this.props;
     dispatch(fetchTypeList());
     dispatch(fetchStationList());
-  }
-
-  _onPressArrow() {
-    console.log('pressed');
-    const {dispatch} = this.props;
-    dispatch(switchDateSelectPad());
-  }
-
-  _renderDatePad() {
-    return (this.props.isHistoricalDatePadHidden ? <View /> : <DateSelectPad />);
   }
 
   render() {
@@ -73,37 +63,38 @@ class HistoricalData extends Component {
       });
     }
 
+    var yearValList = [];
+    var minYear = this.props.minYear;
+    var maxYear = (new Date()).getFullYear();
+    if (minYear !== undefined) {
+      for (var i = minYear; i <= maxYear; i++) {
+        yearValList.push(i.toString());
+      }
+    }
+
+
     return (
       <View style={{flex:1,}}>
         <View style={[
           styles.selectBar,
           {
-            height: this.props.isHistoricalDatePadHidden ?
-              window.height / 8 : window.height * 4 / 5 - 10
+            height: this.props.needExtendHistoricalPad ?
+              window.height * 3 / 5 : window.height / 3
           }
         ]}>
           <View style={styles.normalSelectBar}>
             <Selector upperText={'传感器\n种类'} valList={typeValList}
-              defaultValue="所有" name={'historicalTypeSelector'} isCurrent={false}/>
+              defaultValue="所有" name={'historicalTypeSelector'}
+              isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
             <Selector upperText={'监测站\n编号'} valList={stationValList}
-              defaultValue="所有" name={'historicalStationSelector'} isCurrent={false}/>
+              defaultValue="所有" name={'historicalStationSelector'}
+              isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
+            <Selector upperText={'选择\n年份'} valList={yearValList}
+              defaultValue={yearValList[0]} type={strings.YEAR_SELECTOR_TYPE}
+              name={'historicalYearSelector'} isCurrent={false} />
           </View>
-          {this._renderDatePad()}
+          <DateSelectPad />
         </View>
-        <TouchableHighlight
-          onPress={this._onPressArrow.bind(this)}
-          activeOpacity={0.3}
-          underlayColor={'#ccc'}
-        >
-          <Image
-            style={styles.arrowIcon}
-            source={{
-              uri: this.props.isHistoricalDatePadHidden ?
-                logos.downArrow : logos.upArrow,
-              scale: 4.5
-            }}
-          />
-        </TouchableHighlight>
         <HistoricalDashboard />
       </View>
     );
@@ -117,11 +108,7 @@ var styles = StyleSheet.create({
   normalSelectBar: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-  },
-  arrowIcon: {
-    width: 14,
-    height: 14,
-    alignSelf: 'center',
+    flexWrap: 'wrap',
   },
 });
 

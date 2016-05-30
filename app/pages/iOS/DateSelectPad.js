@@ -32,7 +32,7 @@ function tebMapStateToProps(state) {
   };
 }
 
-var DatePickerExample = React.createClass({
+var DateSelectPad = React.createClass({
 
   onDateChange: function(date) {
     const {dispatch} = this.props;
@@ -162,4 +162,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(DatePickerExample);
+export default connect(mapStateToProps)(DateSelectPad);

@@ -71,24 +71,26 @@ export function fetchCurrentData(stationName, deviceType) {
 	};
 }
 
-export function fetchHistoricalData(stationName, deviceType, time) {
-	var url = urls.SOIL_HISTORICAL_DATA;
+export function fetchHistoricalData() {
+	return (dispatch, getState) => {
+		var url = urls.SOIL_HISTORICAL_DATA;
+		var time = getState().tmp.historicalDate.getTime() / 1000;
+		var stationName = getState().tmp.historicalStationSelector;
+		var deviceType = getState().tmp.historicalTypeSelector;
 
-	if (time === undefined) {
-		return console.error('time should not be undefined');
-	} else {
-		url = url + 'time=' + time + '&';
-	}
+		if (time === undefined) {
+			return console.error('time should not be undefined');
+		} else {
+			url = url + 'time=' + time + '&';
+		}
 
-	if (stationName !== undefined && stationName !== '所有') {
-		url = url + 'stationName=' + stationName + '&';
-	}
+		if (stationName !== undefined && stationName !== '所有') {
+			url = url + 'stationName=' + stationName + '&';
+		}
 
-	if (deviceType !== undefined && deviceType !== '所有') {
-		url = url + 'deviceType=' + deviceType + '&';
-	}
-
-	return dispatch => {
+		if (deviceType !== undefined && deviceType !== '所有') {
+			url = url + 'deviceType=' + deviceType + '&';
+		}
 		return fetch(url)
 		.then((response) => response.json())
 		.then((json) => {

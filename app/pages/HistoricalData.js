@@ -6,9 +6,9 @@ import {
   fetchTypeList,
 } from '../actions/read';
 import Selector from './Selector';
-import HistoricalDashboard from './HistoricalDashboard';
+import Dashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
-import DateSelectPad from './iOS/DateSelector';
+import DateSelectPad from './iOS/HistoricalDateSelectPad';
 import * as strings from '../constants/Strings';
 
 const {
@@ -73,7 +73,6 @@ class HistoricalData extends Component {
       }
     }
 
-
     return (
       <View style={{flex:1,}}>
         <View style={[
@@ -95,7 +94,7 @@ class HistoricalData extends Component {
           </View>
           <DateSelectPad />
         </View>
-        <HistoricalDashboard />
+        <Dashboard />
       </View>
     );
   }

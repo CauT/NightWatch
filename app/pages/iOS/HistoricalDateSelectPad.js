@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 import {connect} from 'react-redux';
+import {fetchHistoricalData} from '../../actions/read';
 var {
   DatePickerIOS,
   StyleSheet,
@@ -34,7 +35,7 @@ function tebMapStateToProps(state) {
 
 var DateSelectPad = React.createClass({
 
-  onDateChange: function(date) {
+  _onDateChange: function(date) {
     const {dispatch} = this.props;
     dispatch({
       type: types.CHANGE_HISTORICAL_DATE,
@@ -65,7 +66,7 @@ var DateSelectPad = React.createClass({
       <DatePickerIOS
         date={this.props.historicalDate}
         mode="date"
-        onDateChange={this.onDateChange}
+        onDateChange={this._onDateChange}
       />
     );
   },
@@ -77,14 +78,15 @@ var DateSelectPad = React.createClass({
       <DatePickerIOS
         date={this.props.historicalDate}
         mode="time"
-        onDateChange={this.onDateChange}
+        onDateChange={this._onDateChange}
         minuteInterval={1}
       />
     );
   },
 
   _onPressSearch() {
-    console.log('pressed');
+    const {dispatch} = this.props;
+    dispatch(fetchHistoricalData());
   },
 
   render: function() {

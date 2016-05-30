@@ -75,15 +75,33 @@ var DatePickerExample = React.createClass({
     );
   },
 
+  _onPressSearch() {
+    console.log('pressed');
+  },
+
   render: function() {
     return (
       <View>
-        <Text style={styles.selectedTime}>{
-          '选中：' +
-          this.props.localeDate +
-          ' ' +
-          this.props.localeTime.substr(0, 11)
-        }</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.selectedTime}>{
+            '选中：' +
+            this.props.localeDate +
+            ' ' +
+            this.props.localeTime.substr(0, 11)
+          }</Text>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this._onPressSearch}
+            activeOpacity={0.3}
+            underlayColor={'#2ab7a9'}
+          >
+            <View style={styles.row}>
+              <Text style={styles.buttonText}>查找</Text>
+              <Image style={styles.arrowIcon}
+                source={{uri: logos.search, scale: 4.5}} />
+            </View>
+          </TouchableHighlight>
+        </View>
         {this._renderDatePicker()}
         <TouchableHighlight
           style={styles.arrowBar}
@@ -125,18 +143,6 @@ var DatePickerExample = React.createClass({
       </View>
     );
   },
-});
-
-var Heading = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}>
-          {this.props.label}
-        </Text>
-      </View>
-    );
-  }
 });
 
 var styles = StyleSheet.create({
@@ -187,7 +193,24 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
-  }
+  },
+  button: {
+    height: 30,
+    width: 70,
+    backgroundColor: '#26A69A',
+    shadowColor: '#a6aab0',
+    shadowOpacity: 0.5,
+    shadowOffset:{width:2,height:2},
+    shadowRadius: 3,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  buttonText: {
+    alignSelf: 'center',
+    fontSize: 15,
+    color: '#ffffff',
+  },
 });
 
 function mapStateToProps(state) {

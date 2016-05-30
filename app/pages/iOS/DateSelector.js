@@ -11,20 +11,28 @@ var {
   TouchableHighlight,
 } = React;
 import {logos} from '../../../string';
+import Button from '../Button';
+import ExtendButton from '../ExtendButton';
 import * as types from '../../constants/ActionTypes';
 
-var DatePickerExample = React.createClass({
-  getDefaultProps: function () {
-    return {
-      timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
-    };
-  },
+var DateExtendButton = connect(debMapStateToProps)(ExtendButton);
+var TimeExtendButton = connect(tebMapStateToProps)(ExtendButton);
 
-  getInitialState: function() {
-    return {
-      timeZoneOffsetInHours: this.props.timeZoneOffsetInHours,
-    };
-  },
+function debMapStateToProps(state) {
+  const {tmp} = state;
+  return {
+    isHidden: tmp.historicalPadState[0].bool,
+  };
+}
+
+function tebMapStateToProps(state) {
+  const {tmp} = state;
+  return {
+    isHidden: tmp.historicalPadState[1].bool,
+  };
+}
+
+var DatePickerExample = React.createClass({
 
   onDateChange: function(date) {
     const {dispatch} = this.props;
@@ -89,57 +97,15 @@ var DatePickerExample = React.createClass({
             ' ' +
             this.props.localeTime.substr(0, 11)
           }</Text>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={this._onPressSearch}
-            activeOpacity={0.3}
-            underlayColor={'#2ab7a9'}
-          >
-            <View style={styles.row}>
-              <Text style={styles.buttonText}>查找</Text>
-              <Image style={styles.arrowIcon}
-                source={{uri: logos.search, scale: 4.5}} />
-            </View>
-          </TouchableHighlight>
+          <Button buttonText={'查找'} logoSource={logos.search}
+            onPress={this._onPressSearch}/>
         </View>
         {this._renderDatePicker()}
-        <TouchableHighlight
-          style={styles.arrowBar}
-          onPress={this._onPressDateArrow}
-          activeOpacity={0.3}
-          underlayColor={'#66bb6a'}
-        >
-          <View style={styles.row} >
-            <Text style={{paddingRight: 8,}}>选择月日</Text>
-              <Image
-                style={styles.arrowIcon}
-                source={{
-                  uri: this.props.isHistoricalDatePadHidden ?
-                    logos.downArrow : logos.upArrow,
-                  scale: 4.5
-                }}
-              />
-          </View>
-        </TouchableHighlight>
+        <DateExtendButton stateVarName={'isHistoricalDatePadHidden'}
+          buttonText={'选择月日'} onPress={this._onPressDateArrow}/>
         {this._renderTimePicker()}
-        <TouchableHighlight
-          style={styles.arrowBar}
-          onPress={this._onPressTimeArrow}
-          activeOpacity={0.3}
-          underlayColor={'#66bb6a'}
-        >
-          <View style={styles.row} >
-            <Text style={{paddingRight: 8,}}>选择时间</Text>
-              <Image
-                style={styles.arrowIcon}
-                source={{
-                  uri: this.props.isHistoricalTimePadHidden ?
-                    logos.downArrow : logos.upArrow,
-                  scale: 4.5
-                }}
-              />
-          </View>
-        </TouchableHighlight>
+        <TimeExtendButton stateVarName={'isHistoricalTimePadHidden'}
+          buttonText={'选择时间'} onPress={this._onPressTimeArrow}/>
       </View>
     );
   },
@@ -159,21 +125,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 2,
   },
-  labelView: {
-    marginRight: 10,
-    paddingVertical: 2,
-  },
-  label: {
-    fontWeight: '500',
-  },
-  headingContainer: {
-    padding: 4,
-    backgroundColor: '#f6f7f8',
-  },
-  heading: {
-    fontWeight: '500',
-    fontSize: 14,
-  },
   arrowIcon: {
     width: 14,
     height: 14,
@@ -186,30 +137,17 @@ var styles = StyleSheet.create({
   },
   arrowBar: {
     backgroundColor: '#a5d6a7',
-    margin: 8
+    margin: 8,
+    shadowColor: '#a6aab0',
+    shadowOpacity: 0.5,
+    shadowOffset:{width:2,height:2},
+    shadowRadius: 3
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
-  },
-  button: {
-    height: 30,
-    width: 70,
-    backgroundColor: '#26A69A',
-    shadowColor: '#a6aab0',
-    shadowOpacity: 0.5,
-    shadowOffset:{width:2,height:2},
-    shadowRadius: 3,
-    alignSelf: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  buttonText: {
-    alignSelf: 'center',
-    fontSize: 15,
-    color: '#ffffff',
   },
 });
 

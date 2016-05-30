@@ -89,7 +89,7 @@ class HistoricalData extends Component {
               defaultValue="所有" name={'historicalStationSelector'}
               isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
             <Selector upperText={'选择\n年份'} valList={yearValList}
-              defaultValue={this.props.historicalDate.getFullYear()}
+              defaultValue={this.props.historicalDate.getFullYear().toString()}
               type={strings.YEAR_SELECTOR_TYPE} name={'historicalYearSelector'}
               isCurrent={false} />
           </View>

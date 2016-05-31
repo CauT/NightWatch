@@ -4,7 +4,7 @@ import React from 'react-native';
 import {
   selectCurrentDataSelector,
   selectHistoricalDataSelector,
-} from '../actions/read';
+} from '../../actions/read';
 import {connect} from 'react-redux';
 
 import {

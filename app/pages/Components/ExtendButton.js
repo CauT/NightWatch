@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react-native';
-import {logos} from '../../string';
+import {logos} from '../../../string';
 
 const {
   StyleSheet,

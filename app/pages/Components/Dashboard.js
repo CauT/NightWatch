@@ -2,9 +2,6 @@
 
 import React from 'react-native';
 import RefreshableListview from 'react-native-refreshable-listview';
-import {
-  fetchCurrentData,
-} from '../actions/read';
 import MonitorView from './MonitorView';
 
 const {

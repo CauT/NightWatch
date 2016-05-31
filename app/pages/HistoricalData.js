@@ -5,10 +5,10 @@ import {
   fetchStationList,
   fetchTypeList,
 } from '../actions/read';
-import Selector from './Selector';
+import Selector from './Components/Selector';
 import Dashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
-import DateSelectPad from './iOS/HistoricalDateSelectPad';
+import DateSelectPad from './ComponentsIOS/HistoricalDateSelectPad';
 import * as strings from '../constants/Strings';
 
 const {

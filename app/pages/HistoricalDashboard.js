@@ -7,7 +7,7 @@ import {fetchHistoricalData} from '../actions/read';
 const {
   ListView,
 } = React;
-import Dashboard from './Components/Dashboard';
+import Dashboard from './components/Dashboard';
 
 function mapStateToProps(state) {
   var ds = new ListView.DataSource({

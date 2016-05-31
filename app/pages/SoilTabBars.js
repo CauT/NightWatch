@@ -14,8 +14,8 @@ const {
 } = React;
 import {soilItemInfos} from '../../string';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import TabBar from './Components/TabBar';
-import GraphDateSelectPad from './ComponentsIOS/GraphDateSelectPad';
+import TabBar from './components/TabBar';
+import GraphDateSelectPad from './componentsIOS/GraphDateSelectPad';
 
 class SoilTabBars extends Component {
   static initialState = {

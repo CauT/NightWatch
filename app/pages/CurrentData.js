@@ -5,7 +5,7 @@ import {
   fetchStationList,
   fetchTypeList,
 } from '../actions/read';
-import Selector from './Components/Selector';
+import Selector from './components/Selector';
 import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';
 import * as strings from '../constants/Strings'

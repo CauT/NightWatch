@@ -12,8 +12,8 @@ var {
   TouchableHighlight,
 } = React;
 import {logos} from '../../../string';
-import Button from '../Components/Button';
-import ExtendButton from '../Components/ExtendButton';
+import Button from '../components/Button';
+import ExtendButton from '../components/ExtendButton';
 import * as types from '../../constants/ActionTypes';
 
 var SrtDateExtButton = connect(getEBMapStateToProps(0))(ExtendButton);

@@ -39,7 +39,7 @@ var styles = StyleSheet.create({
   },
   button: {
     height: 30,
-    width: 70,
+    width: 55,
     backgroundColor: '#26A69A',
     shadowColor: '#a6aab0',
     shadowOpacity: 0.5,

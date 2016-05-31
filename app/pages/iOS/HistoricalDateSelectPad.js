@@ -134,7 +134,7 @@ var styles = StyleSheet.create({
   },
   selectedTime: {
     fontSize: 20,
-    padding: 10,
+    padding: 7,
     alignSelf: 'center',
   },
   arrowBar: {

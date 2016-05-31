@@ -15,6 +15,7 @@ const {
 import {soilItemInfos} from '../../string';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from './TabBar';
+import GraphDateSelectPad from './iOS/GraphDateSelectPad';
 
 class SoilTabBars extends Component {
   static initialState = {
@@ -28,9 +29,7 @@ class SoilTabBars extends Component {
           <HistoricalData tabLabel={soilItemInfos[0]} style={styles.tabView} />
           <CurrentData tabLabel={soilItemInfos[1]} style={styles.tabView}/>
           <View tabLabel={soilItemInfos[2]} style={styles.tabView}>
-            <View style={styles.card}>
-              <Text>Messenger</Text>
-            </View>
+            <GraphDateSelectPad />
           </View>
         </ScrollableTabView>
       </View>

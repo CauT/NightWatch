@@ -5,6 +5,9 @@ import * as types from '../constants/ActionTypes';
 const initialState = {
 	minYear: 2015, //已知数据库最小时间为2015年9月30日
 	historicalDate: new Date(),
+	graphStartDate: new Date(),
+	graphEndDate: new Date(),
+	isGraphDatePadHidden: [true, true, true, true],
 	needExtendHistoricalPad: false,
 	historicalPadState: [{
 		name: 'isHistoricalDatePadHidden',
@@ -15,6 +18,16 @@ const initialState = {
 	}]
 };
 
+function checkOnlyOnePadNotHidden(stateArray) {
+	var res = 0;
+	stateArray.forEach(function(state) {
+		if (!state) {
+			res++;
+		}
+	});
+	return res <= 1;
+}
+
 export default function category(state = initialState, action) {
 	switch (action.type) {
 
@@ -23,6 +36,22 @@ export default function category(state = initialState, action) {
 			state.historicalDate.setFullYear(action.selected);
 			return Object.assign({}, state, {
 				historicalDate: state.historicalDate,
+			});
+
+		case types.SWITCH_GRAPH_DATE_SELECT_PAD_STATE:
+			var i = action.index;
+			var toChange = !state.isGraphDatePadHidden[i];
+			var isHidden = state.isGraphDatePadHidden.slice(0);
+			isHidden[i] = toChange;
+			if (!checkOnlyOnePadNotHidden(isHidden)) {
+				for (var j in isHidden) {
+					isHidden[j] = true;
+				}
+				isHidden[i] = toChange;
+			}
+
+			return Object.assign({}, state, {
+				isGraphDatePadHidden: isHidden,
 			});
 
 		case types.SWITCH_DATE_SELECT_PAD_STATE:
@@ -84,6 +113,16 @@ export default function category(state = initialState, action) {
       return Object.assign({}, state, {
         soilStationList: tmp.concat(action.res),
       });
+
+		case types.CHANGE_GRAPH_START_DATE:
+			return Object.assign({}, state, {
+				graphStartDate: action.date,
+			});
+
+		case types.CHANGE_GRAPH_END_DATE:
+			return Object.assign({}, state, {
+				graphEndDate: action.date,
+			});
 
 		default:
 			return state;

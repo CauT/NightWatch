@@ -4,18 +4,20 @@ import * as types from '../constants/ActionTypes';
 import * as urls from '../constants/Urls';
 import * as strings from '../constants/Strings';
 
-export function fetchCurrentData(stationName, deviceType) {
-	var url = urls.SOIL_CURRENT_DATA;
+export function fetchCurrentData() {
+	return (dispatch, getState) => {
+		var url = urls.SOIL_CURRENT_DATA;
+		var stationName = getState().tmp.currentStationSelector;
+		var deviceType = getState().tmp.currentTypeSelector;
 
-	if (stationName !== undefined && stationName !== '所有') {
-		url = url + 'stationName=' + stationName + '&';
-	}
+		if (stationName !== undefined && stationName !== '所有') {
+			url = url + 'stationName=' + stationName + '&';
+		}
 
-	if (deviceType !== undefined && deviceType !== '所有') {
-		url = url + 'deviceType=' + deviceType + '&';
-	}
+		if (deviceType !== undefined && deviceType !== '所有') {
+			url = url + 'deviceType=' + deviceType + '&';
+		}
 
-	return dispatch => {
 		return fetch(url)
 		.then((response) => response.json())
 		.then((json) => {

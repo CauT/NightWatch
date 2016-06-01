@@ -4,11 +4,14 @@ import React from 'react-native';
 import {
   fetchStationList,
   fetchTypeList,
+  fetchCurrentData,
 } from '../actions/read';
 import Selector from './components/Selector';
 import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';
 import * as strings from '../constants/Strings'
+import Button from './components/Button';
+import {logos} from '../../string';
 
 const {
   StyleSheet,
@@ -41,6 +44,11 @@ class CurrentData extends Component {
     dispatch(fetchStationList());
   }
 
+  _onPressSearch() {
+    const {dispatch} = this.props;
+    dispatch(fetchCurrentData());
+  }
+
   render() {
     var typeValList = [];
     var stl = this.props.soilTypeList;
@@ -66,6 +74,8 @@ class CurrentData extends Component {
           <Selector upperText={'监测站\n编号'} valList={stationValList}
             defaultValue="所有" varName={'currentStationSelector'} />
         </View>
+        <Button buttonText={'查找'} logoSource={logos.search}
+          onPress={this._onPressSearch.bind(this)}/>
         <CurrentDashboard />
       </View>
     );

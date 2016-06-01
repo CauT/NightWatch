@@ -1,11 +1,13 @@
 'use strict';
 
 import React from 'react-native';
+import * as types from '../../constants/ActionTypes';
 import {
   selectCurrentDataSelector,
   selectHistoricalDataSelector,
 } from '../../actions/read';
 import {connect} from 'react-redux';
+import * as strings from '../../constants/Strings';
 
 import {
   Select,
@@ -30,15 +32,13 @@ class Selector extends Component {
     super(props);
   }
 
-  _selectType(selected) {
+  _selectType(toSelect) {
     const {dispatch} = this.props;
-    if (this.props.isCurrent) {
-      dispatch(selectCurrentDataSelector(this.props.type, this.props.name,
-        selected));
-    } else {
-      dispatch(selectHistoricalDataSelector(this.props.type, this.props.name,
-        selected));
-    }
+    dispatch({
+      type: types.SET_SELECTOR_STATE,
+      selectorVarName: this.props.varName,
+      toSelect: toSelect,
+    });
   }
 
   _getOptionList() {
@@ -72,12 +72,12 @@ class Selector extends Component {
 
     return (
       <View style={styles.selector}>
-        <Text style={styles.selectorName}>
+        <Text style={styles. selectorVarName}>
           {this.props.upperText}
         </Text>
         <Select
-          width={70}
-          height={55}
+          width={110}
+          height={40}
           ref="SELECT_TYPE"
           optionListRef={this._getOptionList.bind(this)}
           defaultValue={this.props.defaultValue}
@@ -97,7 +97,7 @@ var styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignSelf: 'center',
   },
-  selectorName: {
+   selectorVarName: {
     paddingRight: 10,
     alignSelf: 'center',
   },

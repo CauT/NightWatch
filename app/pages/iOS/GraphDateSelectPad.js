@@ -74,7 +74,9 @@ var GraphDateSelectPad = React.createClass({
 
   _onPressSearch() {
     const {dispatch} = this.props;
-    // dispatch(fetchHistoricalData());
+    dispatch({
+      type: types.UPDATE_GRAPH_URL,
+    });
   },
 
   render: function() {
@@ -86,16 +88,14 @@ var GraphDateSelectPad = React.createClass({
           ' ' +
           this.props.localeStartTime.substr(0, 11)
         }</Text>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.selectedTime}>{
-            '终止：' +
-            this.props.localeEndDate +
-            ' ' +
-            this.props.localeEndTime.substr(0, 11)
-          }</Text>
-          <Button buttonText={'查找'} logoSource={logos.search}
-            onPress={this._onPressSearch}/>
-        </View>
+        <Text style={styles.selectedTime}>{
+          '终止：' +
+          this.props.localeEndDate +
+          ' ' +
+          this.props.localeEndTime.substr(0, 11)
+        }</Text>
+        <Button buttonText={'查找'} logoSource={logos.search}
+          onPress={this._onPressSearch}/>
         {this._renderDatePicker(0)}
         <SrtDateExtButton buttonText={'起始时间：选择月日'}
           onPress={this._getOnPressArrow(0)}/>

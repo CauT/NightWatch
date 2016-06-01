@@ -15,6 +15,7 @@ const {
 import {soilItemInfos} from '../../string';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from './components/TabBar';
+import GraphGenerator from './GraphGenerator';
 import GraphDateSelectPad from './componentsIOS/GraphDateSelectPad';
 
 class SoilTabBars extends Component {
@@ -28,31 +29,15 @@ class SoilTabBars extends Component {
         <ScrollableTabView initialPage={1} renderTabBar={() => <TabBar />}>
           <HistoricalData tabLabel={soilItemInfos[0]} style={styles.tabView} />
           <CurrentData tabLabel={soilItemInfos[1]} style={styles.tabView}/>
-          <View tabLabel={soilItemInfos[2]} style={styles.tabView}>
-            <GraphDateSelectPad />
-          </View>
+          <GraphGenerator tabLabel={soilItemInfos[2]} style={styles.tabView}/>
         </ScrollableTabView>
       </View>
     );
   }
 
-  _onRefresh() {
-    console.log('refreshing');
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      console.log('refreshing');
-
-      this.setState({
-        isRefreshing: false,
-      });
-    }, 5000);
-  }
 }
 
 var styles = StyleSheet.create({
-  webView: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     marginTop: 30,

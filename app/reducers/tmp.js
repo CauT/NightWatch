@@ -1,6 +1,7 @@
 'use strict';
 
 import * as types from '../constants/ActionTypes';
+import * as urls from '../constants/Urls';
 
 const initialState = {
 	minYear: 2015, //已知数据库最小时间为2015年9月30日
@@ -31,11 +32,29 @@ function checkOnlyOnePadNotHidden(stateArray) {
 export default function category(state = initialState, action) {
 	switch (action.type) {
 
-		case types.SET_YEAR_SELECTOR_STATE:
-			console.log(state);
-			state.historicalDate.setFullYear(action.selected);
+		case types.UPDATE_GRAPH_URL:
+			var {
+				graphTypeSelector,
+				graphStationSelector,
+				graphStartDate,
+				graphEndDate,
+			} = state;
+
+			if (graphStartDate === undefined || graphEndDate === undefined ||
+				graphTypeSelector === undefined || graphStationSelector === undefined) {
+				return Object.assign({}, state, {
+					errMsg: '起始时间、终止时间、监测站编号、传感器类型均不能为空',
+				});
+			}
+
 			return Object.assign({}, state, {
-				historicalDate: state.historicalDate,
+				graphUrl: urls.SOIL_GENERATE_GRAPH
+					+ 'height=250&width=350&'
+					// + 'deviceType=' + state.graphTypeSelector + '&'
+					// + 'stationName=' + state.graphStationSelector + '&'
+					+ 'device_ids=172;174&'
+					+ 'start_time=' + graphStartDate.getTime() / 1000 + '&'
+					+ 'end_time=' + graphEndDate.getTime() / 1000,
 			});
 
 		case types.SWITCH_GRAPH_DATE_SELECT_PAD_STATE:
@@ -77,7 +96,7 @@ export default function category(state = initialState, action) {
 
     case types.SET_SELECTOR_STATE:
       var obj = {};
-      obj[action.selectorName] = action.selected;
+      obj[action. selectorVarName] = action.toSelect;
       return Object.assign({}, state, obj);
 
 		case types.CHANGE_HISTORICAL_DATE:

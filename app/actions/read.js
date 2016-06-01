@@ -4,46 +4,6 @@ import * as types from '../constants/ActionTypes';
 import * as urls from '../constants/Urls';
 import * as strings from '../constants/Strings';
 
-export function selectCurrentDataSelector(selectorType, selector, selected) {
-	return (dispatch, getState) => {
-		dispatch(setSelectorState(selector, selected));
-
-		if (selectorType === strings.NORMAL_SELECTOR_TYPE) {
-			dispatch(fetchCurrentData(getState().tmp.currentStationSelector,
-				getState().tmp.currentTypeSelector));
-		} else if (selectorType === strings.YEAR_SELECTOR_TYPE) {
-			dispatch(setYearSelectorState(selector, selected));
-		}
-	};
-}
-
-export function selectHistoricalDataSelector(selectorType, selector, selected) {
-	return (dispatch, getState) => {
-
-		if (selectorType === strings.NORMAL_SELECTOR_TYPE) {
-			dispatch(setSelectorState(selector, selected));
-		} else if (selectorType === strings.YEAR_SELECTOR_TYPE) {
-			dispatch(setYearSelectorState(selector, selected));
-		}
-	};
-}
-
-function setSelectorState(selector, selected) {
-	return {
-		selectorName: selector,
-		selected: selected,
-		type: types.SET_SELECTOR_STATE,
-	};
-}
-
-function setYearSelectorState(selector, selected) {
-	return {
-		selectorName: selector,
-		selected: selected,
-		type: types.SET_YEAR_SELECTOR_STATE,
-	};
-}
-
 export function fetchCurrentData(stationName, deviceType) {
 	var url = urls.SOIL_CURRENT_DATA;
 

@@ -92,11 +92,11 @@ var DateSelectPad = React.createClass({
   render: function() {
     return (
       <View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', alignItems:'space-around'}}>
           <Text style={styles.selectedTime}>{
-            '选中：' +
+            '选中:' +
             this.props.localeDate +
-            ' ' +
+            '\n' +
             this.props.localeTime.substr(0, 11)
           }</Text>
           <Button buttonText={'查找'} logoSource={logos.search}

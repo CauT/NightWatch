@@ -82,15 +82,9 @@ class HistoricalData extends Component {
         ]}>
           <View style={styles.normalSelectBar}>
             <Selector upperText={'传感器\n种类'} valList={typeValList}
-              defaultValue="所有" name={'historicalTypeSelector'}
-              isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
+              defaultValue="所有" varName={'historicalTypeSelector'} />
             <Selector upperText={'监测站\n编号'} valList={stationValList}
-              defaultValue="所有" name={'historicalStationSelector'}
-              isCurrent={false} type={strings.NORMAL_SELECTOR_TYPE} />
-            <Selector upperText={'选择\n年份'} valList={yearValList}
-              defaultValue={this.props.historicalDate.getFullYear().toString()}
-              type={strings.YEAR_SELECTOR_TYPE} name={'historicalYearSelector'}
-              isCurrent={false} />
+              defaultValue="所有" varName={'historicalStationSelector'} />
           </View>
           <DateSelectPad />
         </View>

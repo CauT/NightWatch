@@ -74,7 +74,9 @@ var GraphDateSelectPad = React.createClass({
 
   _onPressSearch() {
     const {dispatch} = this.props;
-    // dispatch(fetchHistoricalData());
+    dispatch({
+      type: types.UPDATE_GRAPH_URL,
+    });
   },
 
   render: function() {

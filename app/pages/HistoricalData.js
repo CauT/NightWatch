@@ -78,7 +78,7 @@ class HistoricalData extends Component {
         <View style={[
           styles.selectBar,
           {height: this.props.needExtendHistoricalPad ?
-            window.height * 3 / 5 : window.height / 3}
+            window.height * 3 / 5 : window.height / 4}
         ]}>
           <View style={styles.normalSelectBar}>
             <Selector upperText={'传感器\n种类'} valList={typeValList}
@@ -101,7 +101,6 @@ var styles = StyleSheet.create({
   normalSelectBar: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    flexWrap: 'wrap',
   },
 });
 

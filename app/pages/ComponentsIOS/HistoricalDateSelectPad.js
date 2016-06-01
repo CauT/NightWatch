@@ -92,7 +92,7 @@ var DateSelectPad = React.createClass({
   render: function() {
     return (
       <View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.container}>
           <Text style={styles.selectedTime}>{
             '选中：' +
             this.props.localeDate +
@@ -133,8 +133,8 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   selectedTime: {
-    fontSize: 20,
-    padding: 7,
+    fontSize: 15,
+    padding: 5,
     alignSelf: 'center',
   },
   arrowBar: {
@@ -151,6 +151,10 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
   },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  }
 });
 
 function mapStateToProps(state) {

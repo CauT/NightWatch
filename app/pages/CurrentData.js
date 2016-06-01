@@ -86,7 +86,7 @@ var styles = StyleSheet.create({
   selectBar: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    height: window.height / 8,
+    padding: 8,
   },
 });
 

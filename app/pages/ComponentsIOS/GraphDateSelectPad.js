@@ -2,14 +2,12 @@
 
 var React = require('react-native');
 import {connect} from 'react-redux';
-import {fetchHistoricalData} from '../../actions/read';
 var {
   DatePickerIOS,
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableHighlight,
+  PixelRatio,
 } = React;
 import {logos} from '../../../string';
 import Button from '../components/Button';
@@ -82,20 +80,22 @@ var GraphDateSelectPad = React.createClass({
   render: function() {
     return (
       <View>
-        <Text style={styles.selectedTime}>{
-          '起始：' +
-          this.props.localeStartDate +
-          ' ' +
-          this.props.localeStartTime.substr(0, 11)
-        }</Text>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.selectedTime}>{
-            '终止：' +
-            this.props.localeEndDate +
-            ' ' +
-            this.props.localeEndTime.substr(0, 11)
-          }</Text>
-          <Button buttonText={'查找'} logoSource={logos.search}
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View>
+            <Text style={styles.selectedTime}>{
+              '起始：' +
+              this.props.localeStartDate +
+              ' ' +
+              this.props.localeStartTime.substr(0, 11)
+            }</Text>
+            <Text style={styles.selectedTime}>{
+              '终止：' +
+              this.props.localeEndDate +
+              ' ' +
+              this.props.localeEndTime.substr(0, 11)
+            }</Text>
+          </View>
+          <Button style={{alignSelf: 'flex-end'}} buttonText={'查找'} logoSource={logos.search}
             onPress={this._onPressSearch}/>
         </View>
         {this._renderDatePicker(0)}
@@ -110,6 +110,8 @@ var GraphDateSelectPad = React.createClass({
         {this._renderDatePicker(3)}
         <EndTimeExtButton buttonText={'终止时间：选择时间'}
           onPress={this._getOnPressArrow(3)}/>
+        <View style={styles.greenLine}/>
+        <View style={styles.blank} />
       </View>
     );
   },
@@ -135,17 +137,9 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   selectedTime: {
-    fontSize: 20,
+    fontSize: 15,
     padding: 7,
-    alignSelf: 'center',
-  },
-  arrowBar: {
-    backgroundColor: '#a5d6a7',
-    margin: 8,
-    shadowColor: '#a6aab0',
-    shadowOpacity: 0.5,
-    shadowOffset:{width:2,height:2},
-    shadowRadius: 3
+    alignSelf: 'flex-start',
   },
   row: {
     flexDirection: 'row',
@@ -153,6 +147,17 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
   },
+  greenLine: {
+    backgroundColor: '#01a971',
+    margin: 3,
+    height: 4 / PixelRatio.get(),
+    shadowColor: '#ccc',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+  },
+  blank: {
+    height: window.height / 12,
+  }
 });
 
 function mapStateToProps(state) {

@@ -86,7 +86,7 @@ class Dashboard extends Component {
   render() {
     return (
       <View style={{flex:1}}>
-        <View style={styles.greyLine}/>
+        <View style={styles.greenLine}/>
         {this._getMajor()}
         <View style={styles.blank} />
       </View>
@@ -99,7 +99,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  greyLine: {
+  greenLine: {
     backgroundColor: '#01a971',
     margin: 3,
     height: 4 / PixelRatio.get(),

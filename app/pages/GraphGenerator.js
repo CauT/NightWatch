@@ -79,7 +79,7 @@ class GenerateGraph extends Component {
 
 var styles = StyleSheet.create({
   selectBar: {
-    padding: 8,
+    padding: 6,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },

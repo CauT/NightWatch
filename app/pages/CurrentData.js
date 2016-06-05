@@ -5,7 +5,7 @@ import {
   fetchStationList,
   fetchTypeList,
   fetchCurrentData,
-} from '../actions/read';
+} from '../actions/soil';
 import Selector from './components/Selector';
 import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';
@@ -25,10 +25,10 @@ const {
 var window = Dimensions.get('window');
 
 function mapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    soilTypeList: tmp.soilTypeList,
-    soilStationList: tmp.soilStationList,
+    soilTypeList: soil.soilTypeList,
+    soilStationList: soil.soilStationList,
   };
 }
 

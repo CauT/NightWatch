@@ -2,7 +2,7 @@
 
 import React from 'react-native';
 import {connect} from 'react-redux';
-import {fetchCurrentData} from '../actions/read';
+import {fetchCurrentData} from '../actions/soil';
 
 const {
   ListView,
@@ -13,15 +13,15 @@ function mapStateToProps(state) {
   var ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 !== r2
   });
-  const {tmp} = state;
+  const {soil} = state;
   return {
     _loadData: function(dispatch) {
       // const {dispatch} = this.props;
-      dispatch(fetchCurrentData(tmp.currentStationSelector,
-        tmp.currentTypeSelector));
+      dispatch(fetchCurrentData(soil.currentStationSelector,
+        soil.currentTypeSelector));
     },
-    dataSource: tmp.soilCurrentDevicesInfo !== undefined ?
-      ds.cloneWithRows(tmp.soilCurrentDevicesInfo) : undefined,
+    dataSource: soil.soilCurrentDevicesInfo !== undefined ?
+      ds.cloneWithRows(soil.soilCurrentDevicesInfo) : undefined,
   };
 }
 

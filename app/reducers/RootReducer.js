@@ -1,10 +1,10 @@
 'use strict';
 
 import {combineReducers} from 'redux';
-import tmp from './tmp';
+import soil from './soil';
 
 const rootReducer = combineReducers({
-	tmp,
+	soil,
 })
 
 export default rootReducer;

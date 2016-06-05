@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "count": "cloc *.js *.json app/" 
+    "count": "cloc *.js *.json app/",
+    "common-count": "cloc package.json string.js app/actions/ app/constants/ app/pages/components/ app/reducers/ app/stores/ app/pages/*.js",
+    "android-count": "cloc index.android.js app/AndroidRoot.js app/pages/componentsAndroid/",
+    "ios-count": "cloc index.ios.js app/iOSRoot.js app/pages/componentsIOS/"
   },
   "dependencies": {
     "immutable": "^3.8.1",

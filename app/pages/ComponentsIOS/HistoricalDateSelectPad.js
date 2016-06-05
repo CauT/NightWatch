@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 import {connect} from 'react-redux';
-import {fetchHistoricalData} from '../../actions/read';
+import {fetchHistoricalData} from '../../actions/soil';
 var {
   DatePickerIOS,
   StyleSheet,
@@ -20,16 +20,16 @@ var DateExtendButton = connect(debMapStateToProps)(ExtendButton);
 var TimeExtendButton = connect(tebMapStateToProps)(ExtendButton);
 
 function debMapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    isHidden: tmp.historicalPadState[0].bool,
+    isHidden: soil.historicalPadState[0].bool,
   };
 }
 
 function tebMapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    isHidden: tmp.historicalPadState[1].bool,
+    isHidden: soil.historicalPadState[1].bool,
   };
 }
 
@@ -158,13 +158,13 @@ var styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    localeDate: tmp.historicalDate.toLocaleDateString(),
-    localeTime: tmp.historicalDate.toLocaleTimeString(),
-    historicalDate: tmp.historicalDate,
-    isHistoricalTimePadHidden: tmp.historicalPadState[1].bool,
-    isHistoricalDatePadHidden: tmp.historicalPadState[0].bool,
+    localeDate: soil.historicalDate.toLocaleDateString(),
+    localeTime: soil.historicalDate.toLocaleTimeString(),
+    historicalDate: soil.historicalDate,
+    isHistoricalTimePadHidden: soil.historicalPadState[1].bool,
+    isHistoricalDatePadHidden: soil.historicalPadState[0].bool,
   };
 }
 

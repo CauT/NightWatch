@@ -4,7 +4,7 @@ import React from 'react-native';
 import {
   fetchStationList,
   fetchTypeList,
-} from '../actions/read';
+} from '../actions/soil';
 import Selector from './components/Selector';
 import Dashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
@@ -25,13 +25,13 @@ const {
 var window = Dimensions.get('window');
 
 function mapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    minYear: tmp.minYear,
-    soilTypeList: tmp.soilTypeList,
-    soilStationList: tmp.soilStationList,
-    historicalDate: tmp.historicalDate,
-    needExtendHistoricalPad: tmp.needExtendHistoricalPad,
+    minYear: soil.minYear,
+    soilTypeList: soil.soilTypeList,
+    soilStationList: soil.soilStationList,
+    historicalDate: soil.historicalDate,
+    needExtendHistoricalPad: soil.needExtendHistoricalPad,
   };
 }
 

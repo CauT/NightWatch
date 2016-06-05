@@ -4,7 +4,7 @@ import React from 'react-native';
 import {
   fetchStationList,
   fetchTypeList,
-} from '../actions/read';
+} from '../actions/soil';
 import Selector from './components/Selector';
 import {connect} from 'react-redux';
 import DateSelectPad from './componentsIOS/GraphDateSelectPad';
@@ -26,13 +26,13 @@ var window = Dimensions.get('window');
 var WEBVIEW_REF = 'webview';
 
 function mapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    graphUrl: tmp.graphUrl,
-    soilTypeList: tmp.soilTypeList,
-    soilStationList: tmp.soilStationList,
-    historicalDate: tmp.historicalDate,
-    needExtendHistoricalPad: tmp.needExtendHistoricalPad,
+    graphUrl: soil.graphUrl,
+    soilTypeList: soil.soilTypeList,
+    soilStationList: soil.soilStationList,
+    historicalDate: soil.historicalDate,
+    needExtendHistoricalPad: soil.needExtendHistoricalPad,
   };
 }
 

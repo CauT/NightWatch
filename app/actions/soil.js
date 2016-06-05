@@ -7,8 +7,8 @@ import * as strings from '../constants/Strings';
 export function fetchCurrentData() {
 	return (dispatch, getState) => {
 		var url = urls.SOIL_CURRENT_DATA;
-		var stationName = getState().tmp.currentStationSelector;
-		var deviceType = getState().tmp.currentTypeSelector;
+		var stationName = getState().soil.currentStationSelector;
+		var deviceType = getState().soil.currentTypeSelector;
 
 		if (stationName !== undefined && stationName !== '所有') {
 			url = url + 'stationName=' + stationName + '&';
@@ -36,9 +36,9 @@ export function fetchCurrentData() {
 export function fetchHistoricalData() {
 	return (dispatch, getState) => {
 		var url = urls.SOIL_HISTORICAL_DATA;
-		var time = getState().tmp.historicalDate.getTime() / 1000;
-		var stationName = getState().tmp.historicalStationSelector;
-		var deviceType = getState().tmp.historicalTypeSelector;
+		var time = getState().soil.historicalDate.getTime() / 1000;
+		var stationName = getState().soil.historicalStationSelector;
+		var deviceType = getState().soil.historicalTypeSelector;
 
 		if (time === undefined) {
 			return console.error('time should not be undefined');

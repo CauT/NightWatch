@@ -5,7 +5,7 @@ import * as types from '../../constants/ActionTypes';
 import {
   selectCurrentDataSelector,
   selectHistoricalDataSelector,
-} from '../../actions/read';
+} from '../../actions/soil';
 import {connect} from 'react-redux';
 import * as strings from '../../constants/Strings';
 

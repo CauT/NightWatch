@@ -21,9 +21,9 @@ var EndTimeExtButton = connect(getEBMapStateToProps(3))(ExtendButton);
 
 function getEBMapStateToProps(index) {
   return function(state) {
-    const {tmp} = state;
+    const {soil} = state;
     return {
-      isHidden: tmp.isGraphDatePadHidden[index],
+      isHidden: soil.isGraphDatePadHidden[index],
     };
   };
 }
@@ -161,15 +161,15 @@ var styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  const {tmp} = state;
+  const {soil} = state;
   return {
-    localeStartDate: tmp.graphStartDate.toLocaleDateString(),
-    localeStartTime: tmp.graphStartDate.toLocaleTimeString(),
-    localeEndDate: tmp.graphEndDate.toLocaleDateString(),
-    localeEndTime: tmp.graphEndDate.toLocaleTimeString(),
-    startDate: tmp.graphStartDate,
-    endDate: tmp.graphEndDate,
-    isHidden: tmp.isGraphDatePadHidden,
+    localeStartDate: soil.graphStartDate.toLocaleDateString(),
+    localeStartTime: soil.graphStartDate.toLocaleTimeString(),
+    localeEndDate: soil.graphEndDate.toLocaleDateString(),
+    localeEndTime: soil.graphEndDate.toLocaleTimeString(),
+    startDate: soil.graphStartDate,
+    endDate: soil.graphEndDate,
+    isHidden: soil.isGraphDatePadHidden,
   };
 }
 

@@ -122,15 +122,15 @@ export default function category(state = initialState, action) {
 			return Object.assign({}, state, obj);
 
 		case types.FETCH_TYPE_LIST:
-			var tmp = [{DEVICENAME: '所有'}];
+			var first = [{DEVICENAME: '所有'}];
       return Object.assign({}, state, {
-        soilTypeList: tmp.concat(action.res),
+        soilTypeList: first.concat(action.res),
       });
 
     case types.FETCH_STATION_LIST:
-			var tmp = [{NAME: '所有'}];
+			var first = [{NAME: '所有'}];
       return Object.assign({}, state, {
-        soilStationList: tmp.concat(action.res),
+        soilStationList: first.concat(action.res),
       });
 
 		case types.CHANGE_GRAPH_START_DATE:

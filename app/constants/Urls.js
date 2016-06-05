@@ -9,4 +9,4 @@ export const SOIL_HISTORICAL_DATA = SERVER_ADDRESS
 export const SOIL_STATION_LIST = SERVER_ADDRESS + '/v1/device/info/station_list';
 export const SOIL_TYPE_LIST = SERVER_ADDRESS + '/v1/device/info/type_list';
 export const SOIL_GENERATE_GRAPH = SERVER_ADDRESS
-  + '/v1/utils/generate_graph?';
+  + '/v1/utils/generate_graph/advance?';

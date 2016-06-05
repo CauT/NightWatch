@@ -50,9 +50,8 @@ export default function category(state = initialState, action) {
 			return Object.assign({}, state, {
 				graphUrl: urls.SOIL_GENERATE_GRAPH
 					+ 'height=250&width=350&'
-					// + 'deviceType=' + state.graphTypeSelector + '&'
-					// + 'stationName=' + state.graphStationSelector + '&'
-					+ 'device_ids=172;174&'
+					+ 'device_type=' + state.graphTypeSelector + '&'
+					+ 'station_name=' + state.graphStationSelector + '&'
 					+ 'start_time=' + graphStartDate.getTime() / 1000 + '&'
 					+ 'end_time=' + graphEndDate.getTime() / 1000,
 			});

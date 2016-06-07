@@ -7,7 +7,8 @@ import {
 } from '../actions/soil';
 import Selector from './components/Selector';
 import {connect} from 'react-redux';
-import DateSelectPad from './componentsIOS/GraphDateSelectPad';
+import GdspIOS from './componentsIOS/GraphDateSelectPad';
+import GdspAndroid from './componentsAndroid/GraphDateSelectPad';
 import * as strings from '../constants/Strings';
 
 const {
@@ -19,11 +20,19 @@ const {
   WebView,
   Dimensions,
   Component,
+  Platform,
   TouchableHighlight,
 } = React;
 
 var window = Dimensions.get('window');
 var WEBVIEW_REF = 'webview';
+
+var DateSelectPad;
+if (Platform.OS === 'ios') {
+  DateSelectPad = GdspIOS;
+} else {
+  DateSelectPad = GdspAndroid;
+}
 
 function mapStateToProps(state) {
   const {soil} = state;

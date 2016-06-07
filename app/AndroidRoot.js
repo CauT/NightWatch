@@ -13,7 +13,8 @@ const {
   TouchableHighlight,
 } = React;
 import SoilTabBars from './pages/SoilTabBars';
-import {androidMajorItemInfos, settingItemInfos} from '../string';
+// import {androidMajorItemInfos, settingItemInfos} from '../string';
+import * as string from '../string';
 
 var DRAWER_WIDTH_LEFT = 42;
 var appName = '农业监测终端';
@@ -22,16 +23,6 @@ class AndroidRoot extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-    };
-
-    var ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
-    this.majorDataSource = ds.cloneWithRows(androidMajorItemInfos);
-    this.settingDataSource = ds.cloneWithRows(settingItemInfos);
   }
 
   render() {
@@ -51,6 +42,11 @@ class AndroidRoot extends React.Component {
   }
 
   _renderNavigationView() {
+    var ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    var majorDataSource = ds.cloneWithRows(string.androidMajorItemInfos);
+    var settingDataSource = ds.cloneWithRows(string.settingItemInfos);
     return (
       <View style={styles.sideBar}>
         <View>
@@ -60,7 +56,7 @@ class AndroidRoot extends React.Component {
         </View>
         <View style={styles.whileLine}/>
         <ListView style={styles.listContainer}
-          dataSource={this.majorDataSource}
+          dataSource={majorDataSource}
           renderRow={(rowData) =>
               <TouchableHighlight
                 activeOpacity={0.3}
@@ -78,7 +74,7 @@ class AndroidRoot extends React.Component {
         />
         <View style={styles.whileLine}/>
         <ListView style={styles.listContainer}
-          dataSource={this.settingDataSource}
+          dataSource={settingDataSource}
           renderRow={
             (rowData) =>
               <TouchableHighlight

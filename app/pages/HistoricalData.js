@@ -8,8 +8,9 @@ import {
 import Selector from './components/Selector';
 import Dashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';
-import DateSelectPad from './componentsIOS/HistoricalDateSelectPad';
 import * as strings from '../constants/Strings';
+import HdspIOS from './componentsIOS/HistoricalDateSelectPad';
+import HdspAndroid from './componentsAndroid/HistoricalDateSelectPad';
 
 const {
   StyleSheet,
@@ -20,7 +21,15 @@ const {
   Dimensions,
   Component,
   TouchableHighlight,
+  Platform,
 } = React;
+
+var DateSelectPad;
+if (Platform.OS === 'ios') {
+  DateSelectPad = HdspIOS;
+} else {
+  DateSelectPad = HdspAndroid;
+}
 
 var window = Dimensions.get('window');
 

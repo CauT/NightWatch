@@ -7,9 +7,8 @@ var {
     View,
     TouchableOpacity,
     Animated,
+    Image,
 } = React;
-
-var { Icon, } = require('react-native-icons');
 
 var styles = StyleSheet.create({
   tab: {
@@ -51,16 +50,18 @@ var TabBar = React.createClass({
       tabs: React.PropTypes.array
     },
 
-    renderTabOption({tabIcon, tabName}, page) {
+    renderTabOption({base64, tabName}, page) {
       var isTabActive = this.props.activeTab === page;
 
       return (
-        <TouchableOpacity key={tabIcon} onPress={() => this.props.goToPage(page)} style={styles.tab}>
-          <Icon name={tabIcon} size={30} color='#01A971' style={styles.icon}
+        <TouchableOpacity key={tabName} onPress={() => this.props.goToPage(page)} style={styles.tab}>
+          <Image
+            style={styles.icon}
+            source={{uri:base64, scale: 4.5}}
             ref={(icon) => { this.selectedTabIcons[page] = icon }}/>
+
           <Text style={styles.tabName}>{tabName}</Text>
-          <Icon name={tabIcon} size={30} color='#ccc' style={styles.icon}
-            ref={(icon) => { this.unselectedTabIcons[page] = icon }}/>
+
         </TouchableOpacity>
       );
     },
@@ -81,11 +82,11 @@ var TabBar = React.createClass({
         }
 
         if (value - i >= 0 && value - i <= 1) {
-          iconRef.setNativeProps({opacity: value - i});
+          iconRef.setNativeProps({style:{opacity: value - i}});
         }
 
         if (i - value >= 0 &&  i - value <= 1) {
-          iconRef.setNativeProps({opacity: i - value});
+          iconRef.setNativeProps({style:{opacity: i - value}});
         }
       });
     },

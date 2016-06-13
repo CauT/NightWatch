@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 import {connect} from 'react-redux';
-import {fetchHistoricalData} from '../../actions/soil';
+import {fetchHistoricalData} from '../../actions/Soil';
 var {
   DatePickerIOS,
   StyleSheet,

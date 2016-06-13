@@ -2,7 +2,7 @@
 
 import React from 'react-native';
 import {connect} from 'react-redux';
-import {fetchHistoricalData} from '../actions/soil';
+import {fetchHistoricalData} from '../actions/Soil';
 
 const {
   ListView,

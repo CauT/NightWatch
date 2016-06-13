@@ -5,7 +5,7 @@ import {
   fetchStationList,
   fetchTypeList,
   fetchCurrentData,
-} from '../actions/soil';
+} from '../actions/Soil';
 import Selector from './components/Selector';
 import CurrentDashboard from './CurrentDashboard';
 import {connect} from 'react-redux';

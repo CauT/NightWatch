@@ -4,7 +4,7 @@ import React from 'react-native';
 import {
   fetchStationList,
   fetchTypeList,
-} from '../actions/soil';
+} from '../actions/Soil';
 import Selector from './components/Selector';
 import Dashboard from './HistoricalDashboard';
 import {connect} from 'react-redux';

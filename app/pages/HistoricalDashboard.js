@@ -16,8 +16,7 @@ function mapStateToProps(state) {
   const {soil} = state;
   return {
     _loadData: function(dispatch) {
-      dispatch(fetchHistoricalData(soil.historicalStationSelector,
-        soil.historicalTypeSelector, 1443760000));
+      dispatch(fetchHistoricalData());
     },
     dataSource: soil.soilHistoricalDevicesInfo !== undefined ?
       ds.cloneWithRows(soil.soilHistoricalDevicesInfo) : undefined,

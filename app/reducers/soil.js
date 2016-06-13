@@ -31,7 +31,6 @@ function checkOnlyOnePadNotHidden(stateArray) {
 
 export default function category(state = initialState, action) {
 	switch (action.type) {
-
 		case types.UPDATE_GRAPH_URL:
 			var {
 				graphTypeSelector,

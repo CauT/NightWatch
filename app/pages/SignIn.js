@@ -2,7 +2,8 @@
 
 import React from 'react-native';
 import {connect} from 'react-redux';
-import {fetchHistoricalData} from '../actions/Soil';
+import * as types from '../constants/ActionTypes';
+import {signInThenFetchToken} from '../actions/SignIn';
 import SignInButton from './components/SignInButton';
 import {logos, loginInfos} from '../../string';
 
@@ -10,6 +11,7 @@ const {
   View,
   Text,
   Image,
+  Alert,
   StyleSheet,
   Component,
   TextInput,
@@ -22,15 +24,18 @@ class SignIn extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  _getOnChangeText(isAccount) {
     const {dispatch} = this.props;
-  }
-
-  _onChangeText() {
-    const {dispatch} = this.props;
+    return function(text) {
+      dispatch({
+        type: isAccount ? types.INPUT_ACCOUNT : types.INPUT_PASSWORD,
+        text: text,
+      });
+    };
   }
 
   render() {
+    const {dispatch} = this.props;
     return (
       <View style={styles.login}>
         <Text style={styles.title}>{loginInfos.title}</Text>
@@ -39,8 +44,8 @@ class SignIn extends Component {
           <Image style={styles.icon} source={{uri:logos.account, scale: 4.5}}/>
           <TextInput
             style={styles.textInput}
-            onChangeText={(text) => this.setState({text})}
-            value={'account'}
+            onChangeText={this._getOnChangeText(true)}
+            value={this.props.username}
           />
         </View>
 
@@ -49,9 +54,9 @@ class SignIn extends Component {
         <View style={styles.row}>
           <Image style={styles.icon} source={{uri:logos.lock, scale: 4.5}}/>
           <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => this.setState({text})}
-            value={'password'}
+            style={styles.textInput} secureTextEntry={true}
+            onChangeText={this._getOnChangeText(false)}
+            value={this.props.pwd}
           />
         </View>
 
@@ -59,9 +64,11 @@ class SignIn extends Component {
 
         <SignInButton buttonText={'登陆'} underlayColor={'#2ab7a9'}
           backgroundColor={'#26A69A'} textColor={'#ffffff'}
+          onPress={() => dispatch(signInThenFetchToken())}
         />
         <SignInButton buttonText={'需要帮助'} underlayColor={'#2ab7a9'}
           backgroundColor={'#D4D5DA'} textColor={'#565656'}
+          onPress={() => dispatch(signInThenFetchToken())}
         />
       </View>
     );
@@ -73,7 +80,7 @@ var styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center'
   },
   inputText: {
     paddingLeft: 10,
@@ -114,7 +121,11 @@ var styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {};
+  const {signIn} = state;
+  return {
+    username: signIn.username,
+    pwd: signIn.pwd,
+  };
 }
 
-export default SignIn;
+export default connect(mapStateToProps)(SignIn);

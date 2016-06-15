@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react-native';
+import {connect} from 'react-redux';
 const {
   StyleSheet,
   TabBarIOS,
@@ -10,6 +11,7 @@ const {
 
 import SoilTabBars from './pages/SoilTabBars';
 import {iosMajorItemInfos} from '../string';
+import SignIn from './pages/SignIn';
 
 class iOSRoot extends React.Component {
   constructor(props) {
@@ -31,7 +33,8 @@ class iOSRoot extends React.Component {
   }
 
   render() {
-    return (
+    return !this.props.isSignIn ? <SignIn /> :
+    (
       <TabBarIOS>
         <TabBarIOS.Item
           title={iosMajorItemInfos[0].name}
@@ -111,4 +114,11 @@ var styles = StyleSheet.create({
   },
 });
 
-export default iOSRoot;
+function mapStateToProps(state) {
+  const {signIn} = state;
+  return {
+    isSignIn: signIn.isSignIn,
+  };
+}
+
+export default connect(mapStateToProps)(iOSRoot);

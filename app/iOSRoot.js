@@ -2,11 +2,13 @@
 
 import React from 'react-native';
 import {connect} from 'react-redux';
+import * as types from './constants/ActionTypes';
 const {
   StyleSheet,
   TabBarIOS,
   Text,
   View,
+  Alert,
 } = React;
 
 import SoilTabBars from './pages/SoilTabBars';
@@ -33,6 +35,16 @@ class iOSRoot extends React.Component {
   }
 
   render() {
+    const {dispatch} = this.props;
+    if (this.props.needAlert) {
+      Alert.alert(
+        this.props.alertTitle,
+        this.props.alertText,
+        [
+          {text: 'OK', onPress: () => dispatch({type: types.ALERTED})},
+        ]
+      );
+    }
     return !this.props.isSignIn ? <SignIn /> :
     (
       <TabBarIOS>
@@ -118,6 +130,9 @@ function mapStateToProps(state) {
   const {signIn} = state;
   return {
     isSignIn: signIn.isSignIn,
+    needAlert: signIn.needAlert,
+    alertText: signIn.alertText,
+    alertTitle: signIn.alertTitle,
   };
 }
 

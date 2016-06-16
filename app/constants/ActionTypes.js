@@ -17,3 +17,4 @@ export const INPUT_PASSWORD = 'INPUT_PASSWORD';
 export const PRESS_SIGN_IN = 'PRESS_SIGN_IN';
 export const PRESS_NEED_HELP = 'PRESS_NEED_HELP';
 export const IS_SIGNED_IN = 'IS_SIGNED_IN';
+export const ALERTED = 'ALERTED';

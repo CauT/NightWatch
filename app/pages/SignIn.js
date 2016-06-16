@@ -5,6 +5,9 @@ import {connect} from 'react-redux';
 import * as types from '../constants/ActionTypes';
 import {signInThenFetchToken} from '../actions/SignIn';
 import SignInButton from './components/SignInButton';
+import * as Progress from 'react-native-progress';
+import Overlay from 'react-native-overlay';
+import {BlurView} from 'react-native-blur';
 import {logos, loginInfos} from '../../string';
 
 const {
@@ -16,12 +19,20 @@ const {
   Component,
   TextInput,
   PixelRatio,
+  Dimensions,
 } = React;
+
+var window = Dimensions.get('window');
 
 class SignIn extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      progress: 0,
+      indeterminate: true,
+    };
   }
 
   _getOnChangeText(isAccount) {
@@ -36,8 +47,17 @@ class SignIn extends Component {
 
   render() {
     const {dispatch} = this.props;
+
     return (
       <View style={styles.login}>
+        <Overlay isVisible={this.props.isWaiting}>
+          <BlurView style={styles.background} blurType="dark">
+            <Progress.Circle
+              style={styles.progress}
+              indeterminate={this.state.indeterminate}
+            />
+          </BlurView>
+        </Overlay>
         <Text style={styles.title}>{loginInfos.title}</Text>
 
         <View style={styles.row}>
@@ -118,12 +138,25 @@ var styles = StyleSheet.create({
     width: 270,
     height: 2 / PixelRatio.get(),
   },
+  progress: {
+    alignSelf:'center',
+  },
+  background: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+    width: window.width,
+    height: window.height,
+  },
 });
 
 function mapStateToProps(state) {
   const {signIn} = state;
   return {
     username: signIn.username,
+    isWaiting: signIn.isWaiting,
+    alertText: signIn.alertText,
+    alertTitle: signIn.alertTitle,
     pwd: signIn.pwd,
   };
 }

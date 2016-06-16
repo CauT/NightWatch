@@ -9,6 +9,9 @@ var shaObj = new jsSHA('SHA-256', 'TEXT');
 
 export function signInThenFetchToken() {
   return (dispatch, getState) => {
+    dispatch({
+      type: types.PRESS_SIGN_IN,
+    });
     shaObj.update(getState().signIn.pwd);
     return fetch(urls.SIGN_IN
       + 'username=' + getState().signIn.username + '&'

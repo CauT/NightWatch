@@ -35,7 +35,7 @@ export default function category(state = initialState, action) {
       var isSignIn = action.res.ret.status === 'SUCCESS';
       return Object.assign({}, state, {
         isSignIn: isSignIn,
-        token: action.res.token,
+        token: isSignIn ? action.res.token : undefined,
         isWaiting: false,
         needAlert: true,
         alertTitle: '提示',

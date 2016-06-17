@@ -1,15 +1,14 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import {connect} from 'react-redux';
 import {fetchHistoricalData} from '../../actions/Soil';
-var {
+const {
   DatePickerIOS,
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableHighlight,
+  Component,
 } = React;
 import {logos} from '../../../string';
 import Button from '../components/Button';
@@ -33,65 +32,46 @@ function tebMapStateToProps(state) {
   };
 }
 
-var DateSelectPad = React.createClass({
-
-  _onDateChange: function(date) {
-    const {dispatch} = this.props;
-    dispatch({
-      type: types.CHANGE_HISTORICAL_DATE,
-      date: date,
-    });
-  },
-
-  _onPressDateArrow() {
-    const {dispatch} = this.props;
-    dispatch({
-      type: types.SWITCH_DATE_SELECT_PAD_STATE,
-      padIndex: 0,
-    });
-  },
-
-  _onPressTimeArrow() {
-    const {dispatch} = this.props;
-    dispatch({
-      type: types.SWITCH_DATE_SELECT_PAD_STATE,
-      padIndex: 1,
-    });
-  },
+class DateSelectPad extends Component {
 
   _renderDatePicker() {
+    const {dispatch} = this.props;
     return (
       this.props.isHistoricalDatePadHidden ?
       <View /> :
       <DatePickerIOS
         date={this.props.historicalDate}
         mode="date"
-        onDateChange={this._onDateChange}
+        onDateChange={(date) => dispatch({
+          type: types.CHANGE_HISTORICAL_DATE,
+          date: date,
+        })}
       />
     );
-  },
+  }
 
   _renderTimePicker() {
+    const {dispatch} = this.props;
     return (
       this.props.isHistoricalTimePadHidden ?
       <View /> :
       <DatePickerIOS
         date={this.props.historicalDate}
         mode="time"
-        onDateChange={this._onDateChange}
+        onDateChange={(date) => dispatch({
+          type: types.CHANGE_HISTORICAL_DATE,
+          date: date,
+        })}
         minuteInterval={1}
       />
     );
-  },
+  }
 
-  _onPressSearch() {
+  render() {
     const {dispatch} = this.props;
-    dispatch(fetchHistoricalData());
-  },
-
-  render: function() {
     return (
       <View>
+
         <View style={styles.container}>
           <Text style={styles.selectedTime}>{
             '选中：' +
@@ -100,18 +80,31 @@ var DateSelectPad = React.createClass({
             this.props.localeTime.substr(0, 11)
           }</Text>
           <Button buttonText={'查找'} logoSource={logos.search}
-            onPress={this._onPressSearch}/>
+            onPress={() => dispatch(fetchHistoricalData())}/>
         </View>
+
         {this._renderDatePicker()}
+
         <DateExtendButton stateVarName={'isHistoricalDatePadHidden'}
-          buttonText={'选择月日'} onPress={this._onPressDateArrow}/>
+          buttonText={'选择月日'} onPress={() => dispatch({
+            type: types.SWITCH_DATE_SELECT_PAD_STATE,
+            padIndex: 0,
+          })}
+        />
+
         {this._renderTimePicker()}
+
         <TimeExtendButton stateVarName={'isHistoricalTimePadHidden'}
-          buttonText={'选择时间'} onPress={this._onPressTimeArrow}/>
+          buttonText={'选择时间'} onPress={() => dispatch({
+            type: types.SWITCH_DATE_SELECT_PAD_STATE,
+            padIndex: 1,
+          })}
+        />
+
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   textinput: {

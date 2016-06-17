@@ -1,11 +1,12 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import {connect} from 'react-redux';
-var {
+const {
   StyleSheet,
   Text,
   View,
+  Component,
   PixelRatio,
   DatePickerAndroid,
   TimePickerAndroid,
@@ -29,17 +30,7 @@ function getEBMapStateToProps(index) {
   };
 }
 
-var GraphDateSelectPad = React.createClass({
-  _getOnDateChange: function(isStart) {
-    const {dispatch} = this.props;
-    return function(date) {
-      dispatch({
-        type: isStart ? types.CHANGE_GRAPH_START_DATE :
-          types.CHANGE_GRAPH_END_DATE,
-        date: date,
-      });
-    };
-  },
+class GraphDateSelectPad extends Component {
 
   _getOnPressArrow(index) {
     const {dispatch} = this.props;
@@ -90,16 +81,10 @@ var GraphDateSelectPad = React.createClass({
         }
       }.bind(this);
     }
-  },
+  }
 
-  _onPressSearch() {
+  render() {
     const {dispatch} = this.props;
-    dispatch({
-      type: types.UPDATE_GRAPH_URL,
-    });
-  },
-
-  render: function() {
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -118,7 +103,7 @@ var GraphDateSelectPad = React.createClass({
             }</Text>
           </View>
           <Button style={{alignSelf: 'flex-end'}} buttonText={'查找'} logoSource={logos.search}
-            onPress={this._onPressSearch}/>
+            onPress={() => dispatch({type: types.UPDATE_GRAPH_URL})}/>
         </View>
         <SrtDateExtButton buttonText={'起始时间：选择月日'}
           onPress={this._getOnPressArrow(0)}/>
@@ -132,8 +117,8 @@ var GraphDateSelectPad = React.createClass({
         <View style={styles.blank} />
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   textinput: {

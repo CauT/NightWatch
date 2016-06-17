@@ -1,14 +1,15 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import {connect} from 'react-redux';
 import {fetchHistoricalData} from '../../actions/Soil';
-var {
+const {
   StyleSheet,
   Text,
   View,
   DatePickerAndroid,
   TimePickerAndroid,
+  Component,
 } = React;
 import {logos} from '../../../string';
 import Button from '../components/Button';
@@ -32,15 +33,7 @@ function tebMapStateToProps(state) {
   };
 }
 
-var DateSelectPad = React.createClass({
-
-  _onDateChange: function(date) {
-    const {dispatch} = this.props;
-    dispatch({
-      type: types.CHANGE_HISTORICAL_DATE,
-      date: date,
-    });
-  },
+class DateSelectPad extends Component {
 
   async _onPressDateArrow() {
     const {dispatch} = this.props;
@@ -61,7 +54,7 @@ var DateSelectPad = React.createClass({
     } catch ({code, message}) {
       console.warn('Cannot open date picker', message);
     }
-  },
+  }
 
   async _onPressTimeArrow() {
     const {dispatch} = this.props;
@@ -82,14 +75,10 @@ var DateSelectPad = React.createClass({
     } catch ({code, message}) {
       console.warn('Cannot open time picker', message);
     }
-  },
+  }
 
-  _onPressSearch() {
+  render() {
     const {dispatch} = this.props;
-    dispatch(fetchHistoricalData());
-  },
-
-  render: function() {
     return (
       <View>
         <View style={styles.container}>
@@ -100,7 +89,7 @@ var DateSelectPad = React.createClass({
             this.props.localeTime.substr(0, 11)
           }</Text>
           <Button buttonText={'查找'} logoSource={logos.search}
-            onPress={this._onPressSearch}/>
+            onPress={() => dispatch(fetchHistoricalData())}/>
         </View>
         <DateExtendButton stateVarName={'isHistoricalDatePadHidden'}
           buttonText={'选择月日'} onPress={this._onPressDateArrow}/>
@@ -108,8 +97,8 @@ var DateSelectPad = React.createClass({
           buttonText={'选择时间'} onPress={this._onPressTimeArrow}/>
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   textinput: {

@@ -155,8 +155,6 @@ function mapStateToProps(state) {
   return {
     username: signIn.username,
     isWaiting: signIn.isWaiting,
-    alertText: signIn.alertText,
-    alertTitle: signIn.alertTitle,
     pwd: signIn.pwd,
   };
 }

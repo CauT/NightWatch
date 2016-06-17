@@ -1,13 +1,14 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 import {connect} from 'react-redux';
-var {
+const {
   DatePickerIOS,
   StyleSheet,
   Text,
   View,
   PixelRatio,
+  Component,
 } = React;
 import {logos} from '../../../string';
 import Button from '../components/Button';
@@ -28,8 +29,8 @@ function getEBMapStateToProps(index) {
   };
 }
 
-var GraphDateSelectPad = React.createClass({
-  _getOnDateChange: function(isStart) {
+class GraphDateSelectPad extends Component {
+  _getOnDateChange(isStart) {
     const {dispatch} = this.props;
     return function(date) {
       dispatch({
@@ -38,7 +39,7 @@ var GraphDateSelectPad = React.createClass({
         date: date,
       });
     };
-  },
+  }
 
   _getOnPressArrow(index) {
     const {dispatch} = this.props;
@@ -48,7 +49,7 @@ var GraphDateSelectPad = React.createClass({
         index: index,
       });
     };
-  },
+  }
 
   // order: startDate startTime endDate endTime
   _renderDatePicker(index) {
@@ -68,16 +69,16 @@ var GraphDateSelectPad = React.createClass({
           minuteInterval={1}
         />
     );
-  },
+  }
 
   _onPressSearch() {
     const {dispatch} = this.props;
     dispatch({
       type: types.UPDATE_GRAPH_URL,
     });
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -114,8 +115,8 @@ var GraphDateSelectPad = React.createClass({
         <View style={styles.blank} />
       </View>
     );
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   textinput: {

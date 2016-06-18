@@ -47,6 +47,7 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    elevation: 2,
   },
   buttonText: {
     alignSelf: 'center',

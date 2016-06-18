@@ -130,7 +130,8 @@ var styles = StyleSheet.create({
     shadowColor: '#a6aab0',
     shadowOpacity: 0.5,
     shadowOffset:{width:2,height:2},
-    shadowRadius: 3
+    shadowRadius: 3,
+    elevation: 2,
   },
   row: {
     flexDirection: 'row',

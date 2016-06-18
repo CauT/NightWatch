@@ -43,6 +43,7 @@ var styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: 3,
+    elevation: 2,
     flex: 1,
   },
   monitorName: {

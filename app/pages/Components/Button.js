@@ -45,6 +45,7 @@ var styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowOffset:{width:2,height:2},
     shadowRadius: 3,
+    elevation: 2,
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',

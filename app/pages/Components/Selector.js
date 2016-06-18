@@ -60,6 +60,7 @@ class Selector extends Component {
       shadowOffset: {width: 2, height: 2},
       shadowOpacity: 0.5,
       shadowRadius: 3,
+      elevation: 2,
     };
 
     if (this.props.valList !== undefined) {

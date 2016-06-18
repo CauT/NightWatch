@@ -12,6 +12,7 @@ const {
   PixelRatio,
   Component,
   Dimensions,
+  Platform,
 } = React;
 
 var window = Dimensions.get('window');
@@ -88,7 +89,10 @@ class Dashboard extends Component {
       <View style={{flex:1}}>
         <View style={styles.greenLine}/>
         {this._getMajor()}
-        <View style={styles.blank} />
+        {() => {
+          return Platform.OS === 'ios' ?
+          <View style={styles.blank} /> : <View />;}
+        }
       </View>
     );
   }
@@ -106,6 +110,7 @@ var styles = StyleSheet.create({
     shadowColor: '#ccc',
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.5,
+    elevation: 1,
   },
   blank: {
     height: window.height / 12,
